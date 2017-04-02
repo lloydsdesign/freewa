@@ -3,5 +3,17 @@
   "title": "Freewa",
   "version": "0.0.1",
   "description": "Free water project",
-  "platform": "1.0.*"
+  "platform": "1.0.*",
+  "screens": [
+    {
+      "name": "Map"
+    }
+  ],
+  "shortcuts": [
+    {
+      "title": "Springs",
+      "name": "Springs",
+      "screen": "@.Map"
+    }
+  ]
 }
