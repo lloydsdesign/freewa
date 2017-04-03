@@ -4,6 +4,8 @@ import React, {
 
 import {
 	Screen,
+	View,
+	TouchableOpacity,
 	Image,
 	Tile,
 	Title,
@@ -130,19 +132,22 @@ export class Map extends Component
 						title={marker.title}
 						onPress={(e) => this.markerPress(e.nativeEvent)}
 					>
-						<MapView.Callout
-							style={{width: 160, height: 160}}
-							onPress={() => navigateTo({
-								screen: ext('SpringDetails'),
-								props: { marker }
-							})}
-						>
-							<Image styleName="medium-square rounded-corners" source={{ uri: marker.image }}>
-								<Tile>
-									<Title>{marker.title}</Title>
-									<Subtitle>{marker.type}</Subtitle>
-								</Tile>
-							</Image>
+						<MapView.Callout style={{width: 160, height: 160}}>
+							<View styleName="fill-parent">
+								<TouchableOpacity
+									onPress={() => navigateTo({
+										screen: ext('SpringDetails'),
+										props: { marker }
+									})}
+								>
+									<Image styleName="medium-square rounded-corners" source={{ uri: marker.image }}>
+										<Tile>
+											<Title>{marker.title}</Title>
+											<Subtitle>{marker.type}</Subtitle>
+										</Tile>
+									</Image>
+								</TouchableOpacity>
+							</View>
 						</MapView.Callout>
 					</MapView.Marker>
 				))}
