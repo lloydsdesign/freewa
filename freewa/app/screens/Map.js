@@ -18,6 +18,7 @@ export default class Map extends Component
 		
 		this.state = {
 			markers: [],
+			path: [],
 			hasLoaded: false
 		};
 	}
@@ -65,6 +66,27 @@ export default class Map extends Component
 		
 		this.setState({hasLoaded: true});
 	}
+	
+	markerPress(marker)
+	{
+		var currPos;
+		
+		/*navigator.geolocation.getCurrentPosition((position) => {
+				currPos = position.coords;
+			},
+			(error) => console.log(JSON.stringify(error)),
+			{enableHighAccuracy: true}
+		);*/
+		
+		currPos = {
+			latitude: 45.324995,
+			longitude: 14.451417
+		};
+		
+		this.setState({
+			path: [currPos, marker.coordinate]
+		});
+	}
 
 
 	render()
@@ -86,15 +108,24 @@ export default class Map extends Component
 				followsUserLocation
 				style={{width: width, height: height}}
 			>
-				{this.state.markers.map(marker => (
+				{this.state.markers.map((marker, i) => (
 					<MapView.Marker
+						key={i}
 						coordinate={{
 							latitude: marker.latitude,
 							longitude: marker.longitude
 						}}
 						title={marker.title}
+						onPress={(e) => this.markerPress(e.nativeEvent)}
 					/>
 				))}
+				
+				<MapView.Polyline
+					coordinates={this.state.path}
+					geodesic
+					strokeColor="#f00"
+					strokeWidth={3}
+				/>
 				
 			</MapView>
 		  </Screen>
