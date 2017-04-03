@@ -2,13 +2,21 @@ import React, {
   Component
 } from 'react';
 
+import {
+	Screen,
+	Image,
+	View,
+	Title,
+	Subtitle
+} from '@shoutem/ui';
+
 import { Dimensions } from 'react-native';
 import MapView from 'react-native-maps';
-import { Screen } from '@shoutem/ui';
 import { NavigationBar } from '@shoutem/ui/navigation';
 
 const jsonGuard = String.fromCharCode(0);
-const CMS_URL = 'http://freewa-back.lloyds-design.hr/manage.php';
+const CMS_BASE = 'http://freewa-back.lloyds-design.hr/';
+const CMS_REST = CMS_BASE +'manage.php';
 
 export default class Map extends Component
 {
@@ -30,7 +38,7 @@ export default class Map extends Component
 	
 	fetchMarkers()
 	{
-		fetch(CMS_URL, {
+		fetch(CMS_REST, {
 			headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
 			method: 'POST',
 			body: 'get_springs='
@@ -38,7 +46,7 @@ export default class Map extends Component
 		.then((response) => response.text())
 		.then((response) => {
 			response = parseJSON(response);
-			this.setState({ markers: convertToFloat(response.springs) });
+			this.setState({ markers: adjustMarkerValues(response.springs) });
 		})
 		.catch((error) => {
 			console.error(error);
@@ -117,7 +125,15 @@ export default class Map extends Component
 						}}
 						title={marker.title}
 						onPress={(e) => this.markerPress(e.nativeEvent)}
-					/>
+					>
+						<MapView.Callout tooltip style={{width: 140, height: 100}}>
+							<View>
+								<Image styleName="large-banner" source={{ uri: marker.image }} />
+								<Title>{marker.title}</Title>
+								<Subtitle>Type: {marker.type}</Subtitle>
+							</View>
+						</MapView.Callout>
+					</MapView.Marker>
 				))}
 				
 				<MapView.Polyline
@@ -133,13 +149,16 @@ export default class Map extends Component
 	}
 }
 
-function convertToFloat(markers)
+function adjustMarkerValues(markers)
 {
 	var i;
 	for(i = 0; i < markers.length; i++)
 	{
-		markers[i].latitude = parseFloat(markers[i].latitude),
-		markers[i].longitude = parseFloat(markers[i].longitude)
+		markers[i].latitude = parseFloat(markers[i].latitude);
+		markers[i].longitude = parseFloat(markers[i].longitude);
+		
+		if(markers[i].image && markers[i].image != "") markers[i].image = CMS_BASE + markers[i].image;
+		else markers[i].image = undefined;
 	}
 	
 	return markers;
