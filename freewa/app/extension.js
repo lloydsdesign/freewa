@@ -2,9 +2,11 @@
 // You should not change it
 import pack from './package.json';
 import Map from './screens/Map';
+import SpringDetails from './screens/SpringDetails';
 
 export const screens = {
-  Map
+  Map,
+  SpringDetails
 };
 
 export function ext(resourceName) {

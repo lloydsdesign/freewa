@@ -5,20 +5,23 @@ import React, {
 import {
 	Screen,
 	Image,
-	View,
+	Tile,
 	Title,
 	Subtitle
 } from '@shoutem/ui';
 
+import { connect } from 'react-redux';
 import { Dimensions } from 'react-native';
 import MapView from 'react-native-maps';
 import { NavigationBar } from '@shoutem/ui/navigation';
+import { navigateTo } from '@shoutem/core/navigation';
+import { ext } from '../extension';
 
 const jsonGuard = String.fromCharCode(0);
 const CMS_BASE = 'http://freewa-back.lloyds-design.hr/';
 const CMS_REST = CMS_BASE +'manage.php';
 
-export default class Map extends Component
+export class Map extends Component
 {
 	constructor(props)
 	{
@@ -77,16 +80,16 @@ export default class Map extends Component
 	
 	markerPress(marker)
 	{
-		var currPos;
-		
 		/*navigator.geolocation.getCurrentPosition((position) => {
-				currPos = position.coords;
+				this.setState({
+					path: [position.coords, marker.coordinate]
+				});
 			},
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
 		);*/
 		
-		currPos = {
+		const currPos = {
 			latitude: 45.324995,
 			longitude: 14.451417
 		};
@@ -99,6 +102,7 @@ export default class Map extends Component
 
 	render()
 	{
+		const { navigateTo } = this.props;
 		const { width, height } = Dimensions.get('window');
 
 		return (
@@ -126,12 +130,19 @@ export default class Map extends Component
 						title={marker.title}
 						onPress={(e) => this.markerPress(e.nativeEvent)}
 					>
-						<MapView.Callout tooltip style={{width: 140, height: 100}}>
-							<View>
-								<Image styleName="large-banner" source={{ uri: marker.image }} />
-								<Title>{marker.title}</Title>
-								<Subtitle>Type: {marker.type}</Subtitle>
-							</View>
+						<MapView.Callout
+							style={{width: 160, height: 160}}
+							onPress={() => navigateTo({
+								screen: ext('SpringDetails'),
+								props: { marker }
+							})}
+						>
+							<Image styleName="medium-square rounded-corners" source={{ uri: marker.image }}>
+								<Tile>
+									<Title>{marker.title}</Title>
+									<Subtitle>{marker.type}</Subtitle>
+								</Tile>
+							</Image>
 						</MapView.Callout>
 					</MapView.Marker>
 				))}
@@ -148,6 +159,11 @@ export default class Map extends Component
 		);
 	}
 }
+
+export default connect(
+	undefined,
+	{ navigateTo }
+)(Map);
 
 function adjustMarkerValues(markers)
 {
