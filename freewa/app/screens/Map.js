@@ -9,12 +9,15 @@ import {
 	Image,
 	Tile,
 	Title,
-	Subtitle
+	Subtitle,
+	Button,
+	Icon,
+	Text
 } from '@shoutem/ui';
 
-import { connect } from 'react-redux';
 import { Dimensions } from 'react-native';
 import MapView from 'react-native-maps';
+import { connect } from 'react-redux';
 import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../extension';
@@ -33,7 +36,8 @@ export class Map extends Component
 			markers: [],
 			selectedMarker: null,
 			path: [],
-			hasLoaded: false
+			hasLoaded: false,
+			user: this.props.user && this.props.user.length ? this.props.user : []
 		};
 	}
 	
@@ -118,6 +122,53 @@ export class Map extends Component
 			path: [currPos, marker.coordinate]
 		});
 	}
+	
+	renderUserButtons()
+	{
+		if(this.state.user.length) return this.renderLogoutButton();
+		else return this.renderLoginButton();
+	}
+	
+	renderLoginButton()
+	{
+		return (
+			<View styleName="horizontal">
+				<Button styleName="full-width" onPress={() => navigateTo({
+					screen: ext('Login')
+				})}>
+					<Icon name="right-arrow" />
+					<Text>LOGIN</Text>
+				</Button>
+				
+				<Button styleName="full-width" onPress={() => navigateTo({
+					screen: ext('Register')
+				})}>
+					<Icon name="right-arrow" />
+					<Text>REGISTER</Text>
+				</Button>
+			</View>
+		);
+	}
+	
+	renderLogoutButton()
+	{
+		return (
+			<View styleName="horizontal">
+				<Button styleName="full-width" onPress={() => this.setState({user: []})}>
+					<Icon name="close" />
+					<Text>LOGOUT</Text>
+				</Button>
+				
+				<Button styleName="full-width" onPress={() => navigateTo({
+					screen: ext('AddSpring'),
+					props: { user: this.state.user }
+				})}>
+					<Icon name="right-arrow" />
+					<Text>ADD SPRING</Text>
+				</Button>
+			</View>
+		);
+	}
 
 
 	render()
@@ -138,7 +189,7 @@ export class Map extends Component
 				loadingEnabled
 				showsUserLocation
 				followsUserLocation
-				style={{width: width, height: height}}
+				style={{flex: 0.8, flexDirection: 'column', width: width}}
 			>
 				{this.state.markers.map((marker, i) => (
 					<MapView.Marker
@@ -178,8 +229,9 @@ export class Map extends Component
 					strokeColor="#f00"
 					strokeWidth={3}
 				/>
-				
 			</MapView>
+			
+			{this.renderUserButtons()}
 		  </Screen>
 		);
 	}

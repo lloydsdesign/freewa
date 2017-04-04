@@ -6,13 +6,19 @@
   "platform": "1.0.*",
   "screens": [
     {
-      "name": "Map",
-	  "navigatesTo": [
-			"@.SpringDetails"
-		]
+      "name": "Map"
     },
     {
       "name": "SpringDetails"
+    },
+    {
+      "name": "Login"
+    },
+    {
+      "name": "Register"
+    },
+    {
+      "name": "AddSpring"
     }
   ],
   "shortcuts": [
