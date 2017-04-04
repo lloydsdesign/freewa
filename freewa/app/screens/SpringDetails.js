@@ -30,7 +30,7 @@ export default class SpringDetails extends Component
 		const position = {
 			latitude: marker.latitude,
 			longitude: marker.longitude,
-			title: marker.title
+			title: marker.title.toUpperCase()
 		};
 		  
 		return (
@@ -39,8 +39,8 @@ export default class SpringDetails extends Component
 				
 				<Image styleName="large-banner" source={{ uri: marker.image }}>
 					<Tile>
-						<Title>{marker.title}</Title>
-						<Subtitle>{marker.type}</Subtitle>
+						<Title>{marker.title.toUpperCase()}</Title>
+						<Subtitle>{marker.type.toUpperCase()}</Subtitle>
 					</Tile>
 				</Image>
 

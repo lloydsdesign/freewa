@@ -147,7 +147,7 @@ export class Map extends Component
 							latitude: marker.latitude,
 							longitude: marker.longitude
 						}}
-						title={marker.title}
+						title={marker.title.toUpperCase()}
 						onPress={(e) => this.markerPress(e.nativeEvent)}
 						onCalloutPress={() => navigateTo({
 							screen: ext('SpringDetails'),
@@ -162,8 +162,8 @@ export class Map extends Component
 								})}>
 									<Image styleName="medium-square rounded-corners" source={{ uri: marker.image }} resizeMode="cover">
 										<Tile>
-											<Title>{marker.title}</Title>
-											<Subtitle>{marker.type}</Subtitle>
+											<Title>{marker.title.toUpperCase()}</Title>
+											<Subtitle>{marker.type.toUpperCase()}</Subtitle>
 										</Tile>
 									</Image>
 								</TouchableOpacity>
