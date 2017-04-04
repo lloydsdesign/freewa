@@ -26,6 +26,12 @@ export default class SpringDetails extends Component
 	render()
 	{
 		const { marker } = this.props;
+		
+		const position = {
+			latitude: marker.latitude,
+			longitude: marker.longitude,
+			title: marker.title
+		};
 		  
 		return (
 			<ScrollView style={{marginTop: -1}}>
@@ -51,13 +57,13 @@ export default class SpringDetails extends Component
 				<View styleName="large-banner">
 					<InlineMap
 						initialRegion={{
-							latitude: marker.latitude,
-							longitude: marker.longitude,
+							latitude: position.latitude,
+							longitude: position.longitude,
 							latitudeDelta: 0.03,
 							longitudeDelta: 0.03
 						}}
-						markers={[marker]}
-						selectedMarker={marker}
+						markers={[position]}
+						selectedMarker={position}
 						style={{height: 160}}
 					/>
 				</View>

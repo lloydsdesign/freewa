@@ -149,16 +149,18 @@ export class Map extends Component
 						}}
 						title={marker.title}
 						onPress={(e) => this.markerPress(e.nativeEvent)}
+						onCalloutPress={() => navigateTo({
+							screen: ext('SpringDetails'),
+							props: { marker }
+						})}
 					>
 						<MapView.Callout style={{width: 160, height: 160}}>
 							<View styleName="fill-parent">
-								<TouchableOpacity
-									onPress={() => navigateTo({
-										screen: ext('SpringDetails'),
-										props: { marker }
-									})}
-								>
-									<Image styleName="medium-square rounded-corners" source={{ uri: marker.image }}>
+								<TouchableOpacity onPress={() => navigateTo({
+									screen: ext('SpringDetails'),
+									props: { marker }
+								})}>
+									<Image styleName="medium-square rounded-corners" source={{ uri: marker.image }} resizeMode="cover">
 										<Tile>
 											<Title>{marker.title}</Title>
 											<Subtitle>{marker.type}</Subtitle>
