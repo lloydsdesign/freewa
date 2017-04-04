@@ -31,15 +31,31 @@ export class Map extends Component
 		
 		this.state = {
 			markers: [],
+			selectedMarker: null,
 			path: [],
 			hasLoaded: false
 		};
 	}
 	
+	watchID: ?number = null;
+	
 	componentWillMount()
 	{
 		this.fetchMarkers();
+		
+		/*this.watchID = navigator.geolocation.watchPosition((position) => {
+			if(!this.state.selectedMarker) return;
+			
+			this.setState({
+				path: [position.coords, selectedMarker.coordinate]
+			});
+		});*/
 	}
+	
+	/*componentWillUnmount()
+	{
+		navigator.geolocation.clearWatch(this.watchID);
+	}*/
 	
 	fetchMarkers()
 	{
@@ -82,21 +98,13 @@ export class Map extends Component
 	
 	markerPress(marker)
 	{
-		/*navigator.geolocation.getCurrentPosition((position) => {
-				this.setState({
-					path: [position.coords, marker.coordinate]
-				});
-			},
-			(error) => console.log(JSON.stringify(error)),
-			{enableHighAccuracy: true}
-		);*/
-		
 		const currPos = {
 			latitude: 45.324995,
 			longitude: 14.451417
 		};
 		
 		this.setState({
+			selectedMarker: marker,
 			path: [currPos, marker.coordinate]
 		});
 	}

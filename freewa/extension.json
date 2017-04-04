@@ -6,7 +6,10 @@
   "platform": "1.0.*",
   "screens": [
     {
-      "name": "Map"
+      "name": "Map",
+	  "navigatesTo": [
+			"@.SpringDetails"
+		]
     },
     {
       "name": "SpringDetails"
