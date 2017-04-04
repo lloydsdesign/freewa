@@ -98,6 +98,16 @@ export class Map extends Component
 	
 	markerPress(marker)
 	{
+		/*navigator.geolocation.getCurrentPosition((position) => {
+				this.setState({
+					selectedMarker: marker,
+					path: [position.coords, marker.coordinate]
+				});
+			},
+			(error) => console.log(JSON.stringify(error)),
+			{enableHighAccuracy: true}
+		);*/
+		
 		const currPos = {
 			latitude: 45.324995,
 			longitude: 14.451417
