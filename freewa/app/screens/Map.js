@@ -80,7 +80,7 @@ export class Map extends Component
 		};
 		
 		this.refs.map.animateToCoordinate(currPos);
-		this.setState({hasLoaded: true});
+		this.setState({ hasLoaded: true });
 	}
 	
 	renderUserButtons()
@@ -94,8 +94,8 @@ export class Map extends Component
 		const { navigateTo } = this.props;
 		
 		return (
-			<View styleName="horizontal">
-				<Button styleName="full-width" onPress={() => navigateTo({
+			<View styleName="h-center">
+				<Button onPress={() => navigateTo({
 					screen: ext('Login'),
 					props: { returnScreen: ext('AddSpring') }
 				})}>
@@ -123,7 +123,7 @@ export class Map extends Component
 					<Text>ADD SPRING</Text>
 				</Button>
 				
-				<Button styleName="full-width" onPress={() => this.setState({user: null})}>
+				<Button styleName="full-width" onPress={() => this.setState({ user: null })}>
 					<Icon name="close" />
 					<Text>LOGOUT</Text>
 				</Button>
@@ -140,6 +140,11 @@ export class Map extends Component
 		
 		return (
 			<View styleName="h-center">
+				<Button onPress={() => this.setState({ selectedMarker: null })}>
+					<Icon name="down-arrow" />
+					<Text>CLOSE</Text>
+				</Button>
+				
 				<TouchableOpacity onPress={() => navigateTo({
 					screen: ext('SpringDetails'),
 					props: { marker }

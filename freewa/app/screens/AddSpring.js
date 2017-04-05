@@ -82,7 +82,7 @@ export class AddSpring extends Component
 		
 		return (
 			<ScrollView style={{marginTop: -1}}>
-				<NavigationBar title="LOGIN" />
+				<NavigationBar title="ADD SPRING" />
 
 				<Row>
 					<Subtitle>Name</Subtitle>
