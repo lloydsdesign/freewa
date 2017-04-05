@@ -34,30 +34,16 @@ export class Map extends Component
 		
 		this.state = {
 			markers: [],
+			selectedMarker: null,
 			hasLoaded: false,
 			user: this.props.user ? this.props.user : null
 		};
 	}
 	
-	watchID: ?number = null;
-	
 	componentWillMount()
 	{
 		this.fetchMarkers();
-		
-		/*this.watchID = navigator.geolocation.watchPosition((position) => {
-			if(!this.state.selectedMarker) return;
-			
-			this.setState({
-				path: [position.coords, selectedMarker.coordinate]
-			});
-		});*/
 	}
-	
-	/*componentWillUnmount()
-	{
-		navigator.geolocation.clearWatch(this.watchID);
-	}*/
 	
 	fetchMarkers()
 	{
@@ -93,7 +79,6 @@ export class Map extends Component
 		};
 		
 		this.refs.map.animateToCoordinate(currPos);
-		
 		this.setState({hasLoaded: true});
 	}
 	
@@ -144,19 +129,38 @@ export class Map extends Component
 			</View>
 		);
 	}
-
+	
+	renderSelectedMarker()
+	{
+		const marker = this.state.selectedMarker;
+		if(!marker) return null;
+		
+		const { navigateTo } = this.props;
+		
+		return (
+			<View styleName="h-center">
+				<TouchableOpacity onPress={() => navigateTo({
+					screen: ext('SpringDetails'),
+					props: { marker }
+				})}>
+					<Image styleName="large-banner" source={{ uri: marker.image }}>
+						<Tile>
+							<Title>{marker.title.toUpperCase()}</Title>
+							<Subtitle>{marker.type.toUpperCase()}</Subtitle>
+						</Tile>
+					</Image>
+				</TouchableOpacity>
+			</View>
+		);
+	}
 
 	render()
 	{
-		const { navigateTo } = this.props;
 		const { width, height } = Dimensions.get('window');
 
 		return (
 		  <Screen styleName="full-screen">
-			<NavigationBar
-			  styleName="no-border"
-			  title="SPRINGS"
-			/>
+			<NavigationBar styleName="no-border" title="SPRINGS" />
 			
 			<MapView
 				ref="map"
@@ -164,7 +168,7 @@ export class Map extends Component
 				loadingEnabled
 				showsUserLocation
 				followsUserLocation
-				style={{flex: 0.85, flexDirection: 'column', width: width}}
+				style={{flex: 0.8, flexDirection: 'column', width: width}}
 			>
 				{this.state.markers.map((marker, i) => (
 					<MapView.Marker
@@ -174,30 +178,12 @@ export class Map extends Component
 							longitude: marker.longitude
 						}}
 						title={marker.title.toUpperCase()}
-						onCalloutPress={() => navigateTo({
-							screen: ext('SpringDetails'),
-							props: { marker }
-						})}
-					>
-						<MapView.Callout style={{width: 160, height: 160}}>
-							<View styleName="fill-parent">
-								<TouchableOpacity onPress={() => navigateTo({
-									screen: ext('SpringDetails'),
-									props: { marker }
-								})}>
-									<Image styleName="medium-square rounded-corners" source={{ uri: marker.image }} resizeMode="cover">
-										<Tile>
-											<Title>{marker.title.toUpperCase()}</Title>
-											<Subtitle>{marker.type.toUpperCase()}</Subtitle>
-										</Tile>
-									</Image>
-								</TouchableOpacity>
-							</View>
-						</MapView.Callout>
-					</MapView.Marker>
+						onPress={(e) => this.setState({ selectedMarker: marker })}
+					/>
 				))}
 			</MapView>
 			
+			{this.renderSelectedMarker()}
 			{this.renderUserButtons()}
 		  </Screen>
 		);

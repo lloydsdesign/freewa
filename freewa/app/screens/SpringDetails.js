@@ -43,14 +43,20 @@ export default class SpringDetails extends Component
 						<Subtitle>{marker.type.toUpperCase()}</Subtitle>
 					</Tile>
 				</Image>
+				
+				<Divider styleName="line" />
+				
+				<Row>
+					<Text>by {marker.user}</Text>
+				</Row>
 
 				<Divider styleName="line" />
-
+				
 				<Row>
 					<View style={{flex: 1}}>
-					  <Subtitle>SPRING DESCRIPTION</Subtitle>
-					  <Text />
-					  <Text>{marker.description}</Text>
+						<Subtitle>SPRING DESCRIPTION</Subtitle>
+						<Text />
+						<Text>{marker.description}</Text>
 					</View>
 				</Row>
 
