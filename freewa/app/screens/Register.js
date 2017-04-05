@@ -132,7 +132,7 @@ export class Register extends Component
 				<Row>
 					<Button styleName="full-width" onPress={() => this.submitForm()}>
 						<Icon name="right-arrow" />
-						<Text>LOGIN</Text>
+						<Text>REGISTER</Text>
 					</Button>
 				</Row>
 			</ScrollView>

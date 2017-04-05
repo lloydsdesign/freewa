@@ -30,22 +30,22 @@ export class Login extends Component
 		super(props);
 		
 		this.state = {
-			username: '',
+			email: '',
 			password: ''
 		};
 	}
 	
 	submitForm()
 	{
-		const {username, password} = this.state;
-		if(username == '' || password == '') return;
+		const {email, password} = this.state;
+		if(email == '' || password == '') return;
 		
 		const { navigateTo } = this.props;
 		
 		fetch(CMS_REST, {
 			headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
 			method: 'POST',
-			body: 'mobile_login=&username='+ username +'&password='+ password
+			body: 'mobile_login=&email='+ email +'&password='+ password
 		})
 		.then((response) => response.text())
 		.then((response) => {
@@ -73,7 +73,7 @@ export class Login extends Component
 				<NavigationBar title="LOGIN" />
 
 				<Row>
-					<Subtitle>Username</Subtitle>
+					<Subtitle>E-mail</Subtitle>
 					<TextInput
 						autoCapitalize="none"
 						autoCorrect={false}
@@ -81,7 +81,8 @@ export class Login extends Component
 						maxLength={50}
 						enablesReturnKeyAutomatically
 						returnKeyType="next"
-						onChangeText={(value) => this.setState({username: value.trim()})}
+						keyboardType="email-address"
+						onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
 					/>
 				</Row>
 				
