@@ -22,6 +22,7 @@ import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../extension';
 
+const markerImage = require('../assets/icons/marker-image.png');
 const jsonGuard = String.fromCharCode(0);
 const CMS_BASE = 'http://freewa-back.lloyds-design.hr/';
 const CMS_REST = CMS_BASE +'manage.php';
@@ -178,6 +179,7 @@ export class Map extends Component
 							longitude: marker.longitude
 						}}
 						title={marker.title.toUpperCase()}
+						image={markerImage}
 						onPress={(e) => this.setState({ selectedMarker: marker })}
 					/>
 				))}
