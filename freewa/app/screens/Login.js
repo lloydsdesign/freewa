@@ -77,6 +77,7 @@ export class Login extends Component
 						autoFocus
 						maxLength={50}
 						enablesReturnKeyAutomatically
+						returnKeyType="next"
 						onChangeText={(value) => this.setState({username: value.trim()})}
 					/>
 				</Row>
@@ -89,6 +90,7 @@ export class Login extends Component
 						autoCapitalize="none"
 						autoCorrect={false}
 						enablesReturnKeyAutomatically
+						returnKeyType="next"
 						secureTextEntry
 						onChangeText={(value) => this.setState({password: value.trim()})}
 					/>

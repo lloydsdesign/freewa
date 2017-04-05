@@ -79,6 +79,7 @@ export class Register extends Component
 						autoFocus
 						maxLength={50}
 						enablesReturnKeyAutomatically
+						returnKeyType="next"
 						onChangeText={(value) => this.setState({username: value.trim()})}
 					/>
 				</Row>
@@ -92,6 +93,7 @@ export class Register extends Component
 						autoCorrect={false}
 						maxLength={50}
 						enablesReturnKeyAutomatically
+						returnKeyType="next"
 						onChangeText={(value) => this.setState({fullName: value.trim()})}
 					/>
 				</Row>
@@ -105,6 +107,7 @@ export class Register extends Component
 						autoCorrect={false}
 						maxLength={50}
 						enablesReturnKeyAutomatically
+						returnKeyType="next"
 						keyboardType="email-address"
 						onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
 					/>
@@ -118,6 +121,7 @@ export class Register extends Component
 						autoCapitalize="none"
 						autoCorrect={false}
 						enablesReturnKeyAutomatically
+						returnKeyType="next"
 						secureTextEntry
 						onChangeText={(value) => this.setState({password: value.trim()})}
 					/>
