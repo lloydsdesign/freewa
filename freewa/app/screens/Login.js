@@ -39,6 +39,8 @@ export class Login extends Component
 		const {username, password} = this.state;
 		if(username == '' || password == '') return;
 		
+		const { navigateTo } = this.props;
+		
 		fetch(CMS_REST, {
 			headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
 			method: 'POST',
@@ -51,7 +53,7 @@ export class Login extends Component
 			if(response.status)
 			{
 				navigateTo({
-					screen: ext('Map'),
+					screen: this.props.returnScreen,
 					props: { user: response.data }
 				});
 			}

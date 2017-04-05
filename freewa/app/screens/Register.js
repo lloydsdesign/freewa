@@ -41,6 +41,8 @@ export class Register extends Component
 		const {username, password, fullName, email} = this.state;
 		if(username == '' || password == '' || fullName == '' || email == '') return;
 		
+		const { navigateTo } = this.props;
+		
 		fetch(CMS_REST, {
 			headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
 			method: 'POST',
@@ -53,7 +55,7 @@ export class Register extends Component
 			if(response.status)
 			{
 				navigateTo({
-					screen: ext('Map'),
+					screen: this.props.returnScreen,
 					props: { user: response.data }
 				});
 			}

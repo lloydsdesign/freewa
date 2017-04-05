@@ -34,8 +34,6 @@ export class Map extends Component
 		
 		this.state = {
 			markers: [],
-			selectedMarker: null,
-			path: [],
 			hasLoaded: false,
 			user: this.props.user && this.props.user.length ? this.props.user : []
 		};
@@ -78,35 +76,13 @@ export class Map extends Component
 		});
 	}
 
-	fitToCoordinates()
+	animateToCoordinate()
 	{
-		const { markers, hasLoaded } = this.state;
-		if(hasLoaded || !markers.length) return;
+		const { hasLoaded } = this.state;
+		if(hasLoaded) return;
 		
-		this.refs.map.fitToCoordinates(markers, {
-			options:
-			{
-				edgePadding:
-				{
-					top: 10,
-					right: 10,
-					bottom: 10,
-					left: 10
-				},
-				animated: true
-			}
-		});
-		
-		this.setState({hasLoaded: true});
-	}
-	
-	markerPress(marker)
-	{
 		/*navigator.geolocation.getCurrentPosition((position) => {
-				this.setState({
-					selectedMarker: marker,
-					path: [position.coords, marker.coordinate]
-				});
+				this.refs.map.animateToCoordinate(position.coords);
 			},
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
@@ -117,10 +93,9 @@ export class Map extends Component
 			longitude: 14.451417
 		};
 		
-		this.setState({
-			selectedMarker: marker,
-			path: [currPos, marker.coordinate]
-		});
+		this.refs.map.animateToCoordinate(currPos);
+		
+		this.setState({hasLoaded: true});
 	}
 	
 	renderUserButtons()
@@ -131,17 +106,21 @@ export class Map extends Component
 	
 	renderLoginButton()
 	{
+		const { navigateTo } = this.props;
+		
 		return (
 			<View styleName="horizontal">
 				<Button styleName="full-width" onPress={() => navigateTo({
-					screen: ext('Login')
+					screen: ext('Login'),
+					props: {returnScreen: ext('Map')}
 				})}>
 					<Icon name="right-arrow" />
 					<Text>LOGIN</Text>
 				</Button>
 				
 				<Button styleName="full-width" onPress={() => navigateTo({
-					screen: ext('Register')
+					screen: ext('Register'),
+					props: {returnScreen: ext('Map')}
 				})}>
 					<Icon name="right-arrow" />
 					<Text>REGISTER</Text>
@@ -152,6 +131,8 @@ export class Map extends Component
 	
 	renderLogoutButton()
 	{
+		const { navigateTo } = this.props;
+		
 		return (
 			<View styleName="horizontal">
 				<Button styleName="full-width" onPress={() => this.setState({user: []})}>
@@ -161,7 +142,10 @@ export class Map extends Component
 				
 				<Button styleName="full-width" onPress={() => navigateTo({
 					screen: ext('AddSpring'),
-					props: { user: this.state.user }
+					props: {
+						returnScreen: ext('Map'),
+						user: this.state.user
+					}
 				})}>
 					<Icon name="right-arrow" />
 					<Text>ADD SPRING</Text>
@@ -185,7 +169,7 @@ export class Map extends Component
 			
 			<MapView
 				ref="map"
-				onRegionChangeComplete={() => this.fitToCoordinates()}
+				onRegionChangeComplete={() => this.animateToCoordinate()}
 				loadingEnabled
 				showsUserLocation
 				followsUserLocation
@@ -199,7 +183,6 @@ export class Map extends Component
 							longitude: marker.longitude
 						}}
 						title={marker.title.toUpperCase()}
-						onPress={(e) => this.markerPress(e.nativeEvent)}
 						onCalloutPress={() => navigateTo({
 							screen: ext('SpringDetails'),
 							props: { marker }
@@ -222,13 +205,6 @@ export class Map extends Component
 						</MapView.Callout>
 					</MapView.Marker>
 				))}
-				
-				<MapView.Polyline
-					coordinates={this.state.path}
-					geodesic
-					strokeColor="#f00"
-					strokeWidth={3}
-				/>
 			</MapView>
 			
 			{this.renderUserButtons()}
