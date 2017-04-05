@@ -6,13 +6,14 @@ import {
   Text,
   Divider,
   Row,
+  View,
   TextInput,
   Icon,
   Button,
-  Screen,
   Subtitle
 } from '@shoutem/ui';
 
+import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { ext } from '../extension';
 import { NavigationBar } from '@shoutem/ui/navigation';
@@ -65,8 +66,10 @@ export class Login extends Component
 	
 	render()
 	{
+		const { navigateTo } = this.props;
+		
 		return (
-			<Screen style={{marginTop: -1}}>
+			<ScrollView style={{marginTop: -1}}>
 				<NavigationBar title="LOGIN" />
 
 				<Row>
@@ -98,13 +101,21 @@ export class Login extends Component
 				
 				<Divider styleName="line" />
 				
-				<Row>
+				<View styleName="horizontal">
+					<Button styleName="full-width" onPress={() => navigateTo({
+						screen: ext('Register'),
+						props: { returnScreen: this.props.returnScreen }
+					})}>
+						<Icon name="right-arrow" />
+						<Text>REGISTER</Text>
+					</Button>
+					
 					<Button styleName="full-width" onPress={() => this.submitForm()}>
 						<Icon name="right-arrow" />
 						<Text>LOGIN</Text>
 					</Button>
-				</Row>
-			</Screen>
+				</View>
+			</ScrollView>
 		);
 	}
 }

@@ -9,10 +9,10 @@ import {
   TextInput,
   Icon,
   Button,
-  Screen,
   Subtitle
 } from '@shoutem/ui';
 
+import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { ext } from '../extension';
 import { NavigationBar } from '@shoutem/ui/navigation';
@@ -68,7 +68,7 @@ export class Register extends Component
 	render()
 	{
 		return (
-			<Screen style={{marginTop: -1}}>
+			<ScrollView style={{marginTop: -1}}>
 				<NavigationBar title="REGISTER" />
 
 				<Row>
@@ -135,7 +135,7 @@ export class Register extends Component
 						<Text>LOGIN</Text>
 					</Button>
 				</Row>
-			</Screen>
+			</ScrollView>
 		);
 	}
 }

@@ -111,18 +111,10 @@ export class Map extends Component
 			<View styleName="horizontal">
 				<Button styleName="full-width" onPress={() => navigateTo({
 					screen: ext('Login'),
-					props: {returnScreen: ext('Map')}
+					props: { returnScreen: ext('AddSpring') }
 				})}>
 					<Icon name="right-arrow" />
-					<Text>LOGIN</Text>
-				</Button>
-				
-				<Button styleName="full-width" onPress={() => navigateTo({
-					screen: ext('Register'),
-					props: {returnScreen: ext('Map')}
-				})}>
-					<Icon name="right-arrow" />
-					<Text>REGISTER</Text>
+					<Text>ADD SPRING</Text>
 				</Button>
 			</View>
 		);
@@ -134,11 +126,6 @@ export class Map extends Component
 		
 		return (
 			<View styleName="horizontal">
-				<Button styleName="full-width" onPress={() => this.setState({user: null})}>
-					<Icon name="close" />
-					<Text>LOGOUT</Text>
-				</Button>
-				
 				<Button styleName="full-width" onPress={() => navigateTo({
 					screen: ext('AddSpring'),
 					props: {
@@ -148,6 +135,11 @@ export class Map extends Component
 				})}>
 					<Icon name="right-arrow" />
 					<Text>ADD SPRING</Text>
+				</Button>
+				
+				<Button styleName="full-width" onPress={() => this.setState({user: null})}>
+					<Icon name="close" />
+					<Text>LOGOUT</Text>
 				</Button>
 			</View>
 		);
