@@ -35,7 +35,7 @@ export class Map extends Component
 		this.state = {
 			markers: [],
 			hasLoaded: false,
-			user: this.props.user && this.props.user.length ? this.props.user : []
+			user: this.props.user ? this.props.user : null
 		};
 	}
 	
@@ -78,8 +78,7 @@ export class Map extends Component
 
 	animateToCoordinate()
 	{
-		const { hasLoaded } = this.state;
-		if(hasLoaded) return;
+		if(this.state.hasLoaded) return;
 		
 		/*navigator.geolocation.getCurrentPosition((position) => {
 				this.refs.map.animateToCoordinate(position.coords);
@@ -100,7 +99,7 @@ export class Map extends Component
 	
 	renderUserButtons()
 	{
-		if(this.state.user.length) return this.renderLogoutButton();
+		if(this.state.user) return this.renderLogoutButton();
 		else return this.renderLoginButton();
 	}
 	
@@ -135,7 +134,7 @@ export class Map extends Component
 		
 		return (
 			<View styleName="horizontal">
-				<Button styleName="full-width" onPress={() => this.setState({user: []})}>
+				<Button styleName="full-width" onPress={() => this.setState({user: null})}>
 					<Icon name="close" />
 					<Text>LOGOUT</Text>
 				</Button>
@@ -173,7 +172,7 @@ export class Map extends Component
 				loadingEnabled
 				showsUserLocation
 				followsUserLocation
-				style={{flex: 0.8, flexDirection: 'column', width: width}}
+				style={{flex: 0.85, flexDirection: 'column', width: width}}
 			>
 				{this.state.markers.map((marker, i) => (
 					<MapView.Marker
