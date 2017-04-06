@@ -79,7 +79,7 @@ export class AddSpring extends Component
 	
 	render()
 	{
-		const { navigateTo } = this.props;
+		const { navigateTo, user } = this.props;
 		
 		return (
 			<ScrollView style={{marginTop: -1}}>
@@ -114,19 +114,27 @@ export class AddSpring extends Component
 							multiline
 							maxLength={500}
 							onChangeText={(value) => this.setState({description: value.trim()})}
-							style={{flex: 1, height: 240}}
+							style={{flex: 1, height: 240, textAlignVertical: 'top'}}
 						/>
 					</View>
 				</Row>
 				
 				<Divider styleName="line" />
 				
-				<Row>
+				<View styleName="horizontal">
+					<Button styleName="full-width" onPress={() => navigateTo({
+						screen: ext('Map'),
+						props: { user: user }
+					})}>
+						<Icon name="close" />
+						<Text>CANCEL</Text>
+					</Button>
+					
 					<Button styleName="full-width" onPress={() => this.submitForm()}>
 						<Icon name="right-arrow" />
 						<Text>SAVE</Text>
 					</Button>
-				</Row>
+				</View>
 			</ScrollView>
 		);
 	}
