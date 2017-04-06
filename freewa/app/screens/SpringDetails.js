@@ -80,7 +80,12 @@ export default class SpringDetails extends Component
 						markers={[position]}
 						selectedMarker={position}
 						style={{height: 160}}
-					/>
+					>
+						<View styleName="overlay vertical v-center h-center fill-parent">
+							<Text>N: {position.latitude.toFixed(6)}</Text>
+							<Text>E: {position.longitude.toFixed(6)}</Text>
+						</View>
+					</InlineMap>
 				</View>
 			</ScrollView>
 		);
