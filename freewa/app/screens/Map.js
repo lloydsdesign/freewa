@@ -23,6 +23,8 @@ import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../extension';
 
 const markerImage = require('../assets/icons/marker-image.png');
+const markerImageNearest = require('../assets/icons/marker-image-nearest.png');
+
 const jsonGuard = String.fromCharCode(0);
 const CMS_BASE = 'http://freewa-back.lloyds-design.hr/';
 const CMS_REST = CMS_BASE +'manage.php';
@@ -35,15 +37,31 @@ export class Map extends Component
 		
 		this.state = {
 			markers: [],
+			lastPosition: {
+				latitude: 45.324995,
+				longitude: 14.451417
+			},
 			selectedMarker: null,
 			hasLoaded: false,
 			user: this.props.user ? this.props.user : null
 		};
 	}
 	
+	watchID: ?number = null;
+	
 	componentWillMount()
 	{
 		this.fetchMarkers();
+		
+		this.watchID = navigator.geolocation.watchPosition((position) => {
+			this.setState({ lastPosition: position.coords });
+			this.pickNearestMarker();
+		});
+	}
+	
+	componentWillUnmount()
+	{
+		navigator.geolocation.clearWatch(this.watchID);
 	}
 	
 	fetchMarkers()
@@ -57,26 +75,51 @@ export class Map extends Component
 		.then((response) => {
 			response = parseJSON(response);
 			this.setState({ markers: adjustMarkerValues(response.springs) });
+			this.pickNearestMarker();
 		})
 		.catch((error) => {
 			console.error(error);
 		});
+	}
+	
+	pickNearestMarker()
+	{
+		var markers = this.state.markers;
+		const lastPosition = this.state.lastPosition;
+		
+		if(!markers.length || !lastPosition) return;
+		
+		markers.sort(function(a, b)
+		{
+			const firstMarker = {
+				latitude: a.latitude,
+				longitude: a.longitude
+			};
+			
+			const secondMarker = {
+				latitude: b.latitude,
+				longitude: b.longitude
+			};
+			
+			return haversine(lastPosition, firstMarker) - haversine(lastPosition, secondMarker);
+		});
+		
+		markers[0].icon = markerImageNearest;
+		
+		var i;
+		for(i = 1; i < markers.length; i++) markers[i].icon = markerImage;
+		
+		this.setState({ markers });
 	}
 
 	animateToRegion()
 	{
 		if(this.state.hasLoaded) return;
 		
-		/*navigator.geolocation.getCurrentPosition((position) => {
-				this.refs.map.animateToCoordinate(position.coords);
-			},
-			(error) => console.log(JSON.stringify(error)),
-			{enableHighAccuracy: true}
-		);*/
-		
+		const lastPosition = this.state.lastPosition;
 		const currRegion = {
-			latitude: 45.324995,
-			longitude: 14.451417,
+			latitude: lastPosition.latitude,
+			longitude: lastPosition.longitude,
 			latitudeDelta: 0.3,
 			longitudeDelta: 0.3
 		};
@@ -186,7 +229,7 @@ export class Map extends Component
 							longitude: marker.longitude
 						}}
 						title={marker.title.toUpperCase()}
-						image={markerImage}
+						image={marker.icon}
 						onPress={(e) => this.setState({ selectedMarker: marker })}
 					/>
 				))}
@@ -207,6 +250,7 @@ export default connect(
 function adjustMarkerValues(markers)
 {
 	var i, j;
+	
 	for(i = 0; i < markers.length; i++)
 	{
 		markers[i].latitude = parseFloat(markers[i].latitude);
@@ -237,4 +281,33 @@ function parseJSON(value)
 	}
 	
 	return value;
+}
+
+function toRad(num)
+{
+	return num * Math.PI / 180;
+}
+
+function haversine(start, end, options)
+{
+	options = options || {};
+
+	const radii = {
+		km:    6371,
+		mile:  3960,
+		meter: 6371000,
+		nmi:   3440
+	};
+
+	const R = options.unit in radii ? radii[options.unit] : radii.meter;
+
+	const dLat = toRad(end.latitude - start.latitude);
+	const dLon = toRad(end.longitude - start.longitude);
+	const lat1 = toRad(start.latitude);
+	const lat2 = toRad(end.latitude);
+
+	const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+	return R * c;
 }
