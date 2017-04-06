@@ -73,31 +73,37 @@ export class Login extends Component
 				<NavigationBar title="LOGIN" />
 
 				<Row>
-					<Subtitle>E-mail</Subtitle>
-					<TextInput
-						autoCapitalize="none"
-						autoCorrect={false}
-						autoFocus
-						maxLength={50}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						keyboardType="email-address"
-						onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
-					/>
+					<View styleName="vertical">
+						<Subtitle>E-mail</Subtitle>
+						<TextInput
+							autoCapitalize="none"
+							autoCorrect={false}
+							autoFocus
+							maxLength={50}
+							enablesReturnKeyAutomatically
+							returnKeyType="next"
+							keyboardType="email-address"
+							onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
+							style={{flex: 1}}
+						/>
+					</View>
 				</Row>
 				
 				<Divider styleName="line" />
 				
 				<Row>
-					<Subtitle>Password</Subtitle>
-					<TextInput
-						autoCapitalize="none"
-						autoCorrect={false}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						secureTextEntry
-						onChangeText={(value) => this.setState({password: value.trim()})}
-					/>
+					<View styleName="vertical">
+						<Subtitle>Password</Subtitle>
+						<TextInput
+							autoCapitalize="none"
+							autoCorrect={false}
+							enablesReturnKeyAutomatically
+							returnKeyType="next"
+							secureTextEntry
+							onChangeText={(value) => this.setState({password: value.trim()})}
+							style={{flex: 1}}
+						/>
+					</View>
 				</Row>
 				
 				<Divider styleName="line" />

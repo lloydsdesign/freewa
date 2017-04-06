@@ -6,6 +6,7 @@ import {
   Text,
   Divider,
   Row,
+  View,
   TextInput,
   Icon,
   Button,
@@ -85,31 +86,37 @@ export class AddSpring extends Component
 				<NavigationBar title="ADD SPRING" />
 
 				<Row>
-					<Subtitle>Name</Subtitle>
-					<TextInput
-						autoCapitalize="words"
-						autoCorrect={false}
-						autoFocus
-						maxLength={50}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						onChangeText={(value) => this.setState({name: value.trim()})}
-					/>
+					<View styleName="vertical">
+						<Subtitle>Name</Subtitle>
+						<TextInput
+							autoCapitalize="words"
+							autoCorrect={false}
+							autoFocus
+							maxLength={50}
+							enablesReturnKeyAutomatically
+							returnKeyType="next"
+							onChangeText={(value) => this.setState({name: value.trim()})}
+							style={{flex: 1}}
+						/>
+					</View>
 				</Row>
 				
 				<Divider styleName="line" />
 				
 				<Row>
-					<Subtitle>Description</Subtitle>
-					<TextInput
-						autoCapitalize="sentences"
-						autoCorrect={false}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						multiline
-						maxLength={500}
-						onChangeText={(value) => this.setState({description: value.trim()})}
-					/>
+					<View styleName="vertical">
+						<Subtitle>Description</Subtitle>
+						<TextInput
+							autoCapitalize="sentences"
+							autoCorrect={false}
+							enablesReturnKeyAutomatically
+							returnKeyType="next"
+							multiline
+							maxLength={500}
+							onChangeText={(value) => this.setState({description: value.trim()})}
+							style={{flex: 1, height: 240}}
+						/>
+					</View>
 				</Row>
 				
 				<Divider styleName="line" />

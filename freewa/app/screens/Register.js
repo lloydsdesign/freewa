@@ -6,6 +6,7 @@ import {
   Text,
   Divider,
   Row,
+  View,
   TextInput,
   Icon,
   Button,
@@ -72,59 +73,71 @@ export class Register extends Component
 				<NavigationBar title="REGISTER" />
 
 				<Row>
-					<Subtitle>Username</Subtitle>
-					<TextInput
-						autoCapitalize="none"
-						autoCorrect={false}
-						autoFocus
-						maxLength={50}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						onChangeText={(value) => this.setState({username: value.trim()})}
-					/>
+					<View styleName="vertical">
+						<Subtitle>Username</Subtitle>
+						<TextInput
+							autoCapitalize="none"
+							autoCorrect={false}
+							autoFocus
+							maxLength={50}
+							enablesReturnKeyAutomatically
+							returnKeyType="next"
+							onChangeText={(value) => this.setState({username: value.trim()})}
+							style={{flex: 1}}
+						/>
+					</View>
 				</Row>
 				
 				<Divider styleName="line" />
 				
 				<Row>
-					<Subtitle>Full name</Subtitle>
-					<TextInput
-						autoCapitalize="words"
-						autoCorrect={false}
-						maxLength={50}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						onChangeText={(value) => this.setState({fullName: value.trim()})}
-					/>
+					<View styleName="vertical">
+						<Subtitle>Full name</Subtitle>
+						<TextInput
+							autoCapitalize="words"
+							autoCorrect={false}
+							maxLength={50}
+							enablesReturnKeyAutomatically
+							returnKeyType="next"
+							onChangeText={(value) => this.setState({fullName: value.trim()})}
+							style={{flex: 1}}
+						/>
+					</View>
 				</Row>
 				
 				<Divider styleName="line" />
 				
 				<Row>
-					<Subtitle>E-mail</Subtitle>
-					<TextInput
-						autoCapitalize="none"
-						autoCorrect={false}
-						maxLength={50}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						keyboardType="email-address"
-						onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
-					/>
+					<View styleName="vertical">
+						<Subtitle>E-mail</Subtitle>
+						<TextInput
+							autoCapitalize="none"
+							autoCorrect={false}
+							maxLength={50}
+							enablesReturnKeyAutomatically
+							returnKeyType="next"
+							keyboardType="email-address"
+							onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
+							style={{flex: 1}}
+						/>
+					</View>
 				</Row>
 				
 				<Divider styleName="line" />
 				
 				<Row>
-					<Subtitle>Password</Subtitle>
-					<TextInput
-						autoCapitalize="none"
-						autoCorrect={false}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						secureTextEntry
-						onChangeText={(value) => this.setState({password: value.trim()})}
-					/>
+					<View styleName="vertical">
+						<Subtitle>Password</Subtitle>
+						<TextInput
+							autoCapitalize="none"
+							autoCorrect={false}
+							enablesReturnKeyAutomatically
+							returnKeyType="next"
+							secureTextEntry
+							onChangeText={(value) => this.setState({password: value.trim()})}
+							style={{flex: 1}}
+						/>
+					</View>
 				</Row>
 				
 				<Divider styleName="line" />
