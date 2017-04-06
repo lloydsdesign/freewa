@@ -63,7 +63,7 @@ export class Map extends Component
 		});
 	}
 
-	animateToCoordinate()
+	animateToRegion()
 	{
 		if(this.state.hasLoaded) return;
 		
@@ -74,12 +74,14 @@ export class Map extends Component
 			{enableHighAccuracy: true}
 		);*/
 		
-		const currPos = {
+		const currRegion = {
 			latitude: 45.324995,
-			longitude: 14.451417
+			longitude: 14.451417,
+			latitudeDelta: 0.3,
+			longitudeDelta: 0.3
 		};
 		
-		this.refs.map.animateToCoordinate(currPos);
+		this.refs.map.animateToRegion(currRegion);
 		this.setState({ hasLoaded: true });
 	}
 	
@@ -170,7 +172,7 @@ export class Map extends Component
 			
 			<MapView
 				ref="map"
-				onRegionChangeComplete={() => this.animateToCoordinate()}
+				onRegionChangeComplete={() => this.animateToRegion()}
 				loadingEnabled
 				showsUserLocation
 				followsUserLocation
