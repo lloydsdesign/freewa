@@ -3,7 +3,8 @@ import React, {
 } from 'react';
 
 import {
-  ScrollView
+  ScrollView,
+  ListView
 } from 'react-native';
 
 import {
@@ -13,19 +14,25 @@ import {
   Title,
   View,
   Image,
-  Tile,
   Divider
 } from '@shoutem/ui';
 
 import { InlineMap } from '@shoutem/ui-addons';
 import { NavigationBar } from '@shoutem/ui/navigation';
 
-
 export default class SpringDetails extends Component
 {
+	renderRow(image)
+	{
+		return (
+			<Image styleName="large-banner" source={{ uri: image }} />
+		);
+	}
+
 	render()
 	{
 		const { marker } = this.props;
+		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		
 		const position = {
 			latitude: marker.latitude,
@@ -37,16 +44,18 @@ export default class SpringDetails extends Component
 			<ScrollView style={{marginTop: -1}}>
 				<NavigationBar title={marker.title.toUpperCase()} />
 				
-				<Image styleName="large-banner" source={{ uri: marker.image }}>
-					<Tile>
-						<Title>{marker.title.toUpperCase()}</Title>
-						<Subtitle>{marker.type.toUpperCase()}</Subtitle>
-					</Tile>
-				</Image>
+				<ListView
+					horizontal
+					dataSource={ds.cloneWithRows(marker.images)}
+					renderRow={image => this.renderRow(image)}
+					enableEmptySections
+				/>
 				
 				<Divider styleName="line" />
 				
 				<Row>
+					<Title>{marker.title.toUpperCase()}</Title>
+					<Subtitle>{marker.type.toUpperCase()}</Subtitle>
 					<Text>by {marker.user}</Text>
 				</Row>
 

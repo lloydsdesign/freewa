@@ -204,7 +204,7 @@ export default connect(
 
 function adjustMarkerValues(markers)
 {
-	var i;
+	var i, j;
 	for(i = 0; i < markers.length; i++)
 	{
 		markers[i].latitude = parseFloat(markers[i].latitude);
@@ -212,6 +212,8 @@ function adjustMarkerValues(markers)
 		
 		if(markers[i].image && markers[i].image != "") markers[i].image = CMS_BASE + markers[i].image;
 		else markers[i].image = undefined;
+		
+		for(j = 0; j < markers[i].images.length; j++) markers[i].images[j] = CMS_BASE + markers[i].images[j];
 	}
 	
 	return markers;
