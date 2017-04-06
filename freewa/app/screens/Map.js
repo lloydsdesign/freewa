@@ -37,10 +37,7 @@ export class Map extends Component
 		
 		this.state = {
 			markers: [],
-			lastPosition: {
-				latitude: 45.324995,
-				longitude: 14.451417
-			},
+			lastPosition: null,
 			selectedMarker: null,
 			hasLoaded: false,
 			user: this.props.user ? this.props.user : null
@@ -51,6 +48,13 @@ export class Map extends Component
 	
 	componentWillMount()
 	{
+		/*navigator.geolocation.getCurrentPosition((position) => {
+				this.setState({ lastPosition: position.coords });
+			},
+			(error) => console.log(JSON.stringify(error)),
+			{enableHighAccuracy: true}
+		);*/
+		
 		this.fetchMarkers();
 		
 		this.watchID = navigator.geolocation.watchPosition((position) => {
@@ -114,9 +118,9 @@ export class Map extends Component
 
 	animateToRegion()
 	{
-		if(this.state.hasLoaded) return;
+		const { hasLoaded, lastPosition } = this.state;
+		if(hasLoaded || !lastPosition) return;
 		
-		const lastPosition = this.state.lastPosition;
 		const currRegion = {
 			latitude: lastPosition.latitude,
 			longitude: lastPosition.longitude,
@@ -255,6 +259,7 @@ function adjustMarkerValues(markers)
 	{
 		markers[i].latitude = parseFloat(markers[i].latitude);
 		markers[i].longitude = parseFloat(markers[i].longitude);
+		markers[i].icon = markerImage;
 		
 		if(markers[i].image && markers[i].image != "") markers[i].image = CMS_BASE + markers[i].image;
 		else markers[i].image = undefined;
