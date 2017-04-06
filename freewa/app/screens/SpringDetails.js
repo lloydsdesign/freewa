@@ -74,8 +74,8 @@ export default class SpringDetails extends Component
 						initialRegion={{
 							latitude: position.latitude,
 							longitude: position.longitude,
-							latitudeDelta: 0.03,
-							longitudeDelta: 0.03
+							latitudeDelta: 0.3,
+							longitudeDelta: 0.3
 						}}
 						markers={[position]}
 						selectedMarker={position}
