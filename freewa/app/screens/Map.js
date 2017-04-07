@@ -148,7 +148,7 @@ export class Map extends Component
 					screen: ext('Login'),
 					props: { returnScreen: ext('AddSpring') }
 				})}>
-					<Icon name="right-arrow" />
+					<Icon name="add-to-favorites-full" />
 					<Text>ADD SPRING</Text>
 				</Button>
 			</View>
@@ -168,7 +168,7 @@ export class Map extends Component
 						user: this.state.user
 					}
 				})}>
-					<Icon name="right-arrow" />
+					<Icon name="add-to-favorites-full" />
 					<Text>ADD SPRING</Text>
 				</Button>
 				

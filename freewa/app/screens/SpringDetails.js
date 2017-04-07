@@ -51,21 +51,40 @@ export default class SpringDetails extends Component
 					enableEmptySections
 				/>
 				
+				<Row style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.3, shadowOffset: {width: 0, height: -4}}}>
+				<View style={{flex: 0.4, backgroundColor: '#FFF'}}>
+					<Text style={{color: '#00B2C1', textAlign: 'center'}}>TYPE</Text> 
+					<Text style={{textAlign: 'center'}}>{marker.type.toUpperCase()}</Text>
+				</View>
+				
+				<View style={{flex: 0.6, backgroundColor: '#FFF'}}>
+					<Text style={{color: '#00B2C1', textAlign: 'center'}}>CONTRIBUTOR</Text> 
+					<Text style={{textAlign: 'center'}}>{marker.user}</Text>
+				</View>
+				</Row>
+				
 				<Divider styleName="line" />
 				
-				<Row>
-					<Title>{marker.title.toUpperCase()}</Title>
-					<Subtitle>{marker.type.toUpperCase()}</Subtitle>
-					<Text>by {marker.user}</Text>
+				<Row style={{backgroundColor: '#00B2C1'}}>
+				<View style={{flex: 0.4, backgroundColor: '#00B2C1'}}>
+					<Text style={{color: '#FFF', textAlign: 'center'}}>RATING</Text> 
+				</View>
+				
+				<View style={{flex: 0.2, backgroundColor: '#FFF'}}>
+					<Text style={{color: '#00B2C1', textAlign: 'center', fontSize: 30, fontWeight: 'bold'}}>4.6</Text> 
+				</View>
+				<View style={{flex: 0.4, backgroundColor: '#00B2C1'}}>
+					<Text style={{color: '#FFF', textAlign: 'center', fontWeight: 'bold'}}>SUPERB</Text> 
+				</View>
 				</Row>
-
+				
 				<Divider styleName="line" />
 				
 				<Row>
 					<View style={{flex: 1}}>
-						<Subtitle>SPRING DESCRIPTION</Subtitle>
+						<Text style={{color: '#00B2C1'}}>SPRING DESCRIPTION</Text>
 						<Text />
-						<Text>{marker.description}</Text>
+						<Text style={{fontSize: 13}}>{marker.description}</Text>
 					</View>
 				</Row>
 
@@ -82,8 +101,9 @@ export default class SpringDetails extends Component
 						style={{height: 160}}
 					>
 						<View styleName="overlay vertical v-center h-center fill-parent">
-							<Text>N: {position.latitude.toFixed(6)}</Text>
-							<Text>E: {position.longitude.toFixed(6)}</Text>
+							<Text>POSITION:</Text>
+							<Text style={{fontWeight: 'bold'}}>N: {position.latitude.toFixed(6)}</Text>
+							<Text style={{fontWeight: 'bold'}}>E: {position.longitude.toFixed(6)}</Text>
 						</View>
 					</InlineMap>
 				</View>
