@@ -11,6 +11,8 @@ import {
   Row,
   Subtitle,
   Text,
+  Icon,
+  Button,
   Title,
   View,
   Image,
@@ -51,13 +53,17 @@ export default class SpringDetails extends Component
 					enableEmptySections
 				/>
 				
-				<Row style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.3, shadowOffset: {width: 0, height: -4}}}>
-				<View style={{flex: 0.4, backgroundColor: '#FFF'}}>
+				<Row style={{backgroundColor: 'rgba(0,178,193,0.7)', marginTop: -47}}>
+					<Text style={{color: '#FFF', fontWeight: 'bold', textAlign: 'center'}}>150m FROM YOU</Text>
+				</Row>
+				
+				<Row style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
+				<View style={{flex: 0.4}}>
 					<Text style={{color: '#00B2C1', textAlign: 'center'}}>TYPE</Text> 
 					<Text style={{textAlign: 'center'}}>{marker.type.toUpperCase()}</Text>
 				</View>
 				
-				<View style={{flex: 0.6, backgroundColor: '#FFF'}}>
+				<View style={{flex: 0.6}}>
 					<Text style={{color: '#00B2C1', textAlign: 'center'}}>CONTRIBUTOR</Text> 
 					<Text style={{textAlign: 'center'}}>{marker.user}</Text>
 				</View>
@@ -102,11 +108,18 @@ export default class SpringDetails extends Component
 					>
 						<View styleName="overlay vertical v-center h-center fill-parent">
 							<Text>POSITION:</Text>
-							<Text style={{fontWeight: 'bold'}}>N: {position.latitude.toFixed(6)}</Text>
-							<Text style={{fontWeight: 'bold'}}>E: {position.longitude.toFixed(6)}</Text>
+							<Text style={{fontWeight: 'bold'}}>N: {position.latitude.toFixed(6)}    E: {position.longitude.toFixed(6)}</Text>
+							<Text> </Text>
 						</View>
 					</InlineMap>
 				</View>
+				<Row>
+					<Button styleName="full-width" style={{backgroundColor: '#FAA21B', marginTop: -80}}>
+					<Icon name="pin" />
+					<Text>O P E N   C O M P A S S</Text>
+					</Button>
+				</Row>
+				
 			</ScrollView>
 		);
 	}
