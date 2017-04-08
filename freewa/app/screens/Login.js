@@ -108,20 +108,24 @@ export class Login extends Component
 				
 				<Divider styleName="line" />
 				
-				<View styleName="horizontal">
+				<Row>
+					<Button styleName="full-width" onPress={() => this.submitForm()}>
+						<Icon name="right-arrow" />
+						<Text>LOGIN</Text>
+					</Button>
+				</Row>
+				
+				<Divider styleName="line" />
+				
+				<Row>
 					<Button styleName="full-width" onPress={() => navigateTo({
 						screen: ext('Register'),
 						props: { returnScreen: this.props.returnScreen }
 					})}>
 						<Icon name="right-arrow" />
-						<Text>REGISTER</Text>
+						<Text>NOT A MEMBER? REGISTER</Text>
 					</Button>
-					
-					<Button styleName="full-width" onPress={() => this.submitForm()}>
-						<Icon name="right-arrow" />
-						<Text>LOGIN</Text>
-					</Button>
-				</View>
+				</Row>
 			</ScrollView>
 		);
 	}

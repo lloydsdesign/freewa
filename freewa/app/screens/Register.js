@@ -68,6 +68,8 @@ export class Register extends Component
 	
 	render()
 	{
+		const { navigateTo } = this.props;
+		
 		return (
 			<ScrollView style={{marginTop: -1}}>
 				<NavigationBar title="REGISTER" />
@@ -142,12 +144,19 @@ export class Register extends Component
 				
 				<Divider styleName="line" />
 				
-				<Row>
+				<View styleName="horizontal">
+					<Button styleName="full-width" onPress={() => navigateTo({
+						screen: ext('Map')
+					})}>
+						<Icon name="close" />
+						<Text>CANCEL</Text>
+					</Button>
+					
 					<Button styleName="full-width" onPress={() => this.submitForm()}>
 						<Icon name="right-arrow" />
 						<Text>REGISTER</Text>
 					</Button>
-				</Row>
+				</View>
 			</ScrollView>
 		);
 	}
