@@ -58,30 +58,30 @@ export default class SpringDetails extends Component
 				</Row>
 				
 				<Row style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
-				<View style={{flex: 0.4}}>
-					<Text style={{color: '#00B2C1', textAlign: 'center'}}>TYPE</Text> 
-					<Text style={{textAlign: 'center'}}>{marker.type.toUpperCase()}</Text>
-				</View>
-				
-				<View style={{flex: 0.6}}>
-					<Text style={{color: '#00B2C1', textAlign: 'center'}}>CONTRIBUTOR</Text> 
-					<Text style={{textAlign: 'center'}}>{marker.user}</Text>
-				</View>
+					<View style={{flex: 0.4}}>
+						<Text style={{color: '#00B2C1', textAlign: 'center'}}>TYPE</Text> 
+						<Text style={{textAlign: 'center'}}>{marker.type.toUpperCase()}</Text>
+					</View>
+					
+					<View style={{flex: 0.6}}>
+						<Text style={{color: '#00B2C1', textAlign: 'center'}}>CONTRIBUTOR</Text> 
+						<Text style={{textAlign: 'center'}}>{marker.user}</Text>
+					</View>
 				</Row>
 				
 				<Divider styleName="line" />
 				
 				<Row style={{backgroundColor: '#00B2C1'}}>
-				<View style={{flex: 0.4, backgroundColor: '#00B2C1'}}>
-					<Text style={{color: '#FFF', textAlign: 'center'}}>RATING</Text> 
-				</View>
-				
-				<View style={{flex: 0.2, backgroundColor: '#FFF'}}>
-					<Text style={{color: '#00B2C1', textAlign: 'center', fontSize: 30, fontWeight: 'bold'}}>4.6</Text> 
-				</View>
-				<View style={{flex: 0.4, backgroundColor: '#00B2C1'}}>
-					<Text style={{color: '#FFF', textAlign: 'center', fontWeight: 'bold'}}>SUPERB</Text> 
-				</View>
+					<View style={{flex: 0.4, backgroundColor: '#00B2C1'}}>
+						<Text style={{color: '#FFF', textAlign: 'center'}}>RATING</Text> 
+					</View>
+					
+					<View style={{flex: 0.2, backgroundColor: '#FFF'}}>
+						<Text style={{color: '#00B2C1', textAlign: 'center', fontSize: 30, fontWeight: 'bold'}}>4.6</Text> 
+					</View>
+					<View style={{flex: 0.4, backgroundColor: '#00B2C1'}}>
+						<Text style={{color: '#FFF', textAlign: 'center', fontWeight: 'bold'}}>SUPERB</Text> 
+					</View>
 				</Row>
 				
 				<Divider styleName="line" />
@@ -115,8 +115,8 @@ export default class SpringDetails extends Component
 				</View>
 				<Row>
 					<Button styleName="full-width" style={{backgroundColor: '#FAA21B', marginTop: -80}}>
-					<Icon name="pin" />
-					<Text>O P E N   C O M P A S S</Text>
+						<Icon name="pin" />
+						<Text>O P E N   C O M P A S S</Text>
 					</Button>
 				</Row>
 				

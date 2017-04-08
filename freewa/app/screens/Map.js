@@ -213,7 +213,9 @@ export class Map extends Component
 				loadingEnabled
 				showsUserLocation
 				followsUserLocation
-				onPress={() => this.setState({ selectedMarker: null })}
+				onPress={() => {
+					if(this.state.selectedMarker) this.setState({ selectedMarker: null });
+				}}
 				style={{flex: 0.8, flexDirection: 'column', width: width}}
 			>
 				{this.state.markers.map((marker, i) => (
@@ -225,7 +227,7 @@ export class Map extends Component
 						}}
 						title={marker.title.toUpperCase()}
 						image={marker.icon}
-						onPress={(e) => this.setState({ selectedMarker: marker })}
+						onPress={() => this.setState({ selectedMarker: marker })}
 					/>
 				))}
 			</MapView>
