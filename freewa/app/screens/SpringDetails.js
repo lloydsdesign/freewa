@@ -30,7 +30,7 @@ export default class SpringDetails extends Component
 		
 		this.state = {
 			lastPosition: null,
-			distance: 0
+			distance: ''
 		};
 	}
 	
@@ -67,17 +67,25 @@ export default class SpringDetails extends Component
 			longitude: marker.longitude
 		};
 		
-		this.setState({ distance: haversine(lastPosition, position) });
+		var distance = haversine(lastPosition, position);
+		if(distance >= 1000)
+		{
+			distance /= 1000;
+			distance = distance.toFixed(2) +'km';
+		}
+		else distance += 'm';
+		
+		this.setState({ distance });
 	}
 	
 	renderDistance()
 	{
 		const distance = this.state.distance;
-		if(!distance) return null;
+		if(distance == '') return null;
 		
 		return (
 			<Row style={{backgroundColor: 'rgba(0,178,193,0.7)', marginTop: -47}}>
-				<Text style={{color: '#FFF', fontWeight: 'bold', textAlign: 'center'}}>{distance}m FROM YOU</Text>
+				<Text style={{color: '#FFF', fontWeight: 'bold', textAlign: 'center'}}>{distance} FROM YOU</Text>
 			</Row>
 		);
 	}
