@@ -106,7 +106,7 @@ export default class SpringDetails extends Component
 					<Text style={{color: '#00B2C1', textAlign: 'center', fontSize: 30, fontWeight: 'bold'}}>{marker.rating}</Text>
 				</View>
 				<View style={{flex: 0.4, backgroundColor: '#00B2C1'}}>
-					<Text style={{color: '#FFF', textAlign: 'center', fontWeight: 'bold'}}>SUPERB</Text>
+					<Text style={{color: '#FFF', textAlign: 'center', fontWeight: 'bold'}}>{getRatingString(marker.rating)}</Text>
 				</View>
 			</Row>
 		);
@@ -227,4 +227,19 @@ function haversine(start, end, options)
 	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
 	return R * c;
+}
+
+function getRatingString(rating)
+{
+	const values = [2, 2.4, 3.4, 4.4];
+	const strings = ['POOR', 'ACCEPTABLE', 'GOOD', 'VERY GOOD', 'SUPERB'];
+	
+	var i;
+	
+	for(i = 0; i < values.length; i++)
+	{
+		if(rating <= values[i]) return strings[i];
+	}
+	
+	return strings[strings.length - 1];
 }

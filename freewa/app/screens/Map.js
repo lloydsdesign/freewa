@@ -181,6 +181,10 @@ export class Map extends Component
 		if(!marker) return null;
 		
 		const { navigateTo } = this.props;
+		var rating;
+		
+		if(marker.ratingCount) rating = marker.rating +' '+ getRatingString(marker.rating);
+		else rating = 'UNRATED';
 		
 		return (
 			<View styleName="h-center">
@@ -192,6 +196,7 @@ export class Map extends Component
 						<Tile>
 							<Title>{marker.title.toUpperCase()}</Title>
 							<Subtitle>{marker.type.toUpperCase()}</Subtitle>
+							<Text>{rating}</Text>
 						</Tile>
 					</Image>
 				</TouchableOpacity>
@@ -254,7 +259,7 @@ function adjustMarkerValues(markers)
 		markers[i].longitude = parseFloat(markers[i].longitude);
 		markers[i].ratingCount = parseInt(markers[i].ratingCount, 10);
 		markers[i].rating = parseFloat(markers[i].rating);
-		markers[i].rating = markers[i].rating.toFixed(2);
+		markers[i].rating = markers[i].rating.toFixed(1);
 		markers[i].icon = markerImage;
 		
 		if(markers[i].image && markers[i].image != "") markers[i].image = CMS_BASE + markers[i].image;
@@ -311,4 +316,19 @@ function haversine(start, end, options)
 	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
 	return R * c;
+}
+
+function getRatingString(rating)
+{
+	const values = [2, 2.4, 3.4, 4.4];
+	const strings = ['POOR', 'ACCEPTABLE', 'GOOD', 'VERY GOOD', 'SUPERB'];
+	
+	var i;
+	
+	for(i = 0; i < values.length; i++)
+	{
+		if(rating <= values[i]) return strings[i];
+	}
+	
+	return strings[strings.length - 1];
 }
