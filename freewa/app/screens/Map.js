@@ -252,6 +252,9 @@ function adjustMarkerValues(markers)
 	{
 		markers[i].latitude = parseFloat(markers[i].latitude);
 		markers[i].longitude = parseFloat(markers[i].longitude);
+		markers[i].ratingCount = parseInt(markers[i].ratingCount, 10);
+		markers[i].rating = parseFloat(markers[i].rating);
+		markers[i].rating = markers[i].rating.toFixed(2);
 		markers[i].icon = markerImage;
 		
 		if(markers[i].image && markers[i].image != "") markers[i].image = CMS_BASE + markers[i].image;

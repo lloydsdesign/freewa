@@ -24,6 +24,94 @@ import { NavigationBar } from '@shoutem/ui/navigation';
 
 export default class SpringDetails extends Component
 {
+	constructor(props)
+	{
+		super(props);
+		
+		this.state = {
+			lastPosition: null,
+			distance: 0
+		};
+	}
+	
+	watchID: ?number = null;
+	
+	componentWillMount()
+	{
+		/*navigator.geolocation.getCurrentPosition((position) => {
+				this.setState({ lastPosition: position.coords });
+			},
+			(error) => console.log(JSON.stringify(error)),
+			{enableHighAccuracy: true}
+		);*/
+		
+		this.watchID = navigator.geolocation.watchPosition((position) => {
+			this.setState({ lastPosition: position.coords });
+			this.calculateDistance();
+		});
+	}
+	
+	componentWillUnmount()
+	{
+		navigator.geolocation.clearWatch(this.watchID);
+	}
+	
+	calculateDistance()
+	{
+		const lastPosition = this.state.lastPosition;
+		if(!lastPosition) return;
+		
+		const { marker } = this.props;
+		const position = {
+			latitude: marker.latitude,
+			longitude: marker.longitude
+		};
+		
+		this.setState({ distance: haversine(lastPosition, position) });
+	}
+	
+	renderDistance()
+	{
+		const distance = this.state.distance;
+		if(!distance) return null;
+		
+		return (
+			<Row style={{backgroundColor: 'rgba(0,178,193,0.7)', marginTop: -47}}>
+				<Text style={{color: '#FFF', fontWeight: 'bold', textAlign: 'center'}}>{distance}m FROM YOU</Text>
+			</Row>
+		);
+	}
+	
+	renderRating()
+	{
+		const { marker } = this.props;
+		
+		if(!marker.ratingCount)
+		{
+			return (
+				<Row style={{backgroundColor: '#00B2C1'}}>
+					<View style={{flex: 1, backgroundColor: '#00B2C1'}}>
+						<Text style={{color: '#FFF', textAlign: 'center'}}>UNRATED</Text>
+					</View>
+				</Row>
+			);
+		}
+		
+		return (
+			<Row style={{backgroundColor: '#00B2C1'}}>
+				<View style={{flex: 0.4, backgroundColor: '#00B2C1'}}>
+					<Text style={{color: '#FFF', textAlign: 'center'}}>RATING</Text>
+				</View>
+				<View style={{flex: 0.2, backgroundColor: '#FFF'}}>
+					<Text style={{color: '#00B2C1', textAlign: 'center', fontSize: 30, fontWeight: 'bold'}}>{marker.rating}</Text>
+				</View>
+				<View style={{flex: 0.4, backgroundColor: '#00B2C1'}}>
+					<Text style={{color: '#FFF', textAlign: 'center', fontWeight: 'bold'}}>SUPERB</Text>
+				</View>
+			</Row>
+		);
+	}
+	
 	renderRow(image)
 	{
 		return (
@@ -53,36 +141,23 @@ export default class SpringDetails extends Component
 					enableEmptySections
 				/>
 				
-				<Row style={{backgroundColor: 'rgba(0,178,193,0.7)', marginTop: -47}}>
-					<Text style={{color: '#FFF', fontWeight: 'bold', textAlign: 'center'}}>150m FROM YOU</Text>
-				</Row>
+				{this.renderDistance()}
 				
 				<Row style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
 					<View style={{flex: 0.4}}>
-						<Text style={{color: '#00B2C1', textAlign: 'center'}}>TYPE</Text> 
+						<Text style={{color: '#00B2C1', textAlign: 'center'}}>TYPE</Text>
 						<Text style={{textAlign: 'center'}}>{marker.type.toUpperCase()}</Text>
 					</View>
 					
 					<View style={{flex: 0.6}}>
-						<Text style={{color: '#00B2C1', textAlign: 'center'}}>CONTRIBUTOR</Text> 
+						<Text style={{color: '#00B2C1', textAlign: 'center'}}>CONTRIBUTOR</Text>
 						<Text style={{textAlign: 'center'}}>{marker.user}</Text>
 					</View>
 				</Row>
 				
 				<Divider styleName="line" />
 				
-				<Row style={{backgroundColor: '#00B2C1'}}>
-					<View style={{flex: 0.4, backgroundColor: '#00B2C1'}}>
-						<Text style={{color: '#FFF', textAlign: 'center'}}>RATING</Text> 
-					</View>
-					
-					<View style={{flex: 0.2, backgroundColor: '#FFF'}}>
-						<Text style={{color: '#00B2C1', textAlign: 'center', fontSize: 30, fontWeight: 'bold'}}>4.6</Text> 
-					</View>
-					<View style={{flex: 0.4, backgroundColor: '#00B2C1'}}>
-						<Text style={{color: '#FFF', textAlign: 'center', fontWeight: 'bold'}}>SUPERB</Text> 
-					</View>
-				</Row>
+				{this.renderRating()}
 				
 				<Divider styleName="line" />
 				
@@ -113,14 +188,43 @@ export default class SpringDetails extends Component
 						</View>
 					</InlineMap>
 				</View>
+				
 				<Row>
 					<Button styleName="full-width" style={{backgroundColor: '#FAA21B', marginTop: -80}}>
 						<Icon name="pin" />
 						<Text>O P E N   C O M P A S S</Text>
 					</Button>
 				</Row>
-				
 			</ScrollView>
 		);
 	}
+}
+
+function toRad(num)
+{
+	return num * Math.PI / 180;
+}
+
+function haversine(start, end, options)
+{
+	options = options || {};
+
+	const radii = {
+		km:    6371,
+		mile:  3960,
+		meter: 6371000,
+		nmi:   3440
+	};
+
+	const R = options.unit in radii ? radii[options.unit] : radii.meter;
+
+	const dLat = toRad(end.latitude - start.latitude);
+	const dLon = toRad(end.longitude - start.longitude);
+	const lat1 = toRad(start.latitude);
+	const lat2 = toRad(end.latitude);
+
+	const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+	return R * c;
 }
