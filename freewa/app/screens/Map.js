@@ -160,8 +160,8 @@ export class Map extends Component
 		const { navigateTo } = this.props;
 		
 		return (
-			<View styleName="horizontal">
-				<Button styleName="full-width" onPress={() => navigateTo({
+			<View styleName="h-center">
+				<Button onPress={() => navigateTo({
 					screen: ext('AddSpring'),
 					props: {
 						returnScreen: ext('Map'),
@@ -170,11 +170,6 @@ export class Map extends Component
 				})}>
 					<Icon name="add-to-favorites-full" />
 					<Text>ADD SPRING</Text>
-				</Button>
-				
-				<Button styleName="full-width" onPress={() => this.setState({ user: null })}>
-					<Icon name="close" />
-					<Text>LOGOUT</Text>
 				</Button>
 			</View>
 		);
@@ -189,11 +184,6 @@ export class Map extends Component
 		
 		return (
 			<View styleName="h-center">
-				<Button onPress={() => this.setState({ selectedMarker: null })}>
-					<Icon name="down-arrow" />
-					<Text>CLOSE</Text>
-				</Button>
-				
 				<TouchableOpacity onPress={() => navigateTo({
 					screen: ext('SpringDetails'),
 					props: { marker }
@@ -223,6 +213,7 @@ export class Map extends Component
 				loadingEnabled
 				showsUserLocation
 				followsUserLocation
+				onPress={() => this.setState({ selectedMarker: null })}
 				style={{flex: 0.8, flexDirection: 'column', width: width}}
 			>
 				{this.state.markers.map((marker, i) => (
