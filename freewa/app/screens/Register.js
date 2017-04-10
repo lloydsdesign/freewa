@@ -71,12 +71,11 @@ export class Register extends Component
 		const { navigateTo } = this.props;
 		
 		return (
-			<ScrollView style={{marginTop: -1}}>
+			<ScrollView style={{marginTop: -1, backgroundColor: '#FFF'}}>
 				<NavigationBar title="REGISTER" />
 
-				<Row>
+				<Row style={{marginTop: 0, paddingTop: 10}}>
 					<View styleName="vertical">
-						<Subtitle>Username</Subtitle>
 						<TextInput
 							autoCapitalize="none"
 							autoCorrect={false}
@@ -85,16 +84,14 @@ export class Register extends Component
 							enablesReturnKeyAutomatically
 							returnKeyType="next"
 							onChangeText={(value) => this.setState({username: value.trim()})}
-							style={{flex: 1}}
+							style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+							placeholder="Username"
 						/>
 					</View>
 				</Row>
 				
-				<Divider styleName="line" />
-				
-				<Row>
+				<Row style={{marginTop: 0, paddingTop: 0}}>
 					<View styleName="vertical">
-						<Subtitle>Full name</Subtitle>
 						<TextInput
 							autoCapitalize="words"
 							autoCorrect={false}
@@ -102,16 +99,14 @@ export class Register extends Component
 							enablesReturnKeyAutomatically
 							returnKeyType="next"
 							onChangeText={(value) => this.setState({fullName: value.trim()})}
-							style={{flex: 1}}
+							style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+							placeholder="Full Name"
 						/>
 					</View>
 				</Row>
 				
-				<Divider styleName="line" />
-				
-				<Row>
+				<Row style={{marginTop: 0, paddingTop: 0}}>
 					<View styleName="vertical">
-						<Subtitle>E-mail</Subtitle>
 						<TextInput
 							autoCapitalize="none"
 							autoCorrect={false}
@@ -120,16 +115,14 @@ export class Register extends Component
 							returnKeyType="next"
 							keyboardType="email-address"
 							onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
-							style={{flex: 1}}
+							style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+							placeholder="E-mail"
 						/>
 					</View>
 				</Row>
 				
-				<Divider styleName="line" />
-				
-				<Row>
+				<Row style={{marginTop: 0, paddingTop: 0}}>
 					<View styleName="vertical">
-						<Subtitle>Password</Subtitle>
 						<TextInput
 							autoCapitalize="none"
 							autoCorrect={false}
@@ -137,23 +130,22 @@ export class Register extends Component
 							returnKeyType="next"
 							secureTextEntry
 							onChangeText={(value) => this.setState({password: value.trim()})}
-							style={{flex: 1}}
+							style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+							placeholder="Password"
 						/>
 					</View>
 				</Row>
 				
-				<Divider styleName="line" />
-				
-				<View styleName="horizontal">
-					<Button styleName="full-width" onPress={() => navigateTo({
+				<View styleName="horizontal" style={{backgroundColor: '#FFF'}}>
+					<Button styleName="full-width" style={{marginRight: 5, marginLeft: 15}}onPress={() => navigateTo({
 						screen: ext('Map')
 					})}>
 						<Icon name="close" />
 						<Text>CANCEL</Text>
 					</Button>
 					
-					<Button styleName="full-width" onPress={() => this.submitForm()}>
-						<Icon name="right-arrow" />
+					<Button styleName="full-width"  style={{backgroundColor: '#FAA21B', marginRight: 15, marginLeft: 5}} onPress={() => this.submitForm()}>
+						<Icon name="add-friend" />
 						<Text>REGISTER</Text>
 					</Button>
 				</View>

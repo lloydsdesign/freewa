@@ -82,12 +82,11 @@ export class AddSpring extends Component
 		const { navigateTo, user } = this.props;
 		
 		return (
-			<ScrollView style={{marginTop: -1}}>
+			<ScrollView style={{marginTop: -1, backgroundColor: '#FFF'}}>
 				<NavigationBar title="ADD SPRING" />
 
-				<Row>
+				<Row style={{marginTop: 0, paddingTop: 10}}>
 					<View styleName="vertical">
-						<Subtitle>Name</Subtitle>
 						<TextInput
 							autoCapitalize="words"
 							autoCorrect={false}
@@ -96,7 +95,8 @@ export class AddSpring extends Component
 							enablesReturnKeyAutomatically
 							returnKeyType="next"
 							onChangeText={(value) => this.setState({name: value.trim()})}
-							style={{flex: 1}}
+							style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+							placeholder="Name of the New Spring"
 						/>
 					</View>
 				</Row>
@@ -105,7 +105,6 @@ export class AddSpring extends Component
 				
 				<Row>
 					<View styleName="vertical">
-						<Subtitle>Description</Subtitle>
 						<TextInput
 							autoCapitalize="sentences"
 							autoCorrect={false}
@@ -114,7 +113,8 @@ export class AddSpring extends Component
 							multiline
 							maxLength={500}
 							onChangeText={(value) => this.setState({description: value.trim()})}
-							style={{flex: 1, height: 240, textAlignVertical: 'top'}}
+							style={{flex: 1, height: 240, textAlignVertical: 'top', borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+							placeholder="Spring Description"
 						/>
 					</View>
 				</Row>
@@ -122,7 +122,7 @@ export class AddSpring extends Component
 				<Divider styleName="line" />
 				
 				<View styleName="horizontal">
-					<Button styleName="full-width" onPress={() => navigateTo({
+					<Button styleName="full-width" style={{marginRight: 5, marginLeft: 15}} onPress={() => navigateTo({
 						screen: ext('Map'),
 						props: { user: user }
 					})}>
@@ -130,8 +130,8 @@ export class AddSpring extends Component
 						<Text>CANCEL</Text>
 					</Button>
 					
-					<Button styleName="full-width" onPress={() => this.submitForm()}>
-						<Icon name="right-arrow" />
+					<Button styleName="full-width" style={{backgroundColor: '#FAA21B', marginRight: 15, marginLeft: 5}} onPress={() => this.submitForm()}>
+						<Icon name="add-to-favorites-full" />
 						<Text>SAVE</Text>
 					</Button>
 				</View>

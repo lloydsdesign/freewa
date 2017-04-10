@@ -69,12 +69,11 @@ export class Login extends Component
 		const { navigateTo } = this.props;
 		
 		return (
-			<ScrollView style={{marginTop: -1}}>
+			<ScrollView style={{marginTop: -1, backgroundColor: '#FFF'}}>
 				<NavigationBar title="LOGIN" />
 
-				<Row>
+				<Row style={{marginTop: 0, paddingTop: 10}}>
 					<View styleName="vertical">
-						<Subtitle>E-mail</Subtitle>
 						<TextInput
 							autoCapitalize="none"
 							autoCorrect={false}
@@ -84,16 +83,14 @@ export class Login extends Component
 							returnKeyType="next"
 							keyboardType="email-address"
 							onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
-							style={{flex: 1}}
+							style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+							placeholder="E-mail"
 						/>
 					</View>
 				</Row>
 				
-				<Divider styleName="line" />
-				
-				<Row>
+				<Row style={{marginTop: 0, paddingTop: 0}}>
 					<View styleName="vertical">
-						<Subtitle>Password</Subtitle>
 						<TextInput
 							autoCapitalize="none"
 							autoCorrect={false}
@@ -101,28 +98,24 @@ export class Login extends Component
 							returnKeyType="next"
 							secureTextEntry
 							onChangeText={(value) => this.setState({password: value.trim()})}
-							style={{flex: 1}}
+							style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+							placeholder="Password"
 						/>
 					</View>
 				</Row>
 				
-				<Divider styleName="line" />
-				
-				<Row>
+				<Row style={{marginTop: 0, paddingTop: 0}}>
 					<Button styleName="full-width" onPress={() => this.submitForm()}>
-						<Icon name="right-arrow" />
+						<Icon name="play" />
 						<Text>LOGIN</Text>
 					</Button>
 				</Row>
 				
-				<Divider styleName="line" />
-				
-				<Row>
-					<Button styleName="full-width" onPress={() => navigateTo({
+				<Row style={{marginTop: 0, paddingTop: 0, paddingBottom: 300}}>
+					<Button styleName="full-width" style={{backgroundColor: '#FAA21B'}} onPress={() => navigateTo({
 						screen: ext('Register'),
 						props: { returnScreen: this.props.returnScreen }
 					})}>
-						<Icon name="right-arrow" />
 						<Text>NOT A MEMBER? REGISTER</Text>
 					</Button>
 				</Row>
