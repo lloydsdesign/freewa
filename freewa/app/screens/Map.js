@@ -8,6 +8,7 @@ import {
 	TouchableOpacity,
 	Image,
 	Tile,
+	Row,
 	Title,
 	Subtitle,
 	Button,
@@ -187,18 +188,20 @@ export class Map extends Component
 		else rating = 'UNRATED';
 		
 		return (
-			<View styleName="h-center">
+			<View styleName="h-center" style={{shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
 				<TouchableOpacity onPress={() => navigateTo({
 					screen: ext('SpringDetails'),
 					props: { marker }
 				})}>
-					<Image styleName="large-banner" source={{ uri: marker.image }}>
-						<Tile>
-							<Title>{marker.title.toUpperCase()}</Title>
-							<Subtitle>{marker.type.toUpperCase()}</Subtitle>
-							<Text>{rating}</Text>
-						</Tile>
+					<View styleName="horizontal" style={{backgroundColor: '#FFF'}}>
+					<Image styleName="medium-square" style={{margin: 10}} source={{ uri: marker.image }}>
 					</Image>
+					<Tile styleName="text-centric" style={{padding: 20}}>
+						<Title styleName="h-center">{marker.title.toUpperCase()}</Title>
+						<Subtitle styleName="h-center">{marker.type.toUpperCase()}</Subtitle>
+						<Text styleName="h-center" style={{color: '#FAA21B'}}>{rating}</Text>
+					</Tile>
+					</View>
 				</TouchableOpacity>
 			</View>
 		);
