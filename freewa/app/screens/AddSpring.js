@@ -86,37 +86,33 @@ export class AddSpring extends Component
 				<NavigationBar title="ADD SPRING" />
 
 				<Row style={{marginTop: 0, paddingTop: 10}}>
-					<View styleName="vertical">
-						<TextInput
-							autoCapitalize="words"
-							autoCorrect={false}
-							autoFocus
-							maxLength={50}
-							enablesReturnKeyAutomatically
-							returnKeyType="next"
-							onChangeText={(value) => this.setState({name: value.trim()})}
-							style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-							placeholder="Name of the New Spring"
-						/>
-					</View>
+					<TextInput
+						autoCapitalize="words"
+						autoCorrect={false}
+						autoFocus
+						maxLength={50}
+						enablesReturnKeyAutomatically
+						returnKeyType="next"
+						onChangeText={(value) => this.setState({name: value.trim()})}
+						style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+						placeholder="Name of the New Spring"
+					/>
 				</Row>
 				
 				<Divider styleName="line" />
 				
 				<Row>
-					<View styleName="vertical">
-						<TextInput
-							autoCapitalize="sentences"
-							autoCorrect={false}
-							enablesReturnKeyAutomatically
-							returnKeyType="next"
-							multiline
-							maxLength={500}
-							onChangeText={(value) => this.setState({description: value.trim()})}
-							style={{flex: 1, height: 240, textAlignVertical: 'top', borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-							placeholder="Spring Description"
-						/>
-					</View>
+					<TextInput
+						autoCapitalize="sentences"
+						autoCorrect={false}
+						enablesReturnKeyAutomatically
+						returnKeyType="next"
+						multiline
+						maxLength={500}
+						onChangeText={(value) => this.setState({description: value.trim()})}
+						style={{flex: 1, height: 240, textAlignVertical: 'top', borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+						placeholder="Spring Description"
+					/>
 				</Row>
 				
 				<Divider styleName="line" />

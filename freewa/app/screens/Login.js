@@ -6,7 +6,6 @@ import {
   Text,
   Divider,
   Row,
-  View,
   TextInput,
   Icon,
   Button,
@@ -73,35 +72,31 @@ export class Login extends Component
 				<NavigationBar title="LOGIN" />
 
 				<Row style={{marginTop: 0, paddingTop: 10}}>
-					<View styleName="vertical">
-						<TextInput
-							autoCapitalize="none"
-							autoCorrect={false}
-							autoFocus
-							maxLength={50}
-							enablesReturnKeyAutomatically
-							returnKeyType="next"
-							keyboardType="email-address"
-							onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
-							style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-							placeholder="E-mail"
-						/>
-					</View>
+					<TextInput
+						autoCapitalize="none"
+						autoCorrect={false}
+						autoFocus
+						maxLength={50}
+						enablesReturnKeyAutomatically
+						returnKeyType="next"
+						keyboardType="email-address"
+						onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
+						style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+						placeholder="E-mail"
+					/>
 				</Row>
 				
 				<Row style={{marginTop: 0, paddingTop: 0}}>
-					<View styleName="vertical">
-						<TextInput
-							autoCapitalize="none"
-							autoCorrect={false}
-							enablesReturnKeyAutomatically
-							returnKeyType="next"
-							secureTextEntry
-							onChangeText={(value) => this.setState({password: value.trim()})}
-							style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-							placeholder="Password"
-						/>
-					</View>
+					<TextInput
+						autoCapitalize="none"
+						autoCorrect={false}
+						enablesReturnKeyAutomatically
+						returnKeyType="next"
+						secureTextEntry
+						onChangeText={(value) => this.setState({password: value.trim()})}
+						style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+						placeholder="Password"
+					/>
 				</Row>
 				
 				<Row style={{marginTop: 0, paddingTop: 0}}>

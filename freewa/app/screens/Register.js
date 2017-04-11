@@ -75,65 +75,57 @@ export class Register extends Component
 				<NavigationBar title="REGISTER" />
 
 				<Row style={{marginTop: 0, paddingTop: 10}}>
-					<View styleName="vertical">
-						<TextInput
-							autoCapitalize="none"
-							autoCorrect={false}
-							autoFocus
-							maxLength={50}
-							enablesReturnKeyAutomatically
-							returnKeyType="next"
-							onChangeText={(value) => this.setState({username: value.trim()})}
-							style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-							placeholder="Username"
-						/>
-					</View>
+					<TextInput
+						autoCapitalize="none"
+						autoCorrect={false}
+						autoFocus
+						maxLength={50}
+						enablesReturnKeyAutomatically
+						returnKeyType="next"
+						onChangeText={(value) => this.setState({username: value.trim()})}
+						style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+						placeholder="Username"
+					/>
 				</Row>
 				
 				<Row style={{marginTop: 0, paddingTop: 0}}>
-					<View styleName="vertical">
-						<TextInput
-							autoCapitalize="words"
-							autoCorrect={false}
-							maxLength={50}
-							enablesReturnKeyAutomatically
-							returnKeyType="next"
-							onChangeText={(value) => this.setState({fullName: value.trim()})}
-							style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-							placeholder="Full Name"
-						/>
-					</View>
+					<TextInput
+						autoCapitalize="words"
+						autoCorrect={false}
+						maxLength={50}
+						enablesReturnKeyAutomatically
+						returnKeyType="next"
+						onChangeText={(value) => this.setState({fullName: value.trim()})}
+						style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+						placeholder="Full Name"
+					/>
 				</Row>
 				
 				<Row style={{marginTop: 0, paddingTop: 0}}>
-					<View styleName="vertical">
-						<TextInput
-							autoCapitalize="none"
-							autoCorrect={false}
-							maxLength={50}
-							enablesReturnKeyAutomatically
-							returnKeyType="next"
-							keyboardType="email-address"
-							onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
-							style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-							placeholder="E-mail"
-						/>
-					</View>
+					<TextInput
+						autoCapitalize="none"
+						autoCorrect={false}
+						maxLength={50}
+						enablesReturnKeyAutomatically
+						returnKeyType="next"
+						keyboardType="email-address"
+						onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
+						style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+						placeholder="E-mail"
+					/>
 				</Row>
 				
 				<Row style={{marginTop: 0, paddingTop: 0}}>
-					<View styleName="vertical">
-						<TextInput
-							autoCapitalize="none"
-							autoCorrect={false}
-							enablesReturnKeyAutomatically
-							returnKeyType="next"
-							secureTextEntry
-							onChangeText={(value) => this.setState({password: value.trim()})}
-							style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-							placeholder="Password"
-						/>
-					</View>
+					<TextInput
+						autoCapitalize="none"
+						autoCorrect={false}
+						enablesReturnKeyAutomatically
+						returnKeyType="next"
+						secureTextEntry
+						onChangeText={(value) => this.setState({password: value.trim()})}
+						style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+						placeholder="Password"
+					/>
 				</Row>
 				
 				<View styleName="horizontal" style={{backgroundColor: '#FFF'}}>
