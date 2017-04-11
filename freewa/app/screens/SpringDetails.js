@@ -18,9 +18,13 @@ import {
 } from '@shoutem/ui';
 
 import { InlineMap } from '@shoutem/ui-addons';
+import { connect } from 'react-redux';
 import { NavigationBar } from '@shoutem/ui/navigation';
+import { navigateTo } from '@shoutem/core/navigation';
+import { ext } from '../extension';
 
-export default class SpringDetails extends Component
+
+export class SpringDetails extends Component
 {
 	constructor(props)
 	{
@@ -130,7 +134,7 @@ export default class SpringDetails extends Component
 
 	render()
 	{
-		const { marker } = this.props;
+		const { marker, navigateTo } = this.props;
 		const position = {
 			latitude: marker.latitude,
 			longitude: marker.longitude,
@@ -196,7 +200,12 @@ export default class SpringDetails extends Component
 				</View>
 				
 				<Row>
-					<Button styleName="full-width" style={{backgroundColor: '#FAA21B'}}>
+					<Button styleName="full-width" style={{backgroundColor: '#FAA21B'}}
+						onPress={() => navigateTo({
+							screen: ext('Compass'),
+							props: { marker }
+						})}
+					>
 						<Icon name="pin" />
 						<Text>O P E N  C O M P A S S</Text>
 					</Button>
@@ -205,6 +214,11 @@ export default class SpringDetails extends Component
 		);
 	}
 }
+
+export default connect(
+	undefined,
+	{ navigateTo }
+)(SpringDetails);
 
 function toRad(num)
 {

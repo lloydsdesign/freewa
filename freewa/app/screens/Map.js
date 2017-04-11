@@ -30,6 +30,7 @@ const jsonGuard = String.fromCharCode(0);
 const CMS_BASE = 'http://freewa-back.lloyds-design.hr/';
 const CMS_REST = CMS_BASE +'manage.php';
 
+
 export class Map extends Component
 {
 	constructor(props)
