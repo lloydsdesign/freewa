@@ -9,11 +9,9 @@ import {
 
 import {
   Row,
-  Subtitle,
   Text,
   Icon,
   Button,
-  Title,
   View,
   Image,
   Divider
@@ -191,18 +189,18 @@ export default class SpringDetails extends Component
 						selectedMarker={position}
 						style={{height: 160}}
 					>
-						<View styleName="overlay vertical v-center h-center fill-parent">
-							<Text>POSITION:</Text>
-							<Text style={{fontWeight: 'bold'}}>N: {position.latitude.toFixed(6)}    E: {position.longitude.toFixed(6)}</Text>
-							<Text> </Text>
+						<View styleName="overlay horizontal v-center h-center fill-parent" style={{fontWeight: 'bold'}}>
+							<Text>N: {position.latitude.toFixed(6)}</Text>
+							<Text>    </Text>
+							<Text>E: {position.longitude.toFixed(6)}</Text>
 						</View>
 					</InlineMap>
 				</View>
 				
 				<Row>
-					<Button styleName="full-width" style={{backgroundColor: '#FAA21B', marginTop: -80}}>
+					<Button styleName="full-width" style={{backgroundColor: '#FAA21B'}}>
 						<Icon name="pin" />
-						<Text>O P E N   C O M P A S S</Text>
+						<Text>O P E N  C O M P A S S</Text>
 					</Button>
 				</Row>
 			</ScrollView>
