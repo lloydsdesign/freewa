@@ -67,15 +67,17 @@ export default class SpringDetails extends Component
 			longitude: marker.longitude
 		};
 		
+		var unit = 'm';
 		var distance = haversine(lastPosition, position);
+		
 		if(distance >= 1000)
 		{
 			distance /= 1000;
-			distance = distance.toFixed(2) +'km';
+			unit = 'km';
 		}
-		else distance += 'm';
 		
-		this.setState({ distance });
+		distance = distance.toFixed(2);
+		this.setState({ distance: distance + unit });
 	}
 	
 	renderDistance()
