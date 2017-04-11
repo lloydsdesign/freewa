@@ -49,12 +49,12 @@ export class Map extends Component
 	
 	componentWillMount()
 	{
-		/*navigator.geolocation.getCurrentPosition((position) => {
+		navigator.geolocation.getCurrentPosition((position) => {
 				this.setState({ lastPosition: position.coords });
 			},
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
-		);*/
+		);
 		
 		this.fetchMarkers();
 		

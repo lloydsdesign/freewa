@@ -36,12 +36,12 @@ export default class SpringDetails extends Component
 	
 	componentWillMount()
 	{
-		/*navigator.geolocation.getCurrentPosition((position) => {
+		navigator.geolocation.getCurrentPosition((position) => {
 				this.setState({ lastPosition: position.coords });
 			},
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
-		);*/
+		);
 		
 		this.watchID = navigator.geolocation.watchPosition((position) => {
 			this.setState({ lastPosition: position.coords });
@@ -71,10 +71,11 @@ export default class SpringDetails extends Component
 		if(distance >= 1000)
 		{
 			distance /= 1000;
+			distance = distance.toFixed(2);
 			unit = 'km';
 		}
+		else distance = parseInt(distance, 10);
 		
-		distance = distance.toFixed(2);
 		this.setState({ distance: distance + unit });
 	}
 	
