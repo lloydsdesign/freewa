@@ -194,13 +194,12 @@ export class Map extends Component
 					props: { marker }
 				})}>
 					<View styleName="horizontal" style={{backgroundColor: '#FFF'}}>
-					<Image styleName="medium-square" style={{margin: 10}} source={{ uri: marker.image }}>
-					</Image>
-					<Tile styleName="text-centric" style={{padding: 20}}>
-						<Title styleName="h-center">{marker.title.toUpperCase()}</Title>
-						<Subtitle styleName="h-center">{marker.type.toUpperCase()}</Subtitle>
-						<Text styleName="h-center" style={{color: '#FAA21B'}}>{rating}</Text>
-					</Tile>
+						<Image styleName="medium-square rounded-corners" style={{margin: 10}} source={{ uri: marker.image }} />
+						<Tile styleName="text-centric" style={{padding: 20}}>
+							<Title styleName="h-center">{marker.title.toUpperCase()}</Title>
+							<Subtitle styleName="h-center">{marker.type.toUpperCase()}</Subtitle>
+							<Text styleName="h-center" style={{color: '#FAA21B'}}>{rating}</Text>
+						</Tile>
 					</View>
 				</TouchableOpacity>
 			</View>
