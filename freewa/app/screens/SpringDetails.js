@@ -3,8 +3,7 @@ import React, {
 } from 'react';
 
 import {
-  ScrollView,
-  ListView
+  ScrollView
 } from 'react-native';
 
 import {
@@ -14,7 +13,8 @@ import {
   Button,
   View,
   Image,
-  Divider
+  Divider,
+  ListView
 } from '@shoutem/ui';
 
 import { InlineMap } from '@shoutem/ui-addons';
@@ -130,8 +130,6 @@ export default class SpringDetails extends Component
 	render()
 	{
 		const { marker } = this.props;
-		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-		
 		const position = {
 			latitude: marker.latitude,
 			longitude: marker.longitude,
@@ -144,22 +142,21 @@ export default class SpringDetails extends Component
 				
 				<ListView
 					horizontal
-					dataSource={ds.cloneWithRows(marker.images)}
+					data={marker.images}
 					renderRow={image => this.renderRow(image)}
-					enableEmptySections
 				/>
 				
 				{this.renderDistance()}
 				
 				<Row style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
-					<View style={{flex: 0.4}}>
-						<Text style={{color: '#00B2C1', textAlign: 'center'}}>TYPE</Text>
-						<Text style={{textAlign: 'center'}}>{marker.type.toUpperCase()}</Text>
+					<View style={{flex: 0.4}} styleName="vertical h-center v-center">
+						<Text style={{color: '#00B2C1'}}>TYPE</Text>
+						<Text>{marker.type.toUpperCase()}</Text>
 					</View>
 					
-					<View style={{flex: 0.6}}>
-						<Text style={{color: '#00B2C1', textAlign: 'center'}}>CONTRIBUTOR</Text>
-						<Text style={{textAlign: 'center'}}>{marker.user}</Text>
+					<View style={{flex: 0.6}} styleName="vertical h-center v-center">
+						<Text style={{color: '#00B2C1'}}>CONTRIBUTOR</Text>
+						<Text>{marker.user}</Text>
 					</View>
 				</Row>
 				
