@@ -20,6 +20,9 @@ import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../extension';
 
+import { DeviceEventEmitter } from 'react-native';
+import { SensorManager  } from 'NativeModules';
+
 const compassImage = require('../assets/icons/compass-blue.png');
 
 
@@ -32,11 +35,13 @@ export class Compass extends Component
 		this.state = {
 			lastPosition: null,
 			distance: '',
-			azimuth: 0
+			azimuth: 0,
+			rotation: 0
 		};
 	}
 	
 	watchID: ?number = null;
+	eventID: ?number = null;
 	
 	componentWillMount()
 	{
@@ -45,6 +50,17 @@ export class Compass extends Component
 			latitude: marker.latitude,
 			longitude: marker.longitude
 		};
+		
+		SensorManager.startOrientation(100);
+		eventID = DeviceEventEmitter.addListener('Orientation', (data) => {
+			//var rotation = data.azimuth + this.state.azimuth;
+			var rotation = data.azimuth;
+			
+			if(rotation < 0) rotation += 360;
+			else if(rotation > 360) rotation -= 360;
+			
+			this.setState({ rotation: rotation.toFixed(2) });
+		});
 		
 		navigator.geolocation.getCurrentPosition((position) => {
 				this.setState({
@@ -70,6 +86,8 @@ export class Compass extends Component
 	
 	componentWillUnmount()
 	{
+		SensorManager.stopOrientation();
+		eventID.remove();
 		navigator.geolocation.clearWatch(this.watchID);
 	}
 	
@@ -113,7 +131,7 @@ export class Compass extends Component
 	render()
 	{
 		const { marker, navigateTo } = this.props;
-		const { azimuth } = this.state;
+		const { rotation } = this.state;
 		var rating;
 		
 		if(marker.ratingCount) rating = marker.rating +' '+ getRatingString(marker.rating);
@@ -139,7 +157,7 @@ export class Compass extends Component
 					</TouchableOpacity>
 				</View>
 				
-				<Image styleName="large-square" source={compassImage} style={{transform: [{rotate: azimuth +'deg'}]}} />
+				<Image styleName="large-square" source={compassImage} style={{transform: [{rotate: rotation +'deg'}]}} />
 				
 				{this.renderDistance()}
 			</Screen>
@@ -215,7 +233,7 @@ function getAzimuth(a, b)
 		azimuth = azimuth.toFixed(2);
 	}
 	
-	return azimuth;
+	return parseFloat(azimuth);
 }
 
 function LocationToPoint(c, oblate)
