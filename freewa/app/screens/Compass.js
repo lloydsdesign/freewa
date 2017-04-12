@@ -51,7 +51,7 @@ export class Compass extends Component
 			longitude: marker.longitude
 		};
 		
-		SensorManager.startOrientation(100);
+		SensorManager.startOrientation(1000);
 		eventID = DeviceEventEmitter.addListener('Orientation', (data) => {
 			//var rotation = data.azimuth + this.state.azimuth;
 			var rotation = data.azimuth;
