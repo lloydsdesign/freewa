@@ -42,7 +42,7 @@ function getAzimuth(point1, point2)
 	point1 = turf.point([point1.latitude, point1.longitude]);
 	point2 = turf.point([point2.latitude, point2.longitude]);
 	
-	var angle = turf.bearing(point2, point1);
+	var angle = turf.bearing(point1, point2);
 	
 	if(angle < 0) angle += 360;
 	return angle;
