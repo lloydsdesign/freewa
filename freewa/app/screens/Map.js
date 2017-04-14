@@ -26,9 +26,14 @@ import { ext } from '../extension';
 const markerImage = require('../assets/icons/marker-image.png');
 const markerImageNearest = require('../assets/icons/marker-image-nearest.png');
 
-const jsonGuard = String.fromCharCode(0);
-const CMS_BASE = 'http://freewa-back.lloyds-design.hr/';
-const CMS_REST = CMS_BASE +'manage.php';
+import {
+	jsonGuard,
+	CMS_BASE,
+	CMS_REST,
+	parseJSON,
+	getRatingString,
+	getDistance
+} from '../const';
 
 
 export class Map extends Component
@@ -95,19 +100,9 @@ export class Map extends Component
 		
 		if(!markers.length || !lastPosition) return;
 		
-		markers.sort(function(a, b)
+		markers.sort((a, b) =>
 		{
-			const firstMarker = {
-				latitude: a.latitude,
-				longitude: a.longitude
-			};
-			
-			const secondMarker = {
-				latitude: b.latitude,
-				longitude: b.longitude
-			};
-			
-			return haversine(lastPosition, firstMarker) - haversine(lastPosition, secondMarker);
+			return getDistance(lastPosition, a) - getDistance(lastPosition, b);
 		});
 		
 		markers[0].icon = markerImageNearest;
@@ -272,66 +267,4 @@ function adjustMarkerValues(markers)
 	}
 	
 	return markers;
-}
-
-function parseJSON(value)
-{
-	const startPos = value.indexOf(jsonGuard);
-	const endPos = value.lastIndexOf(jsonGuard);
-	if(startPos > -1 && endPos > startPos) value = value.substring(startPos + jsonGuard.length, endPos);
-	
-	try
-	{
-		value = JSON.parse(value);
-	}
-	catch(SyntaxError)
-	{
-		return false;
-	}
-	
-	return value;
-}
-
-function toRad(num)
-{
-	return num * Math.PI / 180;
-}
-
-function haversine(start, end, options)
-{
-	options = options || {};
-
-	const radii = {
-		km:    6371,
-		mile:  3960,
-		meter: 6371000,
-		nmi:   3440
-	};
-
-	const R = options.unit in radii ? radii[options.unit] : radii.meter;
-
-	const dLat = toRad(end.latitude - start.latitude);
-	const dLon = toRad(end.longitude - start.longitude);
-	const lat1 = toRad(start.latitude);
-	const lat2 = toRad(end.latitude);
-
-	const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-	return R * c;
-}
-
-function getRatingString(rating)
-{
-	const values = [2, 2.4, 3.4, 4.4];
-	const strings = ['POOR', 'ACCEPTABLE', 'GOOD', 'VERY GOOD', 'SUPERB'];
-	
-	var i;
-	
-	for(i = 0; i < values.length; i++)
-	{
-		if(rating <= values[i]) return strings[i];
-	}
-	
-	return strings[strings.length - 1];
 }

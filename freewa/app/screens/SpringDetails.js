@@ -23,6 +23,11 @@ import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../extension';
 
+import {
+	getRatingString,
+	getDistance
+} from '../const';
+
 
 export class SpringDetails extends Component
 {
@@ -64,13 +69,9 @@ export class SpringDetails extends Component
 		if(!lastPosition) return;
 		
 		const { marker } = this.props;
-		const position = {
-			latitude: marker.latitude,
-			longitude: marker.longitude
-		};
 		
 		var unit = 'm';
-		var distance = haversine(lastPosition, position);
+		var distance = getDistance(lastPosition, marker);
 		
 		if(distance >= 1000)
 		{
@@ -219,47 +220,3 @@ export default connect(
 	undefined,
 	{ navigateTo }
 )(SpringDetails);
-
-function toRad(num)
-{
-	return num * Math.PI / 180;
-}
-
-function haversine(start, end, options)
-{
-	options = options || {};
-
-	const radii = {
-		km:    6371,
-		mile:  3960,
-		meter: 6371000,
-		nmi:   3440
-	};
-
-	const R = options.unit in radii ? radii[options.unit] : radii.meter;
-
-	const dLat = toRad(end.latitude - start.latitude);
-	const dLon = toRad(end.longitude - start.longitude);
-	const lat1 = toRad(start.latitude);
-	const lat2 = toRad(end.latitude);
-
-	const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-	return R * c;
-}
-
-function getRatingString(rating)
-{
-	const values = [2, 2.4, 3.4, 4.4];
-	const strings = ['POOR', 'ACCEPTABLE', 'GOOD', 'VERY GOOD', 'SUPERB'];
-	
-	var i;
-	
-	for(i = 0; i < values.length; i++)
-	{
-		if(rating <= values[i]) return strings[i];
-	}
-	
-	return strings[strings.length - 1];
-}

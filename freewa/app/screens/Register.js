@@ -19,9 +19,13 @@ import { ext } from '../extension';
 import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
 
-const jsonGuard = String.fromCharCode(0);
-const CMS_BASE = 'http://freewa-back.lloyds-design.hr/';
-const CMS_REST = CMS_BASE +'manage.php';
+import {
+	jsonGuard,
+	CMS_BASE,
+	CMS_REST,
+	parseJSON
+} from '../const';
+
 
 export class Register extends Component
 {
@@ -150,21 +154,3 @@ export default connect(
 	undefined,
 	{ navigateTo }
 )(Register);
-
-function parseJSON(value)
-{
-	const startPos = value.indexOf(jsonGuard);
-	const endPos = value.lastIndexOf(jsonGuard);
-	if(startPos > -1 && endPos > startPos) value = value.substring(startPos + jsonGuard.length, endPos);
-	
-	try
-	{
-		value = JSON.parse(value);
-	}
-	catch(SyntaxError)
-	{
-		return false;
-	}
-	
-	return value;
-}
