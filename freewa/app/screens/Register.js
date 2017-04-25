@@ -64,9 +64,6 @@ export class Register extends Component
 					props: { user: response.data }
 				});
 			}
-		})
-		.catch((error) => {
-			console.error(error);
 		});
 	}
 	

@@ -87,9 +87,6 @@ export class Map extends Component
 			response = parseJSON(response);
 			this.setState({ markers: adjustMarkerValues(response.springs) });
 			this.pickNearestMarker();
-		})
-		.catch((error) => {
-			console.error(error);
 		});
 	}
 	

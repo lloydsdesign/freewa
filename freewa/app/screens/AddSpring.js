@@ -47,38 +47,30 @@ export class AddSpring extends Component
 		const { navigateTo, user } = this.props;
 		const type = 'natural';
 		
-		/*navigator.geolocation.getCurrentPosition((position) => {
-				currPos = position.coords;
+		navigator.geolocation.getCurrentPosition((position) => {
+				const currPos = position.coords;
+				
+				fetch(CMS_REST, {
+					headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
+					method: 'POST',
+					body: 'mobile_add_spring=&name='+ name +'&description='+ description +'&type='+ type +'&user_id='+ user.id +'&latitude='+ currPos.latitude +'&longitude='+ currPos.longitude
+				})
+				.then((response) => response.text())
+				.then((response) => {
+					response = parseJSON(response);
+					
+					if(response.status)
+					{
+						navigateTo({
+							screen: ext('Map'),
+							props: { user: user }
+						});
+					}
+				});
 			},
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
-		);*/
-		
-		const currPos = {
-			latitude: 45.324995,
-			longitude: 14.451417
-		};
-		
-		fetch(CMS_REST, {
-			headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
-			method: 'POST',
-			body: 'mobile_add_spring=&name='+ name +'&description='+ description +'&type='+ type +'&user_id='+ user.id +'&latitude='+ currPos.latitude +'&longitude='+ currPos.longitude
-		})
-		.then((response) => response.text())
-		.then((response) => {
-			response = parseJSON(response);
-			
-			if(response.status)
-			{
-				navigateTo({
-					screen: ext('Map'),
-					props: { user: user }
-				});
-			}
-		})
-		.catch((error) => {
-			console.error(error);
-		});
+		);
 	}
 	
 	render()
