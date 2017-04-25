@@ -174,6 +174,7 @@ export class Map extends Component
 		const marker = this.state.selectedMarker;
 		if(!marker) return null;
 		
+		const { user } = this.state;
 		const { navigateTo } = this.props;
 		var rating;
 		
@@ -184,7 +185,7 @@ export class Map extends Component
 			<View styleName="h-center" style={{shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
 				<TouchableOpacity onPress={() => navigateTo({
 					screen: ext('SpringDetails'),
-					props: { marker }
+					props: { marker, user }
 				})}>
 					<View styleName="horizontal" style={{backgroundColor: '#FFF'}}>
 						<Image styleName="medium-square rounded-corners" style={{margin: 10}} source={{ uri: marker.image }} />
@@ -216,7 +217,7 @@ export class Map extends Component
 				onPress={() => {
 					if(this.state.selectedMarker) this.setState({ selectedMarker: null });
 				}}
-				style={{flex: 0.8, flexDirection: 'column', width: width}}
+				style={{flex: 1}}
 			>
 				{this.state.markers.map((marker, i) => (
 					<MapView.Marker

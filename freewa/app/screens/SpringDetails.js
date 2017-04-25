@@ -3,7 +3,9 @@ import React, {
 } from 'react';
 
 import {
-  ScrollView
+  ScrollView,
+  Modal,
+  TextInput
 } from 'react-native';
 
 import {
@@ -14,7 +16,10 @@ import {
   View,
   Image,
   Divider,
-  ListView
+  ListView,
+  Title,
+  Subtitle,
+  TouchableOpacity
 } from '@shoutem/ui';
 
 import { InlineMap } from '@shoutem/ui-addons';
@@ -24,9 +29,14 @@ import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../extension';
 
 import {
+	CMS_REST,
 	getRatingString,
-	getDistance
+	getDistance,
+	parseJSON
 } from '../const';
+
+const fullStar = require('../assets/icons/full-star.png');
+const emptyStar = require('../assets/icons/empty-star.png');
 
 
 export class SpringDetails extends Component
@@ -37,7 +47,10 @@ export class SpringDetails extends Component
 		
 		this.state = {
 			lastPosition: null,
-			distance: ''
+			distance: '',
+			rateModal: false,
+			rateNumber: 0,
+			rateMessage: ''
 		};
 	}
 	
@@ -126,6 +139,135 @@ export class SpringDetails extends Component
 		);
 	}
 	
+	rateSpring()
+	{
+		const { rateNumber, rateMessage } = this.state;
+		if(!rateNumber) return;
+		
+		const { user, marker } = this.props;
+		this.setState({ rateModal: false });
+		
+		fetch(CMS_REST, {
+			headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
+			method: 'POST',
+			body: 'rate_spring=&rate_number='+ rateNumber +'&message='+ rateMessage +'&user_id='+ user.id +'&spring_id='+ marker.id
+		})
+		.then((response) => response.text())
+		.then((response) => {
+			response = parseJSON(response);
+		});
+	}
+	
+	renderStars()
+	{
+		const { rateNumber } = this.state;
+		var i, img, stars = [];
+		
+		for(i = 1; i <= 5; i++)
+		{
+			if(i <= rateNumber) img = fullStar;
+			else img = emptyStar;
+			
+			stars.push(this.getStar(img, i));
+		}
+		
+		return stars;
+	}
+	
+	getStar(img, i)
+	{
+		return (
+			<TouchableOpacity
+				key={i - 1}
+				onPress={() => this.setState({ rateNumber: i })}
+			>
+				<Image source={img} />
+			</TouchableOpacity>
+		);
+	}
+	
+	renderRateModal()
+	{
+		const { rateModal } = this.state;
+		if(!rateModal) return null;
+		
+		const { marker } = this.props;
+		
+		return (
+			<Modal
+				animationType={"fade"}
+				visible={rateModal}
+				onRequestClose={() => this.setState({ rateModal: false })}
+			>
+				<View style={{ flex: 1 }} styleName="vertical h-center">
+					<Title>RATE SPRING</Title>
+					<Subtitle>{marker.title.toUpperCase()}</Subtitle>
+					
+					<Divider styleName="line" />
+					
+					<Row>
+						<View styleName="horizontal h-center space-between">
+							{this.renderStars()}
+						</View>
+					</Row>
+					
+					<Divider styleName="line" />
+				
+					<Row>
+						<TextInput
+							autoCapitalize="sentences"
+							autoCorrect={false}
+							enablesReturnKeyAutomatically
+							returnKeyType="next"
+							multiline
+							maxLength={500}
+							onChangeText={(value) => this.setState({rateMessage: value.trim()})}
+							style={{flex: 1, height: 240, textAlignVertical: 'top', borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+							placeholder="Message"
+						/>
+					</Row>
+				</View>
+				
+				<View styleName="horizontal" style={{backgroundColor: '#FFF'}}>
+					<Button styleName="full-width" onPress={() => this.rateSpring()}>
+						<Icon name="like" />
+						<Text>RATE</Text>
+					</Button>
+					
+					<Button styleName="full-width" onPress={() => this.setState({ rateModal: false })}>
+						<Icon name="close" />
+						<Text>CANCEL</Text>
+					</Button>
+				</View>
+			</Modal>
+		);
+	}
+	
+	renderLogin()
+	{
+		const { user, navigateTo } = this.props;
+		
+		if(user)
+		{
+			return (
+				<Button styleName="full-width" onPress={() => this.setState({ rateModal: true })}>
+					<Icon name="like" />
+					<Text>RATE</Text>
+				</Button>
+			);
+		}
+		
+		return (
+			<Button styleName="full-width" onPress={() => navigateTo({
+				screen: ext('Login'),
+				props: { returnScreen: ext('SpringDetails') }
+			})}>
+				<Icon name="play" />
+				<Text>LOGIN TO RATE</Text>
+			</Button>
+		);
+	}
+	
 	renderRow(image)
 	{
 		return (
@@ -169,6 +311,11 @@ export class SpringDetails extends Component
 				<Divider styleName="line" />
 				
 				{this.renderRating()}
+				
+				<Divider styleName="line" />
+				
+				{this.renderLogin()}
+				{this.renderRateModal()}
 				
 				<Divider styleName="line" />
 				

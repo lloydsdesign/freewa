@@ -21,7 +21,6 @@ import { navigateTo } from '@shoutem/core/navigation';
 
 import {
 	jsonGuard,
-	CMS_BASE,
 	CMS_REST,
 	parseJSON
 } from '../const';
