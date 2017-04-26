@@ -19,8 +19,8 @@ import { connect } from 'react-redux';
 import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../extension';
-import { DeviceEventEmitter } from 'react-native';
-import { SensorManager  } from 'NativeModules';
+/*import { DeviceEventEmitter } from 'react-native';
+import { SensorManager  } from 'NativeModules';*/
 
 const compassImage = require('../assets/icons/compass-blue.png');
 
@@ -52,7 +52,7 @@ export class Compass extends Component
 	{
 		const { marker } = this.props;
 		
-		SensorManager.startOrientation(1000);
+		/*SensorManager.startOrientation(1000);
 		this.eventID = DeviceEventEmitter.addListener('Orientation', (data) => {
 			var rotation = data.azimuth - this.state.azimuth;
 			
@@ -65,7 +65,7 @@ export class Compass extends Component
 			console.log('\n----------------------------------');
 			
 			this.setState({ rotation: rotation.toFixed(2) });
-		});
+		});*/
 		
 		navigator.geolocation.getCurrentPosition((position) => {
 				this.setState({
@@ -91,8 +91,8 @@ export class Compass extends Component
 	
 	componentWillUnmount()
 	{
-		SensorManager.stopOrientation();
-		this.eventID.remove();
+		/*SensorManager.stopOrientation();
+		this.eventID.remove();*/
 		navigator.geolocation.clearWatch(this.watchID);
 	}
 	
