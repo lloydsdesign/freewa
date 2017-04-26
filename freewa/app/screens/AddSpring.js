@@ -15,6 +15,7 @@ import {
 	Tile,
 	Title,
 	Subtitle,
+	Caption,
 	Spinner,
 	DropDownMenu
 } from '@shoutem/ui';
@@ -166,11 +167,15 @@ export class AddSpring extends Component
 	
 	renderRow(image)
 	{
+		var size = image.size / (1024 * 1024);
+		size = parseFloat(size.toFixed(2));
+		
 		return (
 			<TouchableOpacity onPress={() => this.removeImage(image)}>
 				<Image styleName="medium-square" source={{ uri: image.uri }}>
 					<Tile>
 						<Image source={require('../assets/icons/remove.png')} />
+						<Caption>{size} MB</Caption>
 					</Tile>
 				</Image>
 			</TouchableOpacity>
