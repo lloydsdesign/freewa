@@ -1,29 +1,43 @@
 import React, {
-  Component
+	Component
 } from 'react';
 
 import {
-  Text,
-  Divider,
-  Row,
-  View,
-  TextInput,
-  Icon,
-  Button,
-  Subtitle
+	Text,
+	Divider,
+	Row,
+	View,
+	TextInput,
+	Icon,
+	Button,
+	Image,
+	TouchableOpacity,
+	Title,
+	Subtitle,
+	Spinner
 } from '@shoutem/ui';
 
-import { ScrollView } from 'react-native';
+import {
+	ScrollView,
+	ListView,
+	Modal
+}
+from 'react-native';
+
 import { connect } from 'react-redux';
 import { ext } from '../extension';
 import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
+const ImagePicker = require('react-native-image-picker');
 
 import {
 	jsonGuard,
 	CMS_REST,
+	MAX_UPLOAD_SIZE,
 	parseJSON
 } from '../const';
+
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 
 export class AddSpring extends Component
@@ -34,29 +48,50 @@ export class AddSpring extends Component
 		
 		this.state = {
 			name: '',
-			description: ''
+			description: '',
+			images: [],
+			uploading: false
 		};
 	}
 	
 	submitForm()
 	{
-		const {name, description} = this.state;
+		const { name, description, images } = this.state;
 		if(name == '') return;
 		
 		const { navigateTo, user } = this.props;
 		const type = 'natural';
 		
+		this.setState({ uploading: true });
+		
 		navigator.geolocation.getCurrentPosition((position) => {
 				const currPos = position.coords;
 				
+				var data = new FormData();
+				data.append('mobile_add_spring', '');
+				data.append('name', name);
+				data.append('description', description);
+				data.append('type', type);
+				data.append('user_id', user.id);
+				data.append('latitude', currPos.latitude);
+				data.append('longitude', currPos.longitude);
+				
+				var i;
+				for(i = 0; i < images.length; i++)
+				{
+					data.append('img_data[]', images[i].data, images[i].name);
+					data.append('img_name[]', images[i].name);
+				}
+				
 				fetch(CMS_REST, {
-					headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
+					headers: new Headers({'Content-Type': 'multipart/form-data'}),
 					method: 'POST',
-					body: 'mobile_add_spring=&name='+ name +'&description='+ description +'&type='+ type +'&user_id='+ user.id +'&latitude='+ currPos.latitude +'&longitude='+ currPos.longitude
+					body: data
 				})
 				.then((response) => response.text())
 				.then((response) => {
 					response = parseJSON(response);
+					this.setState({ uploading: false });
 					
 					if(response.status)
 					{
@@ -72,9 +107,101 @@ export class AddSpring extends Component
 		);
 	}
 	
+	addImage()
+	{
+		var max_size = MAX_UPLOAD_SIZE / (1024 * 1024);
+		max_size = parseFloat(max_size.toFixed(2));
+		
+		ImagePicker.showImagePicker({
+			title: 'ADD PHOTO (max. '+ max_size +' MB each)',
+			cameraType: 'back',
+			mediaType: 'photo',
+			quality: 1,
+			allowsEditing: true
+		},
+		(response) => {
+			if(response.didCancel || response.error || response.fileSize > MAX_UPLOAD_SIZE) return;
+			var { images } = this.state;
+			
+			var i;
+			for(i = 0; i < images.length; i++)
+			{
+				if(images[i].uri == response.uri) return;
+			}
+			
+			images[images.length] = {
+				name: response.fileName,
+				size: response.fileSize,
+				uri: response.uri,
+				data: response.data
+			};
+			
+			this.setState({ images });
+		});
+	}
+	
+	removeImage(image)
+	{
+		var { images } = this.state;
+		
+		images.splice(images.indexOf(image), 1);
+		this.setState({ images });
+	}
+	
+	renderRow(image)
+	{
+		return (
+			<TouchableOpacity onPress={() => this.removeImage(image)}>
+				<Image styleName="medium-square" source={{ uri: image.uri }} />
+			</TouchableOpacity>
+		);
+	}
+	
+	renderListView()
+	{
+		const { images } = this.state;
+		if(!images.length) return null;
+		
+		return (
+			<ListView
+				horizontal
+				dataSource={ds.cloneWithRows(images)}
+				renderRow={image => this.renderRow(image)}
+			/>
+		);
+	}
+	
 	render()
 	{
+		const { images, uploading } = this.state;
+		
+		if(uploading)
+		{
+			return (
+				<Modal
+					animationType={"fade"}
+					visible
+					onRequestClose={() => this.setState({ uploading: false })}
+				>
+					<View style={{ flex: 1 }} styleName="vertical h-center v-center">
+						<Title>Uploading</Title>
+						<Subtitle>This could take a while...</Subtitle>
+						<Spinner style={{ size: 'large' }} />
+					</View>
+				</Modal>
+			);
+		}
+		
 		const { navigateTo, user } = this.props;
+		
+		var i, size = 0;
+		for(i = 0; i < images.length; i++) size += images[i].size;
+		
+		if(size)
+		{
+			size /= 1024 * 1024;
+			size = size.toFixed(2);
+		}
 		
 		return (
 			<ScrollView style={{marginTop: -1, backgroundColor: '#FFF'}}>
@@ -111,6 +238,17 @@ export class AddSpring extends Component
 				</Row>
 				
 				<Divider styleName="line" />
+				
+				{this.renderListView()}
+				
+				<Divider styleName="line" />
+				
+				<Row>
+					<Button styleName="full-width" onPress={() => this.addImage()}>
+						<Icon name="photo" />
+						<Text>ADD PHOTO ({images.length} - {size} MB)</Text>
+					</Button>
+				</Row>
 				
 				<View styleName="horizontal">
 					<Button styleName="full-width" style={{marginRight: 5, marginLeft: 15}} onPress={() => navigateTo({

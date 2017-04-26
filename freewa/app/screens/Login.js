@@ -44,10 +44,14 @@ export class Login extends Component
 		
 		const { navigateTo } = this.props;
 		
+		var data = new FormData();
+		data.append('mobile_login', '');
+		data.append('email', email);
+		data.append('password', password);
+		
 		fetch(CMS_REST, {
-			headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
 			method: 'POST',
-			body: 'mobile_login=&email='+ email +'&password='+ password
+			body: data
 		})
 		.then((response) => response.text())
 		.then((response) => {

@@ -77,10 +77,12 @@ export class Map extends Component
 	
 	fetchMarkers()
 	{
+		var data = new FormData();
+		data.append('get_springs', '');
+		
 		fetch(CMS_REST, {
-			headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
 			method: 'POST',
-			body: 'get_springs='
+			body: data
 		})
 		.then((response) => response.text())
 		.then((response) => {

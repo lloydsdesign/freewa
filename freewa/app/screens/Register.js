@@ -47,10 +47,16 @@ export class Register extends Component
 		
 		const { navigateTo } = this.props;
 		
+		var data = new FormData();
+		data.append('mobile_add_admin', '');
+		data.append('username', username);
+		data.append('password', password);
+		data.append('full_name', fullName);
+		data.append('email', email);
+		
 		fetch(CMS_REST, {
-			headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
 			method: 'POST',
-			body: 'mobile_add_admin=&username='+ username +'&password='+ password +'&full_name='+ fullName +'&email='+ email
+			body: data
 		})
 		.then((response) => response.text())
 		.then((response) => {
