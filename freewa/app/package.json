@@ -1,8 +1,5 @@
 {
   "name": "ricardo.freewa",
   "version": "0.0.1",
-  "description": "Free water project",
-  "dependencies": {
-    "react-native-sensor-manager": "^0.1.10"
-  }
+  "description": "Free water project"
 }
