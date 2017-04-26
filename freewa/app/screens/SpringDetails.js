@@ -147,10 +147,16 @@ export class SpringDetails extends Component
 		const { user, marker } = this.props;
 		this.setState({ rateModal: false });
 		
+		var data = new FormData();
+		data.append('rate_spring', '');
+		data.append('rate_number', rateNumber);
+		data.append('message', rateMessage);
+		data.append('user_id', user.id);
+		data.append('spring_id', marker.id);
+		
 		fetch(CMS_REST, {
-			headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
 			method: 'POST',
-			body: 'rate_spring=&rate_number='+ rateNumber +'&message='+ rateMessage +'&user_id='+ user.id +'&spring_id='+ marker.id
+			body: data
 		})
 		.then((response) => response.text())
 		.then((response) => {
