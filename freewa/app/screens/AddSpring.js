@@ -76,6 +76,11 @@ export class AddSpring extends Component
 				data.append('latitude', currPos.latitude);
 				data.append('longitude', currPos.longitude);
 				
+				featured_image = '';
+				if(images.length) featured_image = images[0].name;
+				
+				data.append('featured_image', featured_image);
+				
 				var i;
 				for(i = 0; i < images.length; i++)
 				{
