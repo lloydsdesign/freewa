@@ -14,15 +14,15 @@ import {
 	TouchableOpacity,
 	Title,
 	Subtitle,
-	Spinner
+	Spinner,
+	DropDownMenu
 } from '@shoutem/ui';
 
 import {
 	ScrollView,
 	ListView,
 	Modal
-}
-from 'react-native';
+} from 'react-native';
 
 import { connect } from 'react-redux';
 import { ext } from '../extension';
@@ -38,6 +38,16 @@ import {
 } from '../const';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+const types = [
+	{
+		title: 'NATURAL',
+		value: 'natural'
+	},
+	{
+		title: 'URBAN',
+		value: 'urban'
+	}
+];
 
 
 export class AddSpring extends Component
@@ -49,6 +59,7 @@ export class AddSpring extends Component
 		this.state = {
 			name: '',
 			description: '',
+			type: types[0],
 			images: [],
 			uploading: false
 		};
@@ -56,11 +67,10 @@ export class AddSpring extends Component
 	
 	submitForm()
 	{
-		const { name, description, images } = this.state;
+		const { name, description, type, images } = this.state;
 		if(name == '') return;
 		
 		const { navigateTo, user } = this.props;
-		const type = 'natural';
 		
 		this.setState({ uploading: true });
 		
@@ -71,7 +81,7 @@ export class AddSpring extends Component
 				data.append('mobile_add_spring', '');
 				data.append('name', name);
 				data.append('description', description);
-				data.append('type', type);
+				data.append('type', type.value);
 				data.append('user_id', user.id);
 				data.append('latitude', currPos.latitude);
 				data.append('longitude', currPos.longitude);
@@ -178,7 +188,7 @@ export class AddSpring extends Component
 	
 	render()
 	{
-		const { images, uploading } = this.state;
+		const { images, type, uploading } = this.state;
 		
 		if(uploading)
 		{
@@ -223,6 +233,19 @@ export class AddSpring extends Component
 						onChangeText={(value) => this.setState({name: value.trim()})}
 						style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
 						placeholder="Name of the New Spring"
+					/>
+				</Row>
+				
+				<Divider styleName="line" />
+				
+				<Row>
+					<DropDownMenu
+						styleName="horizontal"
+						options={types}
+						selectedOption={type}
+						onOptionSelected={(type) => this.setState({ type })}
+						titleProperty="title"
+						valueProperty="value"
 					/>
 				</Row>
 				
