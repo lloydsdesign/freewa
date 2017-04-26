@@ -12,6 +12,7 @@ import {
 	Button,
 	Image,
 	TouchableOpacity,
+	Tile,
 	Title,
 	Subtitle,
 	Spinner,
@@ -167,7 +168,11 @@ export class AddSpring extends Component
 	{
 		return (
 			<TouchableOpacity onPress={() => this.removeImage(image)}>
-				<Image styleName="medium-square" source={{ uri: image.uri }} />
+				<Image styleName="medium-square" source={{ uri: image.uri }}>
+					<Tile>
+						<Image source={require('../assets/icons/remove.png')} />
+					</Tile>
+				</Image>
 			</TouchableOpacity>
 		);
 	}
