@@ -10,9 +10,7 @@ import {
 	TextInput,
 	Icon,
 	Button,
-	Image,
 	TouchableOpacity,
-	Tile,
 	Title,
 	Subtitle,
 	Caption,
@@ -23,7 +21,8 @@ import {
 import {
 	ScrollView,
 	ListView,
-	Modal
+	Modal,
+	Image
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -177,11 +176,11 @@ export class AddSpring extends Component
 		
 		return (
 			<TouchableOpacity onPress={() => this.removeImage(image)}>
-				<Image styleName="medium-square" source={{ uri: image.uri }}>
-					<Tile>
+				<Image style={{ width: 150, height: 150 }} source={{ uri: image.uri }}>
+					<View styleName="overlay vertical v-center h-center fill-parent">
 						<Image source={require('../assets/icons/remove.png')} />
-						<Caption>{size} MB</Caption>
-					</Tile>
+						<Caption style={{ color: '#fff' }}>{size} MB</Caption>
+					</View>
 				</Image>
 			</TouchableOpacity>
 		);

@@ -1,5 +1,8 @@
 {
   "name": "ricardo.freewa",
   "version": "0.0.1",
-  "description": "Free water project"
+  "description": "Free water project",
+  "dependencies": {
+    "turf": "^3.0.14"
+  }
 }
