@@ -32,7 +32,8 @@ import {
 	CMS_REST,
 	getRatingString,
 	getDistance,
-	parseJSON
+	parseJSON,
+	showAlert
 } from '../const';
 
 const fullStar = require('../assets/icons/full-star.png');
@@ -142,7 +143,11 @@ export class SpringDetails extends Component
 	rateSpring()
 	{
 		const { rateNumber, rateMessage } = this.state;
-		if(!rateNumber) return;
+		if(!rateNumber)
+		{
+			showAlert('Rate failed. Tap on stars to choose rate.');
+			return;
+		}
 		
 		const { user, marker } = this.props;
 		this.setState({ rateModal: false });

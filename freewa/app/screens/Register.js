@@ -22,7 +22,8 @@ import { navigateTo } from '@shoutem/core/navigation';
 import {
 	jsonGuard,
 	CMS_REST,
-	parseJSON
+	parseJSON,
+	showAlert
 } from '../const';
 
 
@@ -43,7 +44,11 @@ export class Register extends Component
 	submitForm()
 	{
 		const {username, password, fullName, email} = this.state;
-		if(username == '' || password == '' || fullName == '' || email == '') return;
+		if(username == '' || password == '' || fullName == '' || email == '')
+		{
+			showAlert('Registration failed. Please fill all input fields.');
+			return;
+		}
 		
 		const { navigateTo } = this.props;
 		
@@ -69,6 +74,7 @@ export class Register extends Component
 					props: { user: response.data }
 				});
 			}
+			else showAlert('Registration failed.');
 		});
 	}
 	

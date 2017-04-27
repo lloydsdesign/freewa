@@ -36,7 +36,8 @@ import {
 	jsonGuard,
 	CMS_REST,
 	MAX_UPLOAD_SIZE,
-	parseJSON
+	parseJSON,
+	showAlert
 } from '../const';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -70,7 +71,11 @@ export class AddSpring extends Component
 	submitForm()
 	{
 		const { name, description, type, images } = this.state;
-		if(name == '') return;
+		if(name == '')
+		{
+			showAlert('Add spring failed. Please fill name field.');
+			return;
+		}
 		
 		const { navigateTo, user } = this.props;
 		

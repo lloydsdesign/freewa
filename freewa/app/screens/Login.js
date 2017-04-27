@@ -21,7 +21,8 @@ import { navigateTo } from '@shoutem/core/navigation';
 import {
 	jsonGuard,
 	CMS_REST,
-	parseJSON
+	parseJSON,
+	showAlert
 } from '../const';
 
 
@@ -40,7 +41,11 @@ export class Login extends Component
 	submitForm()
 	{
 		const {email, password} = this.state;
-		if(email == '' || password == '') return;
+		if(email == '' || password == '')
+		{
+			showAlert('Login failed. Please fill all input fields.');
+			return;
+		}
 		
 		const { navigateTo } = this.props;
 		
@@ -64,6 +69,7 @@ export class Login extends Component
 					props: { user: response.data }
 				});
 			}
+			else showAlert('Login failed. Invalid e-mail or password.');
 		});
 	}
 	
