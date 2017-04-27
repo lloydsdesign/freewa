@@ -206,6 +206,8 @@ export class Map extends Component
 
 	render()
 	{
+		const { markers, selectedMarker } = this.state;
+		
 		return (
 		  <Screen styleName="full-screen">
 			<NavigationBar styleName="no-border" title="SPRINGS" />
@@ -217,11 +219,11 @@ export class Map extends Component
 				showsUserLocation
 				followsUserLocation
 				onPress={() => {
-					if(this.state.selectedMarker) this.setState({ selectedMarker: null });
+					if(selectedMarker) this.setState({ selectedMarker: null });
 				}}
 				style={{flex: 1}}
 			>
-				{this.state.markers.map((marker, i) => (
+				{markers.map((marker, i) => (
 					<MapView.Marker
 						key={i}
 						coordinate={{
@@ -253,10 +255,6 @@ function adjustMarkerValues(markers)
 	
 	for(i = 0; i < markers.length; i++)
 	{
-		markers[i].latitude = parseFloat(markers[i].latitude);
-		markers[i].longitude = parseFloat(markers[i].longitude);
-		markers[i].ratingCount = parseInt(markers[i].ratingCount, 10);
-		markers[i].rating = parseFloat(markers[i].rating);
 		markers[i].rating = markers[i].rating.toFixed(1);
 		markers[i].icon = markerImage;
 		
