@@ -4,7 +4,7 @@ const turf = require('turf');
 const jsonGuard = String.fromCharCode(0);
 const CMS_BASE = 'http://freewa-back.lloyds-design.hr/';
 const CMS_REST = CMS_BASE +'manage.php';
-const MAX_UPLOAD_SIZE = 1024 * 1024 * 2;
+const MAX_UPLOAD_SIZE = 1024 * 1024 * 5;
 
 
 function showAlert(message)
