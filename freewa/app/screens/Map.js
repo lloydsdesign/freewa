@@ -135,7 +135,7 @@ export class Map extends Component
 	
 	renderUserButtons()
 	{
-		if(!this.state.user) return this.renderLogoutButton();
+		if(this.state.user) return this.renderLogoutButton();
 		else return this.renderLoginButton();
 	}
 	
