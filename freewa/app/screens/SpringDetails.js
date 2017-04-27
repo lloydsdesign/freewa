@@ -256,7 +256,7 @@ export class SpringDetails extends Component
 	
 	renderLogin()
 	{
-		const { user, navigateTo } = this.props;
+		const { user, marker, navigateTo } = this.props;
 		
 		if(user)
 		{
@@ -271,7 +271,10 @@ export class SpringDetails extends Component
 		return (
 			<Button styleName="full-width" onPress={() => navigateTo({
 				screen: ext('Login'),
-				props: { returnScreen: ext('SpringDetails') }
+				props: {
+					marker,
+					returnScreen: ext('SpringDetails')
+				}
 			})}>
 				<Icon name="play" />
 				<Text>LOGIN TO RATE</Text>

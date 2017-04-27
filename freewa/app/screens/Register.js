@@ -71,7 +71,10 @@ export class Register extends Component
 			{
 				navigateTo({
 					screen: this.props.returnScreen,
-					props: { user: response.data }
+					props: {
+						user: response.data,
+						marker: this.props.marker ? this.props.marker : null
+					}
 				});
 			}
 			else showAlert('Registration failed.');

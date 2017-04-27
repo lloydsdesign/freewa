@@ -66,7 +66,10 @@ export class Login extends Component
 			{
 				navigateTo({
 					screen: this.props.returnScreen,
-					props: { user: response.data }
+					props: {
+						user: response.data,
+						marker: this.props.marker ? this.props.marker : null
+					}
 				});
 			}
 			else showAlert('Login failed. Invalid e-mail or password.');
@@ -121,6 +124,7 @@ export class Login extends Component
 						screen: ext('Register'),
 						props: { returnScreen: this.props.returnScreen }
 					})}>
+						<Icon name="add-friend" />
 						<Text>NOT A MEMBER? REGISTER</Text>
 					</Button>
 				</Row>
