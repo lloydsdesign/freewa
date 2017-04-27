@@ -86,7 +86,7 @@ export class Register extends Component
 		const { navigateTo } = this.props;
 		
 		return (
-			<ScrollView style={{marginTop: -1, backgroundColor: '#FFF'}}>
+			<ScrollView style={{marginTop: -1, backgroundColor: '#FFF'}} keyboardShouldPersistTaps={true}>
 				<NavigationBar title="REGISTER" />
 
 				<Row style={{marginTop: 0, paddingTop: 10}}>

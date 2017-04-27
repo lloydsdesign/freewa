@@ -14,11 +14,13 @@ import {
   Text
 } from '@shoutem/ui';
 
+import { Keyboard } from 'react-native';
 import { InlineMap } from '@shoutem/ui-addons';
 import { connect } from 'react-redux';
 import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../extension';
+
 /*import { DeviceEventEmitter } from 'react-native';
 import { SensorManager  } from 'NativeModules';*/
 
@@ -51,6 +53,7 @@ export class Compass extends Component
 	componentWillMount()
 	{
 		const { marker } = this.props;
+		Keyboard.dismiss();
 		
 		/*SensorManager.startOrientation(1000);
 		this.eventID = DeviceEventEmitter.addListener('Orientation', (data) => {

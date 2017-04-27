@@ -5,7 +5,8 @@ import React, {
 import {
   ScrollView,
   Modal,
-  TextInput
+  TextInput,
+  Keyboard
 } from 'react-native';
 
 import {
@@ -59,6 +60,8 @@ export class SpringDetails extends Component
 	
 	componentWillMount()
 	{
+		Keyboard.dismiss();
+		
 		navigator.geolocation.getCurrentPosition((position) => {
 				this.setState({ lastPosition: position.coords });
 			},

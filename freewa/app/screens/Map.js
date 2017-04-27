@@ -16,7 +16,7 @@ import {
 	Text
 } from '@shoutem/ui';
 
-import { Dimensions } from 'react-native';
+import { Keyboard } from 'react-native';
 import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
 import { NavigationBar } from '@shoutem/ui/navigation';
@@ -55,6 +55,8 @@ export class Map extends Component
 	
 	componentWillMount()
 	{
+		Keyboard.dismiss();
+		
 		navigator.geolocation.getCurrentPosition((position) => {
 				this.setState({ lastPosition: position.coords });
 			},
@@ -204,8 +206,6 @@ export class Map extends Component
 
 	render()
 	{
-		const { width, height } = Dimensions.get('window');
-
 		return (
 		  <Screen styleName="full-screen">
 			<NavigationBar styleName="no-border" title="SPRINGS" />
