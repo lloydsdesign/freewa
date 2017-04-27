@@ -67,9 +67,12 @@ export class Map extends Component
 		this.fetchMarkers();
 		
 		this.watchID = navigator.geolocation.watchPosition((position) => {
-			this.setState({ lastPosition: position.coords });
-			this.pickNearestMarker();
-		});
+				this.setState({ lastPosition: position.coords });
+				this.pickNearestMarker();
+			},
+			(error) => console.log(JSON.stringify(error)),
+			{enableHighAccuracy: true}
+		);
 	}
 	
 	componentWillUnmount()

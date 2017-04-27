@@ -83,13 +83,16 @@ export class Compass extends Component
 		);
 		
 		this.watchID = navigator.geolocation.watchPosition((position) => {
-			this.setState({
-				lastPosition: position.coords,
-				azimuth: getAzimuth(position.coords, marker)
-			});
-			
-			this.calculateDistance();
-		});
+				this.setState({
+					lastPosition: position.coords,
+					azimuth: getAzimuth(position.coords, marker)
+				});
+				
+				this.calculateDistance();
+			},
+			(error) => console.log(JSON.stringify(error)),
+			{enableHighAccuracy: true}
+		);
 	}
 	
 	componentWillUnmount()

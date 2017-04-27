@@ -70,9 +70,12 @@ export class SpringDetails extends Component
 		);
 		
 		this.watchID = navigator.geolocation.watchPosition((position) => {
-			this.setState({ lastPosition: position.coords });
-			this.calculateDistance();
-		});
+				this.setState({ lastPosition: position.coords });
+				this.calculateDistance();
+			},
+			(error) => console.log(JSON.stringify(error)),
+			{enableHighAccuracy: true}
+		);
 	}
 	
 	componentWillUnmount()
