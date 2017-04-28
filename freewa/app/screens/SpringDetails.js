@@ -349,6 +349,14 @@ export class SpringDetails extends Component
 				
 				{this.renderDistance()}
 				
+				<Row>
+					<View styleName="horizontal h-center v-center">
+						<Title>{marker.title.toUpperCase()}</Title>
+					</View>
+				</Row>
+				
+				<Divider styleName="line" />
+				
 				<Row style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
 					<View style={{flex: 0.4}} styleName="vertical h-center v-center">
 						<Text style={{color: '#00B2C1'}}>TYPE</Text>
