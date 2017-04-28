@@ -34,7 +34,8 @@ import {
 	getRatingString,
 	getDistance,
 	parseJSON,
-	showAlert
+	showAlert,
+	renderNavLogo
 } from '../const';
 
 const fullStar = require('../assets/icons/full-star.png');
@@ -294,6 +295,22 @@ export class SpringDetails extends Component
 			<Image styleName="large-banner" source={{ uri: image }} />
 		);
 	}
+	
+	renderNavHome()
+	{
+		const { navigateTo, user } = this.props;
+		
+		return (
+			<View styleName="container" virtual>
+				<TouchableOpacity onPress={() => navigateTo({
+					screen: ext('Map'),
+					props: { user }
+				})}>
+					<Image style={{ width: 32, height: 32 }} source={require('../assets/icons/home.png')} />
+				</TouchableOpacity>
+			</View>
+		);
+	}
 
 	render()
 	{
@@ -306,7 +323,11 @@ export class SpringDetails extends Component
 		  
 		return (
 			<ScrollView style={{marginTop: -1}}>
-				<NavigationBar title={marker.title.toUpperCase()} />
+				<NavigationBar
+					renderLeftComponent={() => { return null }}
+					renderTitleComponent={() => renderNavLogo()}
+					renderRightComponent={() => this.renderNavHome()}
+				/>
 				
 				<ListView
 					horizontal

@@ -11,7 +11,6 @@ import {
 	Row,
 	Title,
 	Subtitle,
-	Button,
 	Icon,
 	Text
 } from '@shoutem/ui';
@@ -32,7 +31,8 @@ import {
 	CMS_REST,
 	parseJSON,
 	getRatingString,
-	getDistance
+	getDistance,
+	renderNavLogo
 } from '../const';
 
 
@@ -133,7 +133,7 @@ export class Map extends Component
 		this.setState({ hasLoaded: true });
 	}
 	
-	renderUserButtons()
+	renderNavRight()
 	{
 		if(this.state.user) return this.renderLogoutButton();
 		else return this.renderLoginButton();
@@ -144,14 +144,13 @@ export class Map extends Component
 		const { navigateTo } = this.props;
 		
 		return (
-			<View styleName="h-center">
-				<Button onPress={() => navigateTo({
+			<View styleName="container" virtual>
+				<TouchableOpacity onPress={() => navigateTo({
 					screen: ext('Login'),
 					props: { returnScreen: ext('AddSpring') }
 				})}>
-					<Icon name="add-to-favorites-full" />
-					<Text>ADD SPRING</Text>
-				</Button>
+					<Image style={{ width: 32, height: 32 }} source={require('../assets/icons/plus.png')} />
+				</TouchableOpacity>
 			</View>
 		);
 	}
@@ -161,17 +160,16 @@ export class Map extends Component
 		const { navigateTo } = this.props;
 		
 		return (
-			<View styleName="h-center">
-				<Button onPress={() => navigateTo({
+			<View styleName="container" virtual>
+				<TouchableOpacity onPress={() => navigateTo({
 					screen: ext('AddSpring'),
 					props: {
 						returnScreen: ext('Map'),
 						user: this.state.user
 					}
 				})}>
-					<Icon name="add-to-favorites-full" />
-					<Text>ADD SPRING</Text>
-				</Button>
+					<Image style={{ width: 32, height: 32 }} source={require('../assets/icons/plus.png')} />
+				</TouchableOpacity>
 			</View>
 		);
 	}
@@ -213,7 +211,12 @@ export class Map extends Component
 		
 		return (
 		  <Screen styleName="full-screen">
-			<NavigationBar styleName="no-border" title="SPRINGS" />
+			<NavigationBar
+				styleName="no-border"
+				renderLeftComponent={() => { return null }}
+				renderTitleComponent={() => renderNavLogo()}
+				renderRightComponent={() => this.renderNavRight()}
+			/>
 			
 			<MapView
 				ref="map"
@@ -241,7 +244,6 @@ export class Map extends Component
 			</MapView>
 			
 			{this.renderSelectedMarker()}
-			{this.renderUserButtons()}
 		  </Screen>
 		);
 	}

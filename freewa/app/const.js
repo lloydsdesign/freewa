@@ -1,4 +1,14 @@
+import React, {
+	Component
+} from 'react';
+
 import { Alert } from 'react-native';
+
+import {
+	View,
+	Image
+} from '@shoutem/ui';
+
 const turf = require('turf');
 
 const jsonGuard = String.fromCharCode(0);
@@ -6,6 +16,15 @@ const CMS_BASE = 'http://freewa-back.lloyds-design.hr/';
 const CMS_REST = CMS_BASE +'manage.php';
 const MAX_UPLOAD_SIZE = 1024 * 1024 * 5;
 
+
+function renderNavLogo()
+{
+	return (
+		<View styleName="container" virtual>
+			<Image style={{ width: 160, height: 30 }} source={require('./assets/icons/logo.png')} />
+		</View>
+	);
+}
 
 function showAlert(message)
 {
@@ -65,6 +84,7 @@ function getDistance(point1, point2)
 }
 
 export {
+	renderNavLogo,
 	showAlert,
 	jsonGuard,
 	CMS_BASE,

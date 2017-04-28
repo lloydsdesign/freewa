@@ -36,7 +36,8 @@ import {
 	CMS_REST,
 	MAX_UPLOAD_SIZE,
 	parseJSON,
-	showAlert
+	showAlert,
+	renderNavLogo
 } from '../const';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -200,6 +201,22 @@ export class AddSpring extends Component
 		);
 	}
 	
+	renderNavHome()
+	{
+		const { navigateTo, user } = this.props;
+		
+		return (
+			<View styleName="container" virtual>
+				<TouchableOpacity onPress={() => navigateTo({
+					screen: ext('Map'),
+					props: { user }
+				})}>
+					<Image style={{ width: 32, height: 32 }} source={require('../assets/icons/home.png')} />
+				</TouchableOpacity>
+			</View>
+		);
+	}
+	
 	render()
 	{
 		const { images, type, uploading } = this.state;
@@ -234,7 +251,11 @@ export class AddSpring extends Component
 		
 		return (
 			<ScrollView style={{marginTop: -1, backgroundColor: '#FFF'}}>
-				<NavigationBar title="ADD SPRING" />
+				<NavigationBar
+					renderLeftComponent={() => { return null }}
+					renderTitleComponent={() => renderNavLogo()}
+					renderRightComponent={() => this.renderNavHome()}
+				/>
 
 				<Row style={{marginTop: 0, paddingTop: 10}}>
 					<TextInput

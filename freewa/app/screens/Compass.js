@@ -29,7 +29,8 @@ const compassImage = require('../assets/icons/compass-blue.png');
 import {
 	getRatingString,
 	getAzimuth,
-	getDistance
+	getDistance,
+	renderNavLogo
 } from '../const';
 
 
@@ -134,6 +135,22 @@ export class Compass extends Component
 			</Row>
 		);
 	}
+	
+	renderNavHome()
+	{
+		const { navigateTo, user } = this.props;
+		
+		return (
+			<View styleName="container" virtual>
+				<TouchableOpacity onPress={() => navigateTo({
+					screen: ext('Map'),
+					props: { user }
+				})}>
+					<Image style={{ width: 32, height: 32 }} source={require('../assets/icons/home.png')} />
+				</TouchableOpacity>
+			</View>
+		);
+	}
 
 	render()
 	{
@@ -145,8 +162,12 @@ export class Compass extends Component
 		else rating = 'UNRATED';
 		  
 		return (
-			<Screen styleName="full-screen">
-				<NavigationBar title={marker.title.toUpperCase()} />
+			<Screen styleName="full-screen">	
+				<NavigationBar
+					renderLeftComponent={() => { return null }}
+					renderTitleComponent={() => renderNavLogo()}
+					renderRightComponent={() => this.renderNavHome()}
+				/>
 				
 				<View styleName="h-center" style={{shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
 					<TouchableOpacity onPress={() => navigateTo({

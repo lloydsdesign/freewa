@@ -9,7 +9,10 @@ import {
 	TextInput,
 	Icon,
 	Button,
-	Subtitle
+	Subtitle,
+	View,
+	Image,
+	TouchableOpacity
 } from '@shoutem/ui';
 
 import { ScrollView } from 'react-native';
@@ -22,7 +25,8 @@ import {
 	jsonGuard,
 	CMS_REST,
 	parseJSON,
-	showAlert
+	showAlert,
+	renderNavLogo
 } from '../const';
 
 
@@ -76,13 +80,33 @@ export class Login extends Component
 		});
 	}
 	
+	renderNavHome()
+	{
+		const { navigateTo, user } = this.props;
+		
+		return (
+			<View styleName="container" virtual>
+				<TouchableOpacity onPress={() => navigateTo({
+					screen: ext('Map'),
+					props: { user }
+				})}>
+					<Image style={{ width: 32, height: 32 }} source={require('../assets/icons/home.png')} />
+				</TouchableOpacity>
+			</View>
+		);
+	}
+	
 	render()
 	{
 		const { navigateTo } = this.props;
 		
 		return (
 			<ScrollView style={{marginTop: -1, backgroundColor: '#FFF'}} keyboardShouldPersistTaps={true}>
-				<NavigationBar title="LOGIN" />
+				<NavigationBar
+					renderLeftComponent={() => { return null }}
+					renderTitleComponent={() => renderNavLogo()}
+					renderRightComponent={() => this.renderNavHome()}
+				/>
 
 				<Row style={{marginTop: 0, paddingTop: 10}}>
 					<TextInput
