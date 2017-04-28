@@ -1,16 +1,16 @@
 import React, {
-  Component
+	Component
 } from 'react';
 
 import {
-  Text,
-  Divider,
-  Row,
-  View,
-  TextInput,
-  Icon,
-  Button,
-  Subtitle
+	Text,
+	Divider,
+	Row,
+	View,
+	TextInput,
+	Icon,
+	Button,
+	Subtitle
 } from '@shoutem/ui';
 
 import { ScrollView } from 'react-native';

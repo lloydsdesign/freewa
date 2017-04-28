@@ -1,17 +1,17 @@
 import React, {
-  Component
+	Component
 } from 'react';
 
 import {
-  Screen,
-  Image,
-  Row,
-  View,
-  TouchableOpacity,
-  Tile,
-  Title,
-  Subtitle,
-  Text
+	Screen,
+	Image,
+	Row,
+	View,
+	TouchableOpacity,
+	Tile,
+	Title,
+	Subtitle,
+	Text
 } from '@shoutem/ui';
 
 import { Keyboard } from 'react-native';

@@ -1,26 +1,26 @@
 import React, {
-  Component
+	Component
 } from 'react';
 
 import {
-  ScrollView,
-  Modal,
-  TextInput,
-  Keyboard
+	ScrollView,
+	Modal,
+	TextInput,
+	Keyboard
 } from 'react-native';
 
 import {
-  Row,
-  Text,
-  Icon,
-  Button,
-  View,
-  Image,
-  Divider,
-  ListView,
-  Title,
-  Subtitle,
-  TouchableOpacity
+	Row,
+	Text,
+	Icon,
+	Button,
+	View,
+	Image,
+	Divider,
+	ListView,
+	Title,
+	Subtitle,
+	TouchableOpacity
 } from '@shoutem/ui';
 
 import { InlineMap } from '@shoutem/ui-addons';
