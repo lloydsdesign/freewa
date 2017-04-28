@@ -6,6 +6,7 @@ import {
 	Text,
 	Divider,
 	Row,
+	Title,
 	View,
 	TextInput,
 	Icon,
@@ -111,8 +112,16 @@ export class Register extends Component
 					renderTitleComponent={() => renderNavLogo()}
 					renderRightComponent={() => this.renderNavHome()}
 				/>
-
+				
 				<Row style={{marginTop: 0, paddingTop: 10}}>
+					<View styleName="horizontal h-center">
+						<Title>LOGIN</Title>
+					</View>
+				</Row>
+				
+				<Divider styleName="line" />
+
+				<Row>
 					<TextInput
 						autoCapitalize="none"
 						autoCorrect={false}
