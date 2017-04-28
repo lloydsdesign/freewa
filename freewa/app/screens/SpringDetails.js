@@ -49,6 +49,7 @@ export class SpringDetails extends Component
 		super(props);
 		
 		this.state = {
+			marker: this.props.marker,
 			lastPosition: null,
 			distance: '',
 			rateModal: false,
@@ -119,7 +120,7 @@ export class SpringDetails extends Component
 	
 	renderRating()
 	{
-		const { marker } = this.props;
+		const { marker } = this.state;
 		
 		if(!marker.ratingCount)
 		{
@@ -156,7 +157,9 @@ export class SpringDetails extends Component
 			return;
 		}
 		
-		const { user, marker } = this.props;
+		const { user } = this.props;
+		var { marker } = this.state;
+		
 		this.setState({ rateModal: false });
 		
 		var data = new FormData();
@@ -173,6 +176,14 @@ export class SpringDetails extends Component
 		.then((response) => response.text())
 		.then((response) => {
 			response = parseJSON(response);
+			
+			if(response.status)
+			{
+				marker.rating = response.data.rating.toFixed(1);
+				marker.ratingCount = response.data.ratingCount;
+				
+				this.setState({ marker });
+			}
 		});
 	}
 	
@@ -314,7 +325,9 @@ export class SpringDetails extends Component
 
 	render()
 	{
-		const { marker, navigateTo } = this.props;
+		const { navigateTo } = this.props;
+		const { marker } = this.state;
+		
 		const position = {
 			latitude: marker.latitude,
 			longitude: marker.longitude,
