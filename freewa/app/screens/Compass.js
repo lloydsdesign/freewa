@@ -164,8 +164,7 @@ export class Compass extends Component
 		return (
 			<Screen styleName="full-screen">	
 				<NavigationBar
-					renderLeftComponent={() => { return null }}
-					renderTitleComponent={() => renderNavLogo()}
+					renderLeftComponent={() => renderNavLogo()}
 					renderRightComponent={() => this.renderNavHome()}
 				/>
 				

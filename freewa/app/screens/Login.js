@@ -104,8 +104,7 @@ export class Login extends Component
 		return (
 			<ScrollView style={{marginTop: -1, backgroundColor: '#FFF'}} keyboardShouldPersistTaps={true}>
 				<NavigationBar
-					renderLeftComponent={() => { return null }}
-					renderTitleComponent={() => renderNavLogo()}
+					renderLeftComponent={() => renderNavLogo()}
 					renderRightComponent={() => this.renderNavHome()}
 				/>
 				

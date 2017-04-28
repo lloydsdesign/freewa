@@ -337,8 +337,7 @@ export class SpringDetails extends Component
 		return (
 			<ScrollView style={{marginTop: -1}}>
 				<NavigationBar
-					renderLeftComponent={() => { return null }}
-					renderTitleComponent={() => renderNavLogo()}
+					renderLeftComponent={() => renderNavLogo()}
 					renderRightComponent={() => this.renderNavHome()}
 				/>
 				

@@ -213,8 +213,7 @@ export class Map extends Component
 		  <Screen styleName="full-screen">
 			<NavigationBar
 				styleName="no-border"
-				renderLeftComponent={() => { return null }}
-				renderTitleComponent={() => renderNavLogo()}
+				renderLeftComponent={() => renderNavLogo()}
 				renderRightComponent={() => this.renderNavRight()}
 			/>
 			
