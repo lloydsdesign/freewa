@@ -71,9 +71,9 @@ export class AddSpring extends Component
 	submitForm()
 	{
 		const { name, description, type, images } = this.state;
-		if(name == '')
+		if(name == '' || !images.length)
 		{
-			showAlert('Add spring failed. Please fill name field.');
+			showAlert('Add spring failed. Please fill name field and add at least one image.');
 			return;
 		}
 		
@@ -92,11 +92,7 @@ export class AddSpring extends Component
 				data.append('user_id', user.id);
 				data.append('latitude', currPos.latitude);
 				data.append('longitude', currPos.longitude);
-				
-				featured_image = '';
-				if(images.length) featured_image = images[0].name;
-				
-				data.append('featured_image', featured_image);
+				data.append('featured_image', images[0].name);
 				
 				var i;
 				for(i = 0; i < images.length; i++)
