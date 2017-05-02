@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "Free water project",
   "dependencies": {
-    "@turf/bearing": "^4.1.0",
-    "@turf/distance": "^4.1.0",
+    "@turf/bearing": "^4.2.0",
+    "@turf/distance": "^4.2.0",
     "turf": "^3.0.14"
   }
 }
