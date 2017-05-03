@@ -82,7 +82,7 @@ export class AddSpring extends Component
 		this.setState({ uploading: true });
 		
 		navigator.geolocation.getCurrentPosition((position) => {
-				const currPos = position.coords;
+				var currPos = position.coords;
 				
 				var data = new FormData();
 				data.append('mobile_add_spring', '');
@@ -90,9 +90,16 @@ export class AddSpring extends Component
 				data.append('description', description);
 				data.append('type', type.value);
 				data.append('user_id', user.id);
+				data.append('featured_image', images[0].name);
+				
+				if(images[0].latitude && images[0].longitude)
+				{
+					currPos.latitude = images[0].latitude;
+					currPos.longitude = images[0].longitude;
+				}
+				
 				data.append('latitude', currPos.latitude);
 				data.append('longitude', currPos.longitude);
-				data.append('featured_image', images[0].name);
 				
 				var i;
 				for(i = 0; i < images.length; i++)
@@ -118,6 +125,7 @@ export class AddSpring extends Component
 							props: { user: user }
 						});
 					}
+					else showAlert('Add spring failed.');
 				});
 			},
 			(error) => console.log(JSON.stringify(error)),
