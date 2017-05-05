@@ -217,7 +217,7 @@ export class AddSpring extends Component
 					screen: ext('Map'),
 					props: { user }
 				})}>
-					<Image style={{ width: 32, height: 32 }} source={require('../assets/icons/home.png')} />
+					<Image style={{ width: 32, height: 32, marginRight: 10 }} source={require('../assets/icons/home.png')} />
 				</TouchableOpacity>
 			</View>
 		);
