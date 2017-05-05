@@ -110,7 +110,7 @@ export class Login extends Component
 				
 				<Row style={{marginTop: 0, paddingTop: 10}}>
 					<View styleName="horizontal h-center">
-						<Title>LOGIN</Title>
+						<Title style={{color: '#00B2C1'}}>LOGIN</Title>
 					</View>
 				</Row>
 				
