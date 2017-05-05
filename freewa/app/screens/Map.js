@@ -149,7 +149,7 @@ export class Map extends Component
 					screen: ext('Login'),
 					props: { returnScreen: ext('AddSpring') }
 				})}>
-					<Image style={{ width: 32, height: 32 }} source={require('../assets/icons/plus.png')} />
+					<Image style={{ width: 32, height: 32, marginRight: 10 }} source={require('../assets/icons/plus.png')} />
 				</TouchableOpacity>
 			</View>
 		);

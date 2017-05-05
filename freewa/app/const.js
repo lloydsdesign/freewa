@@ -21,7 +21,7 @@ function renderNavLogo()
 {
 	return (
 		<View styleName="container" virtual>
-			<Image style={{ width: 160, height: 30 }} source={require('./assets/icons/logo.png')} />
+			<Image style={{ width: 160, height: 30, marginLeft: 10 }} source={require('./assets/icons/logo.png')} />
 		</View>
 	);
 }
