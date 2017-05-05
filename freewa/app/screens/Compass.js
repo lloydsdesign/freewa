@@ -167,6 +167,11 @@ export class Compass extends Component
 					renderLeftComponent={() => renderNavLogo()}
 					renderRightComponent={() => this.renderNavHome()}
 				/>
+				<View style={{flex: 1}}>
+					<Image styleName="large-square" source={compassImage} style={{marginTop: 100, transform: [{rotate: rotation +'deg'}]}} />
+				
+					{this.renderDistance()}
+				</View>
 				
 				<View styleName="h-center" style={{shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
 					<TouchableOpacity onPress={() => navigateTo({
@@ -184,9 +189,6 @@ export class Compass extends Component
 					</TouchableOpacity>
 				</View>
 				
-				<Image styleName="large-square" source={compassImage} style={{transform: [{rotate: rotation +'deg'}]}} />
-				
-				{this.renderDistance()}
 			</Screen>
 		);
 	}
