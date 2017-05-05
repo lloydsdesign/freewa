@@ -159,7 +159,9 @@ export class AddSpring extends Component
 				name: response.fileName,
 				size: response.fileSize,
 				uri: response.uri,
-				data: response.data
+				data: response.data,
+				latitude: response.latitude,
+				longitude: response.longitude
 			};
 			
 			this.setState({ images });
