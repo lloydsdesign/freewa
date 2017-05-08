@@ -35,6 +35,8 @@ import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../extension';
 
 import {
+	fullStar,
+	emptyStar,
 	CMS_REST,
 	getRatingString,
 	getDistance,
@@ -42,9 +44,6 @@ import {
 	showAlert,
 	renderNavLogo
 } from '../const';
-
-const fullStar = require('../assets/icons/full-star.png');
-const emptyStar = require('../assets/icons/empty-star.png');
 
 
 export class SpringDetails extends Component

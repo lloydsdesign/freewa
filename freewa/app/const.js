@@ -120,5 +120,7 @@ export {
 	getRatingString,
 	getRatingStars,
 	getAzimuth,
-	getDistance
+	getDistance,
+	fullStar,
+	emptyStar
 };
