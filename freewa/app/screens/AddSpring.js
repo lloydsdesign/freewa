@@ -78,7 +78,6 @@ export class AddSpring extends Component
 		}
 		
 		const { navigateTo, user } = this.props;
-		
 		this.setState({ uploading: true });
 		
 		navigator.geolocation.getCurrentPosition((position) => {
@@ -92,7 +91,7 @@ export class AddSpring extends Component
 				data.append('user_id', user.id);
 				data.append('featured_image', images[0].name);
 				
-				if(images[0].latitude && images[0].longitude)
+				if('latitude' in images[0] && 'longitude' in images[0] && images[0].latitude && images[0].longitude)
 				{
 					currPos.latitude = images[0].latitude;
 					currPos.longitude = images[0].longitude;
@@ -109,7 +108,6 @@ export class AddSpring extends Component
 				}
 				
 				fetch(CMS_REST, {
-					headers: new Headers({'Content-Type': 'multipart/form-data'}),
 					method: 'POST',
 					body: data
 				})
@@ -128,10 +126,14 @@ export class AddSpring extends Component
 					else showAlert('Add spring failed.');
 				});
 			},
-			(error) => console.log(JSON.stringify(error)),
+			(error) => {
+				showAlert('Add spring failed. Are your geolocation services turned on?');
+				this.setState({ uploading: false });
+			},
 			{enableHighAccuracy: true}
 		);
 	}
+	
 	
 	addImage()
 	{
