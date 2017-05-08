@@ -324,6 +324,24 @@ export class SpringDetails extends Component
 		);
 	}
 	
+	renderDescription()
+	{
+		const { marker } = this.state;
+		if(marker.description == "") return null;
+		
+		return (
+			<Divider styleName="line" />
+			&&
+			<Row>
+				<View style={{flex: 1}}>
+					<Text style={{color: '#00B2C1'}}>SPRING DESCRIPTION</Text>
+					<Text />
+					<Text style={{fontSize: 13}}>{marker.description}</Text>
+				</View>
+			</Row>
+		);
+	}
+	
 	renderRow(image)
 	{
 		return (
@@ -401,16 +419,7 @@ export class SpringDetails extends Component
 				
 				{this.renderLogin()}
 				{this.renderRateModal()}
-				
-				<Divider styleName="line" />
-				
-				<Row>
-					<View style={{flex: 1}}>
-						<Text style={{color: '#00B2C1'}}>SPRING DESCRIPTION</Text>
-						<Text />
-						<Text style={{fontSize: 13}}>{marker.description}</Text>
-					</View>
-				</Row>
+				{this.renderDescription()}
 
 				<View styleName="large-banner">
 					<InlineMap
