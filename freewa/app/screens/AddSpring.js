@@ -278,11 +278,13 @@ export class AddSpring extends Component
 					/>
 				</Row>
 				
+				
 				<Divider styleName="line" />
 				
-				<Row style ={{margin: 20}}>
+				<Row style ={{paddingRight: 20}}>
+					<Subtitle>SPRING TYPE </Subtitle>
 					<DropDownMenu
-						styleName="horizontal"
+						style={{backgroundColor: '#ddd'}}
 						options={types}
 						selectedOption={type}
 						onOptionSelected={(type) => this.setState({ type })}
@@ -320,7 +322,7 @@ export class AddSpring extends Component
 					</Button>
 				</Row>
 				
-				<View styleName="horizontal">
+				<View styleName="horizontal" style={{marginBottom: 250}}>
 					<Button styleName="full-width" style={{marginRight: 5, marginLeft: 15}} onPress={() => navigateTo({
 						screen: ext('Map'),
 						props: { user: user }
