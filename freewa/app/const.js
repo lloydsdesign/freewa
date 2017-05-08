@@ -84,7 +84,7 @@ function getRatingStars(rating)
 			else img = emptyStar;
 		}
 		
-		stars.push(<Image key={i - 1} source={img} />);
+		stars.push(<Image style={{height: 16, width: 16, margin: 4}} key={i - 1} source={img} />);
 	}
 	
 	return stars;

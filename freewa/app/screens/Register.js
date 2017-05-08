@@ -174,7 +174,7 @@ export class Register extends Component
 					/>
 				</Row>
 				
-				<View styleName="horizontal" style={{backgroundColor: '#FFF'}}>
+				<View styleName="horizontal" style={{backgroundColor: '#FFF', marginBottom: 200}}>
 					<Button styleName="full-width" style={{marginRight: 5, marginLeft: 15}}onPress={() => navigateTo({
 						screen: ext('Map')
 					})}>

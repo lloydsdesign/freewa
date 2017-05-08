@@ -251,9 +251,9 @@ export class SpringDetails extends Component
 				visible={rateModal}
 				onRequestClose={() => this.setState({ rateModal: false })}
 			>
-				<View style={{ flex: 1 }} styleName="vertical h-center">
+				<View style={{ flex: 1, marginTop: 20 }} styleName="vertical h-center">
 					<Title>RATE SPRING</Title>
-					<Subtitle>{marker.title.toUpperCase()}</Subtitle>
+					<Subtitle style={{marginBottom: 10}}>{marker.title.toUpperCase()}</Subtitle>
 					
 					<Divider styleName="line" />
 					
@@ -281,12 +281,12 @@ export class SpringDetails extends Component
 				</View>
 				
 				<View styleName="horizontal" style={{backgroundColor: '#FFF'}}>
-					<Button styleName="full-width" onPress={() => this.rateSpring()}>
+					<Button styleName="full-width" style={{margin: 10, backgroundColor: '#FAA21B'}} onPress={() => this.rateSpring()}>
 						<Icon name="like" />
 						<Text>RATE</Text>
 					</Button>
 					
-					<Button styleName="full-width" onPress={() => this.setState({ rateModal: false })}>
+					<Button styleName="full-width" style={{margin: 10}} onPress={() => this.setState({ rateModal: false })}>
 						<Icon name="close" />
 						<Text>CANCEL</Text>
 					</Button>
@@ -302,22 +302,22 @@ export class SpringDetails extends Component
 		if(user)
 		{
 			return (
-				<Button styleName="full-width" onPress={() => this.setState({ rateModal: true })}>
-					<Icon name="like" />
+				<Button style={{margin: 10, padding: 10, backgroundColor: '#FAA21B', borderColor: '#FFF'}} onPress={() => this.setState({ rateModal: true })}>
+					<Icon name="add-to-favorites-full" />
 					<Text>RATE</Text>
 				</Button>
 			);
 		}
 		
 		return (
-			<Button styleName="full-width" onPress={() => navigateTo({
+			<Button style={{margin: 10, padding: 10, backgroundColor: '#FAA21B', borderColor: '#FFF'}} onPress={() => navigateTo({
 				screen: ext('Login'),
 				props: {
 					marker,
 					returnScreen: ext('SpringDetails')
 				}
 			})}>
-				<Icon name="play" />
+				<Icon name="add-to-favorites-full" />
 				<Text>LOGIN TO RATE</Text>
 			</Button>
 		);

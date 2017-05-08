@@ -280,7 +280,7 @@ export class AddSpring extends Component
 				
 				<Divider styleName="line" />
 				
-				<Row>
+				<Row style ={{margin: 20}}>
 					<DropDownMenu
 						styleName="horizontal"
 						options={types}
