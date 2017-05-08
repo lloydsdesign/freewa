@@ -30,7 +30,7 @@ import {
 	CMS_BASE,
 	CMS_REST,
 	parseJSON,
-	getRatingString,
+	getRatingStars,
 	getDistance,
 	renderNavLogo
 } from '../const';
@@ -183,8 +183,8 @@ export class Map extends Component
 		const { navigateTo } = this.props;
 		var rating;
 		
-		if(marker.ratingCount) rating = marker.rating +' '+ getRatingString(marker.rating);
-		else rating = 'UNRATED';
+		if(marker.ratingCount) rating = <View styleName="horizontal">{getRatingStars(marker.rating)}</View>;
+		else rating = <Text style={{color: '#FAA21B'}}>UNRATED</Text>;
 		
 		return (
 			<View styleName="h-center" style={{shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
@@ -197,7 +197,7 @@ export class Map extends Component
 						<Tile styleName="text-centric" style={{padding: 20}}>
 							<Title styleName="h-center">{marker.title.toUpperCase()}</Title>
 							<Subtitle styleName="h-center">{marker.type.toUpperCase()}</Subtitle>
-							<Text styleName="h-center" style={{color: '#FAA21B'}}>{rating}</Text>
+							{rating}
 						</Tile>
 					</View>
 				</TouchableOpacity>

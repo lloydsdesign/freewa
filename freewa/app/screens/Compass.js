@@ -27,7 +27,7 @@ import { SensorManager  } from 'NativeModules';*/
 const compassImage = require('../assets/icons/compass-blue.png');
 
 import {
-	getRatingString,
+	getRatingStars,
 	getAzimuth,
 	getDistance,
 	renderNavLogo
@@ -158,8 +158,8 @@ export class Compass extends Component
 		const { rotation } = this.state;
 		var rating;
 		
-		if(marker.ratingCount) rating = marker.rating +' '+ getRatingString(marker.rating);
-		else rating = 'UNRATED';
+		if(marker.ratingCount) rating = <View styleName="horizontal">{getRatingStars(marker.rating)}</View>;
+		else rating = <Text style={{color: '#FAA21B'}}>UNRATED</Text>;
 		  
 		return (
 			<Screen styleName="full-screen">	
@@ -183,7 +183,7 @@ export class Compass extends Component
 							<Tile styleName="text-centric" style={{padding: 20}}>
 								<Title styleName="h-center">{marker.title.toUpperCase()}</Title>
 								<Subtitle styleName="h-center">{marker.type.toUpperCase()}</Subtitle>
-								<Text styleName="h-center" style={{color: '#FAA21B'}}>{rating}</Text>
+								{rating}
 							</Tile>
 						</View>
 					</TouchableOpacity>

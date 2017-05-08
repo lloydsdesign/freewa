@@ -15,6 +15,9 @@ const jsonGuard = String.fromCharCode(0);
 const CMS_BASE = 'http://admin.freewa.org/';
 const CMS_REST = CMS_BASE +'manage.php';
 const MAX_UPLOAD_SIZE = 1024 * 1024 * 5;
+const fullStar = require('./assets/icons/full-star.png');
+const emptyStar = require('./assets/icons/empty-star.png');
+const halfStar = require('./assets/icons/half-star.png');
 
 
 function renderNavLogo()
@@ -55,13 +58,36 @@ function getRatingString(rating)
 	const strings = ['POOR', 'ACCEPTABLE', 'GOOD', 'VERY GOOD', 'SUPERB'];
 	
 	var i;
-	
 	for(i = 0; i < values.length; i++)
 	{
 		if(rating <= values[i]) return strings[i];
 	}
 	
 	return strings[strings.length - 1];
+}
+
+function getRatingStars(rating)
+{
+	var i, img, splitStar = false, stars = [];
+	for(i = 1; i < 6; i++)
+	{
+		if(i <= rating) img = fullStar;
+		else
+		{
+			if(!splitStar)
+			{
+				if(i - rating <= 0.5) img = halfStar;
+				else img = emptyStar;
+				
+				splitStar = true;
+			}
+			else img = emptyStar;
+		}
+		
+		stars.push(<Image key={i - 1} source={img} />);
+	}
+	
+	return stars;
 }
 
 function getAzimuth(point1, point2)
@@ -92,6 +118,7 @@ export {
 	MAX_UPLOAD_SIZE,
 	parseJSON,
 	getRatingString,
+	getRatingStars,
 	getAzimuth,
 	getDistance
 };
