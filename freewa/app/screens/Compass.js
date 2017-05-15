@@ -14,17 +14,20 @@ import {
 	Text
 } from '@shoutem/ui';
 
-import { Keyboard } from 'react-native';
+import {
+	Keyboard,
+	DeviceEventEmitter
+} from 'react-native';
+
 import { InlineMap } from '@shoutem/ui-addons';
 import { connect } from 'react-redux';
 import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../extension';
+const ReactNativeHeading = require('react-native-heading');
 
-/*import { DeviceEventEmitter } from 'react-native';
-import { SensorManager  } from 'NativeModules';*/
-
-const compassImage = require('../assets/icons/compass-blue.png');
+const compassImageFar = require('../assets/icons/compass-blue.png');
+const compassImageNear = require('../assets/icons/compass-orange.png');
 
 import {
 	getRatingStars,
@@ -43,33 +46,24 @@ export class Compass extends Component
 		this.state = {
 			lastPosition: null,
 			distance: '',
+			img: compassImageFar,
 			azimuth: 0,
-			rotation: 0
+			heading: 0
 		};
 	}
 	
 	watchID: ?number = null;
-	eventID: ?number = null;
 	
 	componentWillMount()
 	{
 		const { marker } = this.props;
-		Keyboard.dismiss();
 		
-		/*SensorManager.startOrientation(1000);
-		this.eventID = DeviceEventEmitter.addListener('Orientation', (data) => {
-			var rotation = data.azimuth - this.state.azimuth;
-			
-			if(rotation < 0) rotation += 360;
-			else if(rotation > 360) rotation -= 360;
-			
-			console.log('PHONE ANGLE: '+ data.azimuth);
-			console.log('POSITION ANGLE: '+ this.state.azimuth);
-			console.log('ROTATION: '+ rotation);
-			console.log('\n----------------------------------');
-			
-			this.setState({ rotation: rotation.toFixed(2) });
-		});*/
+		Keyboard.dismiss();
+		ReactNativeHeading.start(10);
+		
+		DeviceEventEmitter.addListener('headingUpdated', data => {
+			this.setState({ heading: data });
+		});
 		
 		navigator.geolocation.getCurrentPosition((position) => {
 				this.setState({
@@ -98,8 +92,8 @@ export class Compass extends Component
 	
 	componentWillUnmount()
 	{
-		/*SensorManager.stopOrientation();
-		this.eventID.remove();*/
+		ReactNativeHeading.stop();
+		DeviceEventEmitter.removeAllListeners('headingUpdated');
 		navigator.geolocation.clearWatch(this.watchID);
 	}
 	
@@ -111,6 +105,7 @@ export class Compass extends Component
 		const { marker } = this.props;
 		
 		var unit = 'm';
+		var img = compassImageFar;
 		var distance = getDistance(lastPosition, marker);
 		
 		if(distance >= 1000)
@@ -119,9 +114,16 @@ export class Compass extends Component
 			distance = distance.toFixed(2);
 			unit = 'km';
 		}
-		else distance = parseInt(distance, 10);
+		else
+		{
+			distance = parseInt(distance, 10);
+			if(distance <= 100) img = compassImageNear;
+		}
 		
-		this.setState({ distance: distance + unit });
+		this.setState({
+			distance: distance + unit,
+			compassImage: img
+		});
 	}
 	
 	renderDistance()
@@ -155,20 +157,28 @@ export class Compass extends Component
 	render()
 	{
 		const { marker, navigateTo } = this.props;
-		const { rotation } = this.state;
+		const { azimuth, heading, compassImage } = this.state;
+		
+		var rotation = azimuth - heading;
+		
+		if(rotation < 0) rotation += 360;
+		else if(rotation > 360) rotation -= 360;
+		
+		rotation = parseInt(rotation, 10);
 		var rating;
 		
 		if(marker.ratingCount) rating = <View styleName="horizontal">{getRatingStars(marker.rating)}</View>;
 		else rating = <Text style={{color: '#FAA21B'}}>UNRATED</Text>;
 		  
 		return (
-			<Screen styleName="full-screen">	
+			<Screen styleName="full-screen">
 				<NavigationBar
 					renderLeftComponent={() => renderNavLogo()}
 					renderRightComponent={() => this.renderNavHome()}
 				/>
+				
 				<View style={{flex: 1}}>
-					<Image styleName="large-square" source={compassImage} style={{marginTop: 100, transform: [{rotate: rotation +'deg'}]}} />
+					<Image styleName="large-square" source={compassImage} style={{transform: [{rotate: rotation +'deg'}]}} />
 				
 					{this.renderDistance()}
 				</View>
@@ -188,7 +198,6 @@ export class Compass extends Component
 						</View>
 					</TouchableOpacity>
 				</View>
-				
 			</Screen>
 		);
 	}
