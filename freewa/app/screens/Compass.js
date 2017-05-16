@@ -159,12 +159,11 @@ export class Compass extends Component
 		const { marker, navigateTo } = this.props;
 		const { azimuth, heading, compassImage } = this.state;
 		
-		var rotation = azimuth - heading;
+		var rotation = parseInt(azimuth - heading, 10);
 		
 		if(rotation < 0) rotation += 360;
 		else if(rotation > 360) rotation -= 360;
 		
-		rotation = parseInt(rotation, 10);
 		var rating;
 		
 		if(marker.ratingCount) rating = <View styleName="horizontal">{getRatingStars(marker.rating)}</View>;
