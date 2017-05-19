@@ -8,5 +8,10 @@
     "react-native-fbsdk": "^0.5.0",
     "react-native-heading": "^1.1.1",
     "turf": "^3.0.14"
+  },
+  "rnpm": {
+    "commands": {
+      "postlink": "node node_modules/ricardo.freewa/scripts/run.js"
+    }
   }
 }
