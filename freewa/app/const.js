@@ -15,6 +15,7 @@ const jsonGuard = String.fromCharCode(0);
 const CMS_BASE = 'http://admin.freewa.org/';
 const CMS_REST = CMS_BASE +'manage.php';
 const MAX_UPLOAD_SIZE = 1024 * 1024 * 5;
+const MAP_DELTA = 0.5;
 const fullStar = require('./assets/icons/full-star.png');
 const emptyStar = require('./assets/icons/empty-star.png');
 const halfStar = require('./assets/icons/half-star.png');
@@ -115,6 +116,7 @@ export {
 	jsonGuard,
 	CMS_BASE,
 	CMS_REST,
+	MAP_DELTA,
 	MAX_UPLOAD_SIZE,
 	parseJSON,
 	getRatingString,

@@ -29,6 +29,7 @@ import {
 	jsonGuard,
 	CMS_BASE,
 	CMS_REST,
+	MAP_DELTA,
 	parseJSON,
 	getRatingStars,
 	getDistance,
@@ -59,16 +60,15 @@ export class Map extends Component
 		
 		navigator.geolocation.getCurrentPosition((position) => {
 				this.setState({ lastPosition: position.coords });
+				this.fetchMarkers(position.coords);
 			},
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
 		);
 		
-		this.fetchMarkers();
-		
 		this.watchID = navigator.geolocation.watchPosition((position) => {
 				this.setState({ lastPosition: position.coords });
-				this.pickNearestMarker();
+				this.fetchMarkers(position.coords);
 			},
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
@@ -80,12 +80,21 @@ export class Map extends Component
 		navigator.geolocation.clearWatch(this.watchID);
 	}
 	
-	fetchMarkers()
+	fetchMarkers(position)
 	{
+		const min_lat = position.latitude - MAP_DELTA;
+		const max_lat = position.latitude + MAP_DELTA;
+		const min_lng = position.longitude - MAP_DELTA;
+		const max_lng = position.longitude + MAP_DELTA;
+		
 		var data = new FormData();
 		data.append('get_springs', '');
+		data.append('min_lat', min_lat);
+		data.append('max_lat', max_lat);
+		data.append('min_lng', min_lng);
+		data.append('max_lng', max_lng);
 		
-		fetch(CMS_REST, {
+		return fetch(CMS_REST, {
 			method: 'POST',
 			body: data
 		})
