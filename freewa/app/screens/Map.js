@@ -12,7 +12,8 @@ import {
 	Title,
 	Subtitle,
 	Icon,
-	Text
+	Text,
+	Spinner
 } from '@shoutem/ui';
 
 import { Keyboard } from 'react-native';
@@ -218,19 +219,21 @@ export class Map extends Component
 			</View>
 		);
 	}
-
-	render()
+	
+	renderMap()
 	{
 		const { markers, selectedMarker } = this.state;
 		
+		if(!markers.length)
+		{
+			return (
+				<View styleName="horizontal v-center h-center" style={{ flex: 1 }}>
+					<Spinner style={{ size: 'large', color: '#00B2C1' }} />
+				</View>
+			);
+		}
+		
 		return (
-		  <Screen styleName="full-screen">
-			<NavigationBar
-				styleName="no-border"
-				renderLeftComponent={() => renderNavLogo()}
-				renderRightComponent={() => this.renderNavRight()}
-			/>
-			
 			<MapView
 				ref="map"
 				onRegionChangeComplete={() => this.animateToRegion()}
@@ -255,7 +258,20 @@ export class Map extends Component
 					/>
 				))}
 			</MapView>
+		);
+	}
+
+	render()
+	{
+		return (
+		  <Screen styleName="full-screen">
+			<NavigationBar
+				styleName="no-border"
+				renderLeftComponent={() => renderNavLogo()}
+				renderRightComponent={() => this.renderNavRight()}
+			/>
 			
+			{this.renderMap()}
 			{this.renderSelectedMarker()}
 		  </Screen>
 		);
