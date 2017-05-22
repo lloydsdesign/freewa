@@ -14,10 +14,10 @@ import {
 	View,
 	Image,
 	TouchableOpacity,
-	Spinner
+	Spinner,
+	Screen
 } from '@shoutem/ui';
 
-import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { ext } from '../extension';
 import { NavigationBar } from '@shoutem/ui/navigation';
@@ -130,7 +130,7 @@ export class Login extends Component
 		const { navigateTo } = this.props;
 		
 		return (
-			<ScrollView style={{marginTop: -1, backgroundColor: '#FFF'}}>
+			<Screen style={{backgroundColor: '#FFF'}}>
 				<NavigationBar
 					renderLeftComponent={() => renderNavLogo()}
 					renderRightComponent={() => this.renderNavHome()}
@@ -144,33 +144,33 @@ export class Login extends Component
 				
 				<Divider styleName="line" />
 
-				<Row>
-					<TextInput
-						autoCapitalize="none"
-						autoCorrect={false}
-						autoFocus
-						maxLength={50}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						keyboardType="email-address"
-						onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
-						style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-						placeholder="E-mail"
-					/>
-				</Row>
+				<TextInput
+					autoCapitalize="none"
+					autoCorrect={false}
+					autoFocus
+					maxLength={50}
+					enablesReturnKeyAutomatically
+					returnKeyType="next"
+					keyboardType="email-address"
+					onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
+					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+					placeholder="E-mail"
+					keyboardAppearance="dark"
+				/>
 				
-				<Row style={{marginTop: 0, paddingTop: 0}}>
-					<TextInput
-						autoCapitalize="none"
-						autoCorrect={false}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						secureTextEntry
-						onChangeText={(value) => this.setState({password: value.trim()})}
-						style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-						placeholder="Password"
-					/>
-				</Row>
+				<Divider styleName="line" />
+				
+				<TextInput
+					autoCapitalize="none"
+					autoCorrect={false}
+					enablesReturnKeyAutomatically
+					returnKeyType="next"
+					secureTextEntry
+					onChangeText={(value) => this.setState({password: value.trim()})}
+					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+					placeholder="Password"
+					keyboardAppearance="dark"
+				/>
 				
 				<Row style={{marginTop: 0, paddingTop: 0}}>
 					{this.renderSubmitButton()}
@@ -185,7 +185,7 @@ export class Login extends Component
 						<Text>NOT A MEMBER? REGISTER</Text>
 					</Button>
 				</Row>
-			</ScrollView>
+			</Screen>
 		);
 	}
 }

@@ -14,10 +14,10 @@ import {
 	Subtitle,
 	Image,
 	TouchableOpacity,
-	Spinner
+	Spinner,
+	Screen
 } from '@shoutem/ui';
 
-import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { ext } from '../extension';
 import { NavigationBar } from '@shoutem/ui/navigation';
@@ -134,7 +134,7 @@ export class Register extends Component
 		const { navigateTo } = this.props;
 		
 		return (
-			<ScrollView style={{marginTop: -1, backgroundColor: '#FFF'}}>		
+			<Screen style={{backgroundColor: '#FFF'}}>		
 				<NavigationBar
 					renderLeftComponent={() => renderNavLogo()}
 					renderRightComponent={() => this.renderNavHome()}
@@ -148,59 +148,61 @@ export class Register extends Component
 				
 				<Divider styleName="line" />
 
-				<Row>
-					<TextInput
-						autoCapitalize="none"
-						autoCorrect={false}
-						autoFocus
-						maxLength={50}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						onChangeText={(value) => this.setState({username: value.trim()})}
-						style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-						placeholder="Username"
-					/>
-				</Row>
+				<TextInput
+					autoCapitalize="none"
+					autoCorrect={false}
+					autoFocus
+					maxLength={50}
+					enablesReturnKeyAutomatically
+					returnKeyType="next"
+					onChangeText={(value) => this.setState({username: value.trim()})}
+					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+					placeholder="Username"
+					keyboardAppearance="dark"
+				/>
 				
-				<Row style={{marginTop: 0, paddingTop: 0}}>
-					<TextInput
-						autoCapitalize="words"
-						autoCorrect={false}
-						maxLength={50}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						onChangeText={(value) => this.setState({fullName: value.trim()})}
-						style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-						placeholder="Full Name"
-					/>
-				</Row>
+				<Divider styleName="line" />
+			
+				<TextInput
+					autoCapitalize="words"
+					autoCorrect={false}
+					maxLength={50}
+					enablesReturnKeyAutomatically
+					returnKeyType="next"
+					onChangeText={(value) => this.setState({fullName: value.trim()})}
+					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+					placeholder="Full Name"
+					keyboardAppearance="dark"
+				/>
 				
-				<Row style={{marginTop: 0, paddingTop: 0}}>
-					<TextInput
-						autoCapitalize="none"
-						autoCorrect={false}
-						maxLength={50}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						keyboardType="email-address"
-						onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
-						style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-						placeholder="E-mail"
-					/>
-				</Row>
+				<Divider styleName="line" />
+			
+				<TextInput
+					autoCapitalize="none"
+					autoCorrect={false}
+					maxLength={50}
+					enablesReturnKeyAutomatically
+					returnKeyType="next"
+					keyboardType="email-address"
+					onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
+					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+					placeholder="E-mail"
+					keyboardAppearance="dark"
+				/>
 				
-				<Row style={{marginTop: 0, paddingTop: 0}}>
-					<TextInput
-						autoCapitalize="none"
-						autoCorrect={false}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						secureTextEntry
-						onChangeText={(value) => this.setState({password: value.trim()})}
-						style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-						placeholder="Password"
-					/>
-				</Row>
+				<Divider styleName="line" />
+			
+				<TextInput
+					autoCapitalize="none"
+					autoCorrect={false}
+					enablesReturnKeyAutomatically
+					returnKeyType="next"
+					secureTextEntry
+					onChangeText={(value) => this.setState({password: value.trim()})}
+					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+					placeholder="Password"
+					keyboardAppearance="dark"
+				/>
 				
 				<Row style={{marginTop: 0, paddingTop: 0}}>
 					{this.renderSubmitButton()}
@@ -214,7 +216,7 @@ export class Register extends Component
 						<Text>CANCEL</Text>
 					</Button>
 				</Row>
-			</ScrollView>
+			</Screen>
 		);
 	}
 }

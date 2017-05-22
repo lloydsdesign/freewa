@@ -15,11 +15,11 @@ import {
 	Subtitle,
 	Caption,
 	Spinner,
-	DropDownMenu
+	DropDownMenu,
+	Screen
 } from '@shoutem/ui';
 
 import {
-	ScrollView,
 	ListView,
 	Modal,
 	Image
@@ -259,56 +259,51 @@ export class AddSpring extends Component
 		}
 		
 		return (
-			<ScrollView style={{marginTop: -1, backgroundColor: '#FFF'}}>
+			<Screen style={{backgroundColor: '#FFF'}}>
 				<NavigationBar
 					renderLeftComponent={() => renderNavLogo()}
 					renderRightComponent={() => this.renderNavHome()}
 				/>
 
-				<Row style={{marginTop: 0, paddingTop: 10}}>
-					<TextInput
-						autoCapitalize="words"
-						autoCorrect={false}
-						autoFocus
-						maxLength={50}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						onChangeText={(value) => this.setState({name: value.trim()})}
-						style={{flex: 1, borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-						placeholder="Name of the New Spring"
-					/>
-				</Row>
-				
+				<TextInput
+					autoCapitalize="words"
+					autoCorrect={false}
+					autoFocus
+					maxLength={50}
+					enablesReturnKeyAutomatically
+					returnKeyType="next"
+					onChangeText={(value) => this.setState({name: value.trim()})}
+					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+					placeholder="Name of the New Spring"
+					keyboardAppearance="dark"
+				/>
 				
 				<Divider styleName="line" />
 				
-				<Row style ={{paddingRight: 20}}>
-					<Subtitle>SPRING TYPE </Subtitle>
-					<DropDownMenu
-						style={{backgroundColor: '#ddd'}}
-						options={types}
-						selectedOption={type}
-						onOptionSelected={(type) => this.setState({ type })}
-						titleProperty="title"
-						valueProperty="value"
-					/>
-				</Row>
+				<Subtitle>SPRING TYPE</Subtitle>
+				<DropDownMenu
+					style={{backgroundColor: '#ddd'}}
+					options={types}
+					selectedOption={type}
+					onOptionSelected={(type) => this.setState({ type })}
+					titleProperty="title"
+					valueProperty="value"
+				/>
 				
 				<Divider styleName="line" />
 				
-				<Row>
-					<TextInput
-						autoCapitalize="sentences"
-						autoCorrect={false}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						multiline
-						maxLength={500}
-						onChangeText={(value) => this.setState({description: value.trim()})}
-						style={{flex: 1, height: 240, textAlignVertical: 'top', borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-						placeholder="Spring Description"
-					/>
-				</Row>
+				<TextInput
+					autoCapitalize="sentences"
+					autoCorrect={false}
+					enablesReturnKeyAutomatically
+					returnKeyType="next"
+					multiline
+					maxLength={500}
+					onChangeText={(value) => this.setState({description: value.trim()})}
+					style={{height: 240, textAlignVertical: 'top', borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+					placeholder="Spring Description"
+					keyboardAppearance="dark"
+				/>
 				
 				<Divider styleName="line" />
 				
@@ -337,7 +332,7 @@ export class AddSpring extends Component
 						<Text>SAVE</Text>
 					</Button>
 				</View>
-			</ScrollView>
+			</Screen>
 		);
 	}
 }
