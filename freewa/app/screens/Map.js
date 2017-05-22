@@ -46,6 +46,7 @@ export class Map extends Component
 		
 		this.state = {
 			markers: [],
+			distance: null,
 			lastPosition: null,
 			hasLoaded: false,
 			selectedMarker: this.props.marker ? this.props.marker : null,
@@ -60,14 +61,26 @@ export class Map extends Component
 		Keyboard.dismiss();
 		
 		navigator.geolocation.getCurrentPosition((position) => {
-				this.fetchMarkers(position.coords);
+				this.fetchMarkers(position.coords).then((markers) => {	
+					this.setState({
+						markers: this.pickNearestMarker(markers, position.coords),
+						lastPosition: position.coords,
+						distance: this.calculateDistance(position.coords)
+					});
+				});
 			},
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
 		);
 		
 		this.watchID = navigator.geolocation.watchPosition((position) => {
-				this.fetchMarkers(position.coords);
+				this.fetchMarkers(position.coords).then((markers) => {	
+					this.setState({
+						markers: this.pickNearestMarker(markers, position.coords),
+						lastPosition: position.coords,
+						distance: this.calculateDistance(position.coords)
+					});
+				});
 			},
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
@@ -93,28 +106,20 @@ export class Map extends Component
 		data.append('min_lng', min_lng);
 		data.append('max_lng', max_lng);
 		
-		fetch(CMS_REST, {
+		return fetch(CMS_REST, {
 			method: 'POST',
 			body: data
 		})
 		.then((response) => response.text())
 		.then((response) => {
 			response = parseJSON(response);
-			
-			this.setState({
-				markers: adjustMarkerValues(response.springs),
-				lastPosition: position
-			});
-		})
-		.then(() => this.pickNearestMarker());
+			return adjustMarkerValues(response.springs);
+		});
 	}
 	
-	pickNearestMarker()
+	pickNearestMarker(markers, lastPosition)
 	{
-		var markers = this.state.markers;
-		const lastPosition = this.state.lastPosition;
-		
-		if(!markers.length || !lastPosition) return;
+		if(!markers.length || !lastPosition) return [];
 		
 		markers.sort((a, b) =>
 		{
@@ -126,7 +131,26 @@ export class Map extends Component
 		var i;
 		for(i = 1; i < markers.length; i++) markers[i].icon = markerImage;
 		
-		this.setState({ markers });
+		return markers;
+	}
+	
+	calculateDistance(lastPosition)
+	{
+		const { selectedMarker } = this.state;
+		if(!selectedMarker || !lastPosition) return null;
+		
+		var unit = 'm';
+		var distance = getDistance(lastPosition, selectedMarker);
+		
+		if(distance >= 1000)
+		{
+			distance /= 1000;
+			distance = distance.toFixed(2);
+			unit = 'km';
+		}
+		else distance = parseInt(distance, 10);
+		
+		return distance + unit;
 	}
 
 	animateToRegion()
@@ -223,9 +247,13 @@ export class Map extends Component
 		const marker = this.state.selectedMarker;
 		if(!marker) return null;
 		
-		const { user } = this.state;
+		var { distance } = this.state;
+		const { user, lastPosition } = this.state;
 		const { navigateTo } = this.props;
 		var rating;
+		
+		if(!distance) distance = this.calculateDistance(lastPosition);
+		if(distance) distance = <Text>{distance} FROM YOU</Text>
 		
 		if(marker.ratingCount) rating = <View styleName="horizontal">{getRatingStars(marker.rating)}</View>;
 		else rating = <Text style={{color: '#FAA21B'}}>UNRATED</Text>;
@@ -242,6 +270,7 @@ export class Map extends Component
 							<Title styleName="h-center">{marker.title.toUpperCase()}</Title>
 							<Subtitle styleName="h-center">{marker.type.toUpperCase()}</Subtitle>
 							{rating}
+							{distance}
 						</Tile>
 					</View>
 				</TouchableOpacity>
