@@ -133,7 +133,7 @@ export class Map extends Component
 	{
 		const { hasLoaded, lastPosition, selectedMarker } = this.state;
 		
-		var coords, delta_lat = delta_lng = 0.3;
+		var coords;
 		if(selectedMarker) coords = selectedMarker;
 		else coords = lastPosition;
 		
