@@ -47,8 +47,8 @@ export class Map extends Component
 		this.state = {
 			markers: [],
 			lastPosition: null,
-			selectedMarker: this.props.marker ? this.props.marker : null,
 			hasLoaded: false,
+			selectedMarker: this.props.marker ? this.props.marker : null,
 			user: this.props.user ? this.props.user : null
 		};
 	}
@@ -60,7 +60,6 @@ export class Map extends Component
 		Keyboard.dismiss();
 		
 		navigator.geolocation.getCurrentPosition((position) => {
-				this.setState({ lastPosition: position.coords });
 				this.fetchMarkers(position.coords);
 			},
 			(error) => console.log(JSON.stringify(error)),
@@ -68,7 +67,6 @@ export class Map extends Component
 		);
 		
 		this.watchID = navigator.geolocation.watchPosition((position) => {
-				this.setState({ lastPosition: position.coords });
 				this.fetchMarkers(position.coords);
 			},
 			(error) => console.log(JSON.stringify(error)),
@@ -90,21 +88,25 @@ export class Map extends Component
 		
 		var data = new FormData();
 		data.append('get_springs', '');
-		data.append('min_lat', min_lat);
+		//data.append('min_lat', min_lat);
 		data.append('max_lat', max_lat);
 		data.append('min_lng', min_lng);
 		data.append('max_lng', max_lng);
 		
-		return fetch(CMS_REST, {
+		fetch(CMS_REST, {
 			method: 'POST',
 			body: data
 		})
 		.then((response) => response.text())
 		.then((response) => {
 			response = parseJSON(response);
-			this.setState({ markers: adjustMarkerValues(response.springs) });
-			this.pickNearestMarker();
-		});
+			
+			this.setState({
+				markers: adjustMarkerValues(response.springs),
+				lastPosition: position
+			});
+		})
+		.then(() => this.pickNearestMarker());
 	}
 	
 	pickNearestMarker()
@@ -131,20 +133,47 @@ export class Map extends Component
 	{
 		const { hasLoaded, lastPosition, selectedMarker } = this.state;
 		
-		var region;
-		if(selectedMarker) region = selectedMarker;
-		else region = lastPosition;
+		var coords, delta_lat = delta_lng = 0.3;
+		if(selectedMarker) coords = selectedMarker;
+		else coords = lastPosition;
 		
-		if(hasLoaded || !region) return;
+		if(hasLoaded || !coords) return;
 		
-		const currRegion = {
-			latitude: region.latitude,
-			longitude: region.longitude,
-			latitudeDelta: 0.3,
-			longitudeDelta: 0.3
-		};
+		if(selectedMarker && lastPosition)
+		{
+			coords = [
+				{
+					latitude: selectedMarker.latitude,
+					longitude: selectedMarker.longitude
+				},
+				{
+					latitude: lastPosition.latitude,
+					longitude: lastPosition.longitude
+				}
+			];
+			
+			this.refs.map.fitToCoordinates(coords, {
+				edgePadding: {
+					top: 20,
+					right: 20,
+					bottom: 20,
+					left: 20
+				},
+				animated: true
+			});
+		}
+		else
+		{
+			coords = {
+				latitude: coords.latitude,
+				longitude: coords.longitude,
+				latitudeDelta: 0.3,
+				longitudeDelta: 0.3
+			};
+			
+			this.refs.map.animateToRegion(coords);
+		}
 		
-		this.refs.map.animateToRegion(currRegion);
 		this.setState({ hasLoaded: true });
 	}
 	
@@ -239,7 +268,7 @@ export class Map extends Component
 				onRegionChangeComplete={() => this.animateToRegion()}
 				loadingEnabled
 				showsUserLocation
-				followsUserLocation
+				//followsUserLocation
 				onPress={() => {
 					if(selectedMarker) this.setState({ selectedMarker: null });
 				}}
@@ -252,7 +281,7 @@ export class Map extends Component
 							latitude: marker.latitude,
 							longitude: marker.longitude
 						}}
-						title={marker.title.toUpperCase()}
+						//title={marker.title.toUpperCase()}
 						image={marker.icon}
 						onPress={() => this.setState({ selectedMarker: marker })}
 					/>
