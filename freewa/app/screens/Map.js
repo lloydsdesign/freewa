@@ -45,7 +45,7 @@ export class Map extends Component
 		this.state = {
 			markers: [],
 			lastPosition: null,
-			selectedMarker: null,
+			selectedMarker: this.props.marker ? this.props.marker : null,
 			hasLoaded: false,
 			user: this.props.user ? this.props.user : null
 		};
@@ -119,12 +119,17 @@ export class Map extends Component
 
 	animateToRegion()
 	{
-		const { hasLoaded, lastPosition } = this.state;
-		if(hasLoaded || !lastPosition) return;
+		const { hasLoaded, lastPosition, selectedMarker } = this.state;
+		
+		var region;
+		if(selectedMarker) region = selectedMarker;
+		else region = lastPosition;
+		
+		if(hasLoaded || !region) return;
 		
 		const currRegion = {
-			latitude: lastPosition.latitude,
-			longitude: lastPosition.longitude,
+			latitude: region.latitude,
+			longitude: region.longitude,
 			latitudeDelta: 0.3,
 			longitudeDelta: 0.3
 		};

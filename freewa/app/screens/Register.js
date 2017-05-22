@@ -13,7 +13,8 @@ import {
 	Button,
 	Subtitle,
 	Image,
-	TouchableOpacity
+	TouchableOpacity,
+	Spinner
 } from '@shoutem/ui';
 
 import { ScrollView } from 'react-native';
@@ -38,6 +39,7 @@ export class Register extends Component
 		super(props);
 		
 		this.state = {
+			loading: false,
 			username: '',
 			password: '',
 			fullName: '',
@@ -54,6 +56,7 @@ export class Register extends Component
 			return;
 		}
 		
+		this.setState({ loading: true });
 		const { navigateTo } = this.props;
 		
 		var data = new FormData();
@@ -81,7 +84,11 @@ export class Register extends Component
 					}
 				});
 			}
-			else showAlert('Registration failed.');
+			else
+			{
+				showAlert('Registration failed.');
+				this.setState({ loading: false });
+			}
 		});
 	}
 	
@@ -101,12 +108,33 @@ export class Register extends Component
 		);
 	}
 	
+	renderSubmitButton()
+	{
+		const { loading } = this.state;
+		
+		if(loading)
+		{
+			return (
+				<View styleName="horizontal v-center h-center">
+					<Spinner style={{ size: 'large', color: '#00B2C1' }} />
+				</View>
+			);
+		}
+		
+		return (
+			<Button styleName="full-width"  style={{ backgroundColor: '#FAA21B' }} onPress={() => this.submitForm()}>
+				<Icon name="add-friend" />
+				<Text>REGISTER</Text>
+			</Button>
+		);
+	}
+	
 	render()
 	{
 		const { navigateTo } = this.props;
 		
 		return (
-			<ScrollView style={{marginTop: -1, backgroundColor: '#FFF'}} keyboardShouldPersistTaps={true}>		
+			<ScrollView style={{marginTop: -1, backgroundColor: '#FFF'}}>		
 				<NavigationBar
 					renderLeftComponent={() => renderNavLogo()}
 					renderRightComponent={() => this.renderNavHome()}
@@ -174,19 +202,18 @@ export class Register extends Component
 					/>
 				</Row>
 				
-				<View styleName="horizontal" style={{backgroundColor: '#FFF', marginBottom: 200}}>
-					<Button styleName="full-width" style={{marginRight: 5, marginLeft: 15}}onPress={() => navigateTo({
+				<Row style={{marginTop: 0, paddingTop: 0}}>
+					{this.renderSubmitButton()}
+				</Row>
+				
+				<Row style={{marginTop: 0, paddingTop: 0, paddingBottom: 300}}>
+					<Button styleName="full-width" onPress={() => navigateTo({
 						screen: ext('Map')
 					})}>
 						<Icon name="close" />
 						<Text>CANCEL</Text>
 					</Button>
-					
-					<Button styleName="full-width"  style={{backgroundColor: '#FAA21B', marginRight: 15, marginLeft: 5}} onPress={() => this.submitForm()}>
-						<Icon name="add-friend" />
-						<Text>REGISTER</Text>
-					</Button>
-				</View>
+				</Row>
 			</ScrollView>
 		);
 	}

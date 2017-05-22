@@ -88,7 +88,7 @@ export class AddSpring extends Component
 				data.append('name', name);
 				data.append('description', description);
 				data.append('type', type.value);
-				data.append('active', 1);
+				data.append('active', '1');
 				data.append('user_id', user.id);
 				data.append('featured_image', images[0].name);
 				

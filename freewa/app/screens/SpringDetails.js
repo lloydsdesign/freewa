@@ -366,7 +366,7 @@ export class SpringDetails extends Component
 
 	render()
 	{
-		const { navigateTo } = this.props;
+		const { navigateTo, user } = this.props;
 		const { marker } = this.state;
 		
 		const position = {
@@ -443,12 +443,12 @@ export class SpringDetails extends Component
 				<Row>
 					<Button styleName="full-width" style={{backgroundColor: '#FAA21B'}}
 						onPress={() => navigateTo({
-							screen: ext('Compass'),
-							props: { marker }
+							screen: ext('Map'),
+							props: { marker, user }
 						})}
 					>
 						<Icon name="pin" />
-						<Text>O P E N  C O M P A S S</Text>
+						<Text>SHOW ON MAP</Text>
 					</Button>
 				</Row>
 			</ScrollView>

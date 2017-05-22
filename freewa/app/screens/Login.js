@@ -13,7 +13,8 @@ import {
 	Subtitle,
 	View,
 	Image,
-	TouchableOpacity
+	TouchableOpacity,
+	Spinner
 } from '@shoutem/ui';
 
 import { ScrollView } from 'react-native';
@@ -38,6 +39,7 @@ export class Login extends Component
 		super(props);
 		
 		this.state = {
+			loading: false,
 			email: '',
 			password: ''
 		};
@@ -52,6 +54,7 @@ export class Login extends Component
 			return;
 		}
 		
+		this.setState({ loading: true });
 		const { navigateTo } = this.props;
 		
 		var data = new FormData();
@@ -77,7 +80,11 @@ export class Login extends Component
 					}
 				});
 			}
-			else showAlert('Login failed. Invalid e-mail or password.');
+			else
+			{
+				showAlert('Login failed. Invalid e-mail or password.');
+				this.setState({ loading: false });
+			}
 		});
 	}
 	
@@ -97,12 +104,33 @@ export class Login extends Component
 		);
 	}
 	
+	renderSubmitButton()
+	{
+		const { loading } = this.state;
+		
+		if(loading)
+		{
+			return (
+				<View styleName="horizontal v-center h-center">
+					<Spinner style={{ size: 'large', color: '#00B2C1' }} />
+				</View>
+			);
+		}
+		
+		return (
+			<Button styleName="full-width" onPress={() => this.submitForm()}>
+				<Icon name="play" />
+				<Text>LOGIN</Text>
+			</Button>
+		);
+	}
+	
 	render()
 	{
 		const { navigateTo } = this.props;
 		
 		return (
-			<ScrollView style={{marginTop: -1, backgroundColor: '#FFF'}} keyboardShouldPersistTaps={true}>
+			<ScrollView style={{marginTop: -1, backgroundColor: '#FFF'}}>
 				<NavigationBar
 					renderLeftComponent={() => renderNavLogo()}
 					renderRightComponent={() => this.renderNavHome()}
@@ -145,10 +173,7 @@ export class Login extends Component
 				</Row>
 				
 				<Row style={{marginTop: 0, paddingTop: 0}}>
-					<Button styleName="full-width" onPress={() => this.submitForm()}>
-						<Icon name="play" />
-						<Text>LOGIN</Text>
-					</Button>
+					{this.renderSubmitButton()}
 				</Row>
 				
 				<Row style={{marginTop: 0, paddingTop: 0, paddingBottom: 300}}>
