@@ -31,8 +31,7 @@ import {
 	jsonGuard,
 	CMS_REST,
 	parseJSON,
-	showAlert,
-	renderNavLogo
+	showAlert
 } from '../const';
 
 
@@ -93,22 +92,6 @@ export class Login extends Component
 		});
 	}
 	
-	renderNavHome()
-	{
-		const { navigateTo, user, lastPosition } = this.props;
-		
-		return (
-			<View styleName="container" virtual>
-				<TouchableOpacity onPress={() => navigateTo({
-					screen: ext('Map'),
-					props: { user, lastPosition }
-				})}>
-					<Image style={{ width: 32, height: 32, marginRight: 10 }} source={require('../assets/icons/home.png')} />
-				</TouchableOpacity>
-			</View>
-		);
-	}
-	
 	renderSubmitButton()
 	{
 		const { loading } = this.state;
@@ -136,18 +119,7 @@ export class Login extends Component
 		
 		return (
 			<ScrollView style={{backgroundColor: '#FFF'}}>
-				<NavigationBar
-					renderLeftComponent={() => renderNavLogo()}
-					renderRightComponent={() => this.renderNavHome()}
-				/>
-				
-				<Row style={{marginTop: 0, paddingTop: 10}}>
-					<View styleName="horizontal h-center">
-						<Title style={{color: '#00B2C1'}}>LOGIN</Title>
-					</View>
-				</Row>
-				
-				<Divider styleName="line" />
+				<NavigationBar title="LOGIN" />
 
 				<TextInput
 					autoCapitalize="none"
