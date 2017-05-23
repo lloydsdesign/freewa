@@ -46,7 +46,6 @@ export class SpringDetails extends Component
 		super(props);
 		
 		this.state = {
-			marker: this.props.marker,
 			rateNumber: 0,
 			rateMessage: ''
 		};
@@ -61,7 +60,7 @@ export class SpringDetails extends Component
 	
 	renderRating()
 	{
-		const { marker } = this.state;
+		const { marker } = this.props;
 		
 		if(!marker.ratingCount)
 		{
@@ -131,7 +130,7 @@ export class SpringDetails extends Component
 	
 	renderDescription()
 	{
-		const { marker } = this.state;
+		const { marker } = this.props;
 		if(marker.description == "") return null;
 		
 		return (
@@ -149,7 +148,7 @@ export class SpringDetails extends Component
 	
 	openMaps()
 	{
-		const { marker } = this.state;
+		const { marker } = this.props;
 		var url;
 		
 		if(Platform.OS == 'ios') url = 'http://maps.apple.com/?daddr='+ marker.latitude +','+ marker.longitude +'&dirflg=w';
@@ -167,7 +166,7 @@ export class SpringDetails extends Component
 
 	render()
 	{
-		const { marker } = this.state;
+		const { marker } = this.props;
 		  
 		return (
 			<ScrollView>

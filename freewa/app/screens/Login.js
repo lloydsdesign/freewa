@@ -185,7 +185,11 @@ export class Login extends Component
 					<Button styleName="full-width" style={{backgroundColor: '#FAA21B'}} onPress={() => {
 						InteractionManager.runAfterInteractions(() => navigateTo({
 							screen: ext('Register'),
-							props: { returnScreen, lastPosition }
+							props: {
+								returnScreen,
+								lastPosition,
+								marker: this.props.marker ? this.props.marker : null
+							}
 						}));
 					}}>
 						<Icon name="add-friend" />
