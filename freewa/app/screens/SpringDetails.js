@@ -35,8 +35,7 @@ import {
 	CMS_REST,
 	getRatingString,
 	parseJSON,
-	showAlert,
-	renderNavLogo
+	showAlert
 } from '../const';
 
 
@@ -165,22 +164,6 @@ export class SpringDetails extends Component
 			<Image styleName="large-banner" source={{ uri: image }} />
 		);
 	}
-	
-	renderNavHome()
-	{
-		const { navigateTo, user, lastPosition } = this.props;
-		
-		return (
-			<View styleName="container" virtual>
-				<TouchableOpacity onPress={() => navigateTo({
-					screen: ext('Map'),
-					props: { user, lastPosition }
-				})}>
-					<Image style={{ width: 32, height: 32, marginRight: 10 }} source={require('../assets/icons/home.png')} />
-				</TouchableOpacity>
-			</View>
-		);
-	}
 
 	render()
 	{
@@ -188,10 +171,7 @@ export class SpringDetails extends Component
 		  
 		return (
 			<ScrollView>
-				<NavigationBar
-					renderLeftComponent={() => renderNavLogo()}
-					renderRightComponent={() => this.renderNavHome()}
-				/>
+				<NavigationBar title={marker.title.toUpperCase()} />
 				
 				<ListView
 					horizontal
