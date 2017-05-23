@@ -1,12 +1,10 @@
 {
   "name": "ricardo.freewa",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Free water project",
   "dependencies": {
     "@turf/bearing": "^4.2.0",
     "@turf/distance": "^4.2.0",
-    "react-native-fbsdk": "^0.5.0",
-    "react-native-heading": "^1.1.1",
     "turf": "^3.0.14"
   },
   "rnpm": {
