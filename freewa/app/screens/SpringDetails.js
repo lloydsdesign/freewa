@@ -39,6 +39,7 @@ import {
 } from '../const';
 
 
+
 export class SpringDetails extends Component
 {
 	constructor(props)
@@ -178,13 +179,7 @@ export class SpringDetails extends Component
 					renderRow={image => this.renderRow(image)}
 				/>
 				
-				<Row>
-					<View styleName="horizontal h-center v-center">
-						<Title>{marker.title.toUpperCase()}</Title>
-					</View>
-				</Row>
 				
-				<Divider styleName="line" />
 				
 				<Row style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
 					<View style={{flex: 0.4}} styleName="vertical h-center v-center">
@@ -207,12 +202,12 @@ export class SpringDetails extends Component
 				{this.renderLogin()}
 				{this.renderDescription()}
 				
-				<Row>
-					<Button styleName="full-width" style={{backgroundColor: '#FAA21B'}} onPress={() => this.openMaps()}>
-						<Icon name="pin" />
+				<View>
+					<Button styleName="full-width" style={{backgroundColor: '#00B2C1'}} onPress={() => this.openMaps()}>
+						<Image style={{width: 16, height:16, marginRight: 10}} source={require('../assets/icons/compass.png')} />
 						<Text>SHOW ON MAP</Text>
 					</Button>
-				</Row>
+				</View>
 			</ScrollView>
 		);
 	}

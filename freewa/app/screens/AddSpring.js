@@ -274,14 +274,14 @@ export class AddSpring extends Component
 					enablesReturnKeyAutomatically
 					returnKeyType="next"
 					onChangeText={(value) => this.setState({name: value.trim()})}
-					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, margin: 15}}
 					placeholder="Name of the New Spring"
 					keyboardAppearance="dark"
 				/>
 				
 				<Divider styleName="line" />
 				
-				<Subtitle>SPRING TYPE</Subtitle>
+				<Subtitle styleName="horizontal h-center v-center" style={{padding: 10}}>SPRING TYPE</Subtitle>
 				<DropDownMenu
 					style={{backgroundColor: '#ddd'}}
 					options={types}
@@ -301,7 +301,7 @@ export class AddSpring extends Component
 					multiline
 					maxLength={500}
 					onChangeText={(value) => this.setState({description: value.trim()})}
-					style={{height: 240, textAlignVertical: 'top', borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+					style={{height: 240, textAlignVertical: 'top', borderColor: '#CCC', borderWidth: 1, borderRadius: 0, margin: 15}}
 					placeholder="Spring Description"
 					keyboardAppearance="dark"
 				/>

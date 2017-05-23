@@ -13,7 +13,8 @@ import {
 	Subtitle,
 	Icon,
 	Text,
-	Spinner
+	Spinner,
+	Button
 } from '@shoutem/ui';
 
 import { Keyboard } from 'react-native';
@@ -158,7 +159,7 @@ export class Map extends Component
 		return distance + unit;
 	}
 	
-	renderNavRight()
+	renderAddButton()
 	{
 		if(this.state.user) return this.renderLogoutButton();
 		else return this.renderLoginButton();
@@ -170,17 +171,16 @@ export class Map extends Component
 		const { lastPosition } = this.state;
 		
 		return (
-			<View styleName="container" virtual>
-				<TouchableOpacity onPress={() => navigateTo({
-					screen: ext('Login'),
-					props: {
-						returnScreen: ext('AddSpring'),
-						lastPosition
-					}
-				})}>
-					<Image style={{ width: 32, height: 32, marginRight: 10 }} source={require('../assets/icons/plus.png')} />
-				</TouchableOpacity>
-			</View>
+			<Button style={{padding: 10}} onPress={() => navigateTo({
+				screen: ext('Login'),
+				props: {
+					returnScreen: ext('AddSpring'),
+					lastPosition
+				}
+			})}>
+				<Image style={{width: 24, height: 24, marginRight: 10}} source={require('../assets/icons/plus.png')} />
+				<Text>ADD NEW SPRING</Text>
+			</Button>
 		);
 	}
 	
@@ -190,18 +190,17 @@ export class Map extends Component
 		const { lastPosition } = this.state;
 		
 		return (
-			<View styleName="container" virtual>
-				<TouchableOpacity onPress={() => navigateTo({
-					screen: ext('AddSpring'),
-					props: {
-						returnScreen: ext('Map'),
-						user: this.state.user,
-						lastPosition
-					}
-				})}>
-					<Image style={{ width: 32, height: 32, marginRight: 10 }} source={require('../assets/icons/plus.png')} />
-				</TouchableOpacity>
-			</View>
+			<Button style={{padding: 10}} onPress={() => navigateTo({
+				screen: ext('AddSpring'),
+				props: {
+					returnScreen: ext('Map'),
+					user: this.state.user,
+					lastPosition
+				}
+			})}>
+				<Image style={{width: 24, height: 24, marginRight: 10}} source={require('../assets/icons/plus.png')} />
+				<Text>ADD NEW SPRING</Text>
+			</Button>
 		);
 	}
 	
@@ -287,16 +286,19 @@ export class Map extends Component
 
 	render()
 	{
+		const { navigateTo } = this.props;
+		const { lastPosition } = this.state;
+		
 		return (
 		  <Screen styleName="full-screen">
 			<NavigationBar
 				styleName="no-border"
 				renderLeftComponent={() => renderNavLogo()}
-				renderRightComponent={() => this.renderNavRight()}
 			/>
 			
 			{this.renderMap()}
 			{this.renderSelectedMarker()}
+			{this.renderAddButton()}
 		  </Screen>
 		);
 	}

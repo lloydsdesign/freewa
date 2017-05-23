@@ -158,12 +158,10 @@ export class Login extends Component
 					returnKeyType="next"
 					keyboardType="email-address"
 					onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
-					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 10, marginBottom: 10}}
 					placeholder="E-mail"
 					keyboardAppearance="dark"
 				/>
-				
-				<Divider styleName="line" />
 				
 				<TextInput
 					autoCapitalize="none"
@@ -172,7 +170,7 @@ export class Login extends Component
 					returnKeyType="next"
 					secureTextEntry
 					onChangeText={(value) => this.setState({password: value.trim()})}
-					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 5, marginBottom: 15}}
 					placeholder="Password"
 					keyboardAppearance="dark"
 				/>
