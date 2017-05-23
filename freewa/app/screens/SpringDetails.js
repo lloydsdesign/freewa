@@ -4,7 +4,6 @@ import React, {
 
 import {
 	ScrollView,
-	Modal,
 	Keyboard,
 	InteractionManager,
 	Linking,
@@ -22,8 +21,7 @@ import {
 	ListView,
 	Title,
 	Subtitle,
-	TouchableOpacity,
-	TextInput
+	TouchableOpacity
 } from '@shoutem/ui';
 
 import { connect } from 'react-redux';
@@ -50,7 +48,6 @@ export class SpringDetails extends Component
 		
 		this.state = {
 			marker: this.props.marker,
-			rateModal: false,
 			rateNumber: 0,
 			rateMessage: ''
 		};
@@ -93,130 +90,6 @@ export class SpringDetails extends Component
 		);
 	}
 	
-	rateSpring()
-	{
-		const { rateNumber, rateMessage } = this.state;
-		if(!rateNumber)
-		{
-			showAlert('Rate failed. Tap on stars to choose rate.');
-			return;
-		}
-		
-		const { user } = this.props;
-		var { marker } = this.state;
-		
-		this.setState({ rateModal: false });
-		
-		var data = new FormData();
-		data.append('rate_spring', '');
-		data.append('rate_number', rateNumber);
-		data.append('message', rateMessage);
-		data.append('user_id', user.id);
-		data.append('spring_id', marker.id);
-		
-		fetch(CMS_REST, {
-			method: 'POST',
-			body: data
-		})
-		.then((response) => response.text())
-		.then((response) => {
-			response = parseJSON(response);
-			
-			if(response.status)
-			{
-				marker.rating = response.data.rating.toFixed(1);
-				marker.ratingCount = response.data.ratingCount;
-				
-				this.setState({ marker });
-			}
-		});
-	}
-	
-	renderStars()
-	{
-		const { rateNumber } = this.state;
-		var i, img, stars = [];
-		
-		for(i = 1; i <= 5; i++)
-		{
-			if(i <= rateNumber) img = fullStar;
-			else img = emptyStar;
-			
-			stars.push(this.getStar(img, i));
-		}
-		
-		return stars;
-	}
-	
-	getStar(img, i)
-	{
-		return (
-			<TouchableOpacity
-				key={i - 1}
-				onPress={() => this.setState({ rateNumber: i })}
-			>
-				<Image source={img} />
-			</TouchableOpacity>
-		);
-	}
-	
-	renderRateModal()
-	{
-		const { rateModal } = this.state;
-		if(!rateModal) return null;
-		
-		const { marker } = this.props;
-		
-		return (
-			<Modal
-				animationType={"fade"}
-				visible={rateModal}
-				onRequestClose={() => this.setState({ rateModal: false })}
-			>
-				<View style={{ flex: 1, marginTop: 20 }} styleName="vertical h-center">
-					<Title>RATE SPRING</Title>
-					<Subtitle style={{marginBottom: 10}}>{marker.title.toUpperCase()}</Subtitle>
-					
-					<Divider styleName="line" />
-					
-					<Row>
-						<View styleName="horizontal h-center space-between">
-							{this.renderStars()}
-						</View>
-					</Row>
-					
-					<Divider styleName="line" />
-				
-					<Row>
-						<TextInput
-							autoCapitalize="sentences"
-							autoCorrect={false}
-							enablesReturnKeyAutomatically
-							returnKeyType="next"
-							multiline
-							maxLength={500}
-							onChangeText={(value) => this.setState({rateMessage: value.trim()})}
-							style={{flex: 1, height: 240, textAlignVertical: 'top', borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-							placeholder="Message"
-						/>
-					</Row>
-				</View>
-				
-				<View styleName="horizontal" style={{backgroundColor: '#FFF'}}>
-					<Button styleName="full-width" style={{margin: 10, backgroundColor: '#FAA21B'}} onPress={() => this.rateSpring()}>
-						<Icon name="like" />
-						<Text>RATE</Text>
-					</Button>
-					
-					<Button styleName="full-width" style={{margin: 10}} onPress={() => this.setState({ rateModal: false })}>
-						<Icon name="close" />
-						<Text>CANCEL</Text>
-					</Button>
-				</View>
-			</Modal>
-		);
-	}
-	
 	renderLogin()
 	{
 		const { user, marker, navigateTo, lastPosition } = this.props;
@@ -224,7 +97,16 @@ export class SpringDetails extends Component
 		if(user)
 		{
 			return (
-				<Button style={{margin: 10, padding: 10, backgroundColor: '#FAA21B', borderColor: '#FFF'}} onPress={() => this.setState({ rateModal: true })}>
+				<Button style={{margin: 10, padding: 10, backgroundColor: '#FAA21B', borderColor: '#FFF'}} onPress={() => {
+					InteractionManager.runAfterInteractions(() => navigateTo({
+						screen: ext('RateSpring'),
+						props: {
+							marker,
+							user,
+							lastPosition
+						}
+					}));
+				}}>
 					<Icon name="add-to-favorites-full" />
 					<Text>RATE</Text>
 				</Button>
@@ -237,7 +119,7 @@ export class SpringDetails extends Component
 					screen: ext('Login'),
 					props: {
 						marker,
-						returnScreen: ext('SpringDetails'),
+						returnScreen: ext('RateSpring'),
 						lastPosition
 					}
 				}));
@@ -269,10 +151,10 @@ export class SpringDetails extends Component
 	openMaps()
 	{
 		const { marker } = this.state;
-		
 		var url;
+		
 		if(Platform.OS == 'ios') url = 'http://maps.apple.com/?dirflg=w&ll='+ marker.latitude +','+ marker.longitude;
-		else url = 'geo:'+ marker.latitude +','+ marker.longitude;
+		else url = 'geo:'+ marker.latitude +','+ marker.longitude +'?q='+ marker.latitude +','+ marker.longitude;
 		
 		Linking.openURL(url);
 	}
@@ -305,7 +187,7 @@ export class SpringDetails extends Component
 		const { marker } = this.state;
 		  
 		return (
-			<ScrollView style={{marginTop: -1}}>
+			<ScrollView>
 				<NavigationBar
 					renderLeftComponent={() => renderNavLogo()}
 					renderRightComponent={() => this.renderNavHome()}
@@ -344,7 +226,6 @@ export class SpringDetails extends Component
 				<Divider styleName="line" />
 				
 				{this.renderLogin()}
-				{this.renderRateModal()}
 				{this.renderDescription()}
 				
 				<Row>
