@@ -76,6 +76,8 @@ export class Register extends Component
 			
 			if(response.status)
 			{
+				showAlert('Successfully registered as '+ email);
+				
 				navigateTo({
 					screen: this.props.returnScreen,
 					props: {
