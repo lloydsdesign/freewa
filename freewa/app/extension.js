@@ -6,15 +6,13 @@ import SpringDetails from './screens/SpringDetails';
 import Login from './screens/Login';
 import Register from './screens/Register';
 import AddSpring from './screens/AddSpring';
-import Compass from './screens/Compass';
 
 export const screens = {
   Map,
   SpringDetails,
   Login,
   Register,
-  AddSpring,
-  Compass
+  AddSpring
 };
 
 export function ext(resourceName) {

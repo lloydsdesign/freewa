@@ -14,9 +14,13 @@ import {
 	View,
 	Image,
 	TouchableOpacity,
-	Spinner,
-	Screen
+	Spinner
 } from '@shoutem/ui';
+
+import {
+	InteractionManager,
+	ScrollView
+} from 'react-native';
 
 import { connect } from 'react-redux';
 import { ext } from '../extension';
@@ -55,7 +59,7 @@ export class Login extends Component
 		}
 		
 		this.setState({ loading: true });
-		const { navigateTo } = this.props;
+		const { navigateTo, lastPosition } = this.props;
 		
 		var data = new FormData();
 		data.append('mobile_login', '');
@@ -76,7 +80,8 @@ export class Login extends Component
 					screen: this.props.returnScreen,
 					props: {
 						user: response.data,
-						marker: this.props.marker ? this.props.marker : null
+						marker: this.props.marker ? this.props.marker : null,
+						lastPosition
 					}
 				});
 			}
@@ -90,13 +95,13 @@ export class Login extends Component
 	
 	renderNavHome()
 	{
-		const { navigateTo, user } = this.props;
+		const { navigateTo, user, lastPosition } = this.props;
 		
 		return (
 			<View styleName="container" virtual>
 				<TouchableOpacity onPress={() => navigateTo({
 					screen: ext('Map'),
-					props: { user }
+					props: { user, lastPosition }
 				})}>
 					<Image style={{ width: 32, height: 32, marginRight: 10 }} source={require('../assets/icons/home.png')} />
 				</TouchableOpacity>
@@ -127,10 +132,10 @@ export class Login extends Component
 	
 	render()
 	{
-		const { navigateTo } = this.props;
+		const { navigateTo, lastPosition, returnScreen } = this.props;
 		
 		return (
-			<Screen style={{backgroundColor: '#FFF'}}>
+			<ScrollView style={{backgroundColor: '#FFF'}}>
 				<NavigationBar
 					renderLeftComponent={() => renderNavLogo()}
 					renderRightComponent={() => this.renderNavHome()}
@@ -177,15 +182,17 @@ export class Login extends Component
 				</Row>
 				
 				<Row style={{marginTop: 0, paddingTop: 0, paddingBottom: 300}}>
-					<Button styleName="full-width" style={{backgroundColor: '#FAA21B'}} onPress={() => navigateTo({
-						screen: ext('Register'),
-						props: { returnScreen: this.props.returnScreen }
-					})}>
+					<Button styleName="full-width" style={{backgroundColor: '#FAA21B'}} onPress={() => {
+						InteractionManager.runAfterInteractions(() => navigateTo({
+							screen: ext('Register'),
+							props: { returnScreen, lastPosition }
+						}));
+					}}>
 						<Icon name="add-friend" />
 						<Text>NOT A MEMBER? REGISTER</Text>
 					</Button>
 				</Row>
-			</Screen>
+			</ScrollView>
 		);
 	}
 }

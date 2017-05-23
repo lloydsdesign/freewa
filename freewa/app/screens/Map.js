@@ -47,8 +47,7 @@ export class Map extends Component
 		this.state = {
 			markers: [],
 			distance: null,
-			lastPosition: null,
-			hasLoaded: false,
+			lastPosition: this.props.lastPosition ? this.props.lastPosition : null,
 			selectedMarker: this.props.marker ? this.props.marker : null,
 			user: this.props.user ? this.props.user : null
 		};
@@ -58,30 +57,25 @@ export class Map extends Component
 	
 	componentWillMount()
 	{
-		Keyboard.dismiss();
+		const { lastPosition } = this.state;
 		
-		navigator.geolocation.getCurrentPosition((position) => {
-				this.fetchMarkers(position.coords).then((markers) => {	
-					this.setState({
-						markers: this.pickNearestMarker(markers, position.coords),
-						lastPosition: position.coords,
-						distance: this.calculateDistance(position.coords)
-					});
-				});
-			},
+		if(lastPosition)
+		{
+			this.doFetchJob(lastPosition);
+			return;
+		}
+		
+		navigator.geolocation.getCurrentPosition((position) => this.doFetchJob(position.coords),
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
 		);
+	}
+	
+	componentDidMount()
+	{
+		Keyboard.dismiss();
 		
-		this.watchID = navigator.geolocation.watchPosition((position) => {
-				this.fetchMarkers(position.coords).then((markers) => {	
-					this.setState({
-						markers: this.pickNearestMarker(markers, position.coords),
-						lastPosition: position.coords,
-						distance: this.calculateDistance(position.coords)
-					});
-				});
-			},
+		this.watchID = navigator.geolocation.watchPosition((position) => this.doFetchJob(position.coords),
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
 		);
@@ -90,6 +84,17 @@ export class Map extends Component
 	componentWillUnmount()
 	{
 		navigator.geolocation.clearWatch(this.watchID);
+	}
+	
+	doFetchJob(position)
+	{
+		this.fetchMarkers(position).then((markers) => {
+			this.setState({
+				markers: this.pickNearestMarker(markers, position),
+				lastPosition: position,
+				distance: this.calculateDistance(position)
+			});
+		});
 	}
 	
 	fetchMarkers(position)
@@ -145,60 +150,12 @@ export class Map extends Component
 		if(distance >= 1000)
 		{
 			distance /= 1000;
-			distance = distance.toFixed(2);
+			distance = parseFloat(distance.toFixed(2));
 			unit = 'km';
 		}
 		else distance = parseInt(distance, 10);
 		
 		return distance + unit;
-	}
-
-	animateToRegion()
-	{
-		const { hasLoaded, lastPosition, selectedMarker } = this.state;
-		
-		var coords;
-		if(selectedMarker) coords = selectedMarker;
-		else coords = lastPosition;
-		
-		if(hasLoaded || !coords) return;
-		
-		if(selectedMarker && lastPosition)
-		{
-			coords = [
-				{
-					latitude: selectedMarker.latitude,
-					longitude: selectedMarker.longitude
-				},
-				{
-					latitude: lastPosition.latitude,
-					longitude: lastPosition.longitude
-				}
-			];
-			
-			this.refs.map.fitToCoordinates(coords, {
-				edgePadding: {
-					top: 20,
-					right: 20,
-					bottom: 20,
-					left: 20
-				},
-				animated: true
-			});
-		}
-		else
-		{
-			coords = {
-				latitude: coords.latitude,
-				longitude: coords.longitude,
-				latitudeDelta: 0.3,
-				longitudeDelta: 0.3
-			};
-			
-			this.refs.map.animateToRegion(coords);
-		}
-		
-		this.setState({ hasLoaded: true });
 	}
 	
 	renderNavRight()
@@ -210,12 +167,16 @@ export class Map extends Component
 	renderLoginButton()
 	{
 		const { navigateTo } = this.props;
+		const { lastPosition } = this.state;
 		
 		return (
 			<View styleName="container" virtual>
 				<TouchableOpacity onPress={() => navigateTo({
 					screen: ext('Login'),
-					props: { returnScreen: ext('AddSpring') }
+					props: {
+						returnScreen: ext('AddSpring'),
+						lastPosition
+					}
 				})}>
 					<Image style={{ width: 32, height: 32, marginRight: 10 }} source={require('../assets/icons/plus.png')} />
 				</TouchableOpacity>
@@ -226,6 +187,7 @@ export class Map extends Component
 	renderLogoutButton()
 	{
 		const { navigateTo } = this.props;
+		const { lastPosition } = this.state;
 		
 		return (
 			<View styleName="container" virtual>
@@ -233,7 +195,8 @@ export class Map extends Component
 					screen: ext('AddSpring'),
 					props: {
 						returnScreen: ext('Map'),
-						user: this.state.user
+						user: this.state.user,
+						lastPosition
 					}
 				})}>
 					<Image style={{ width: 32, height: 32, marginRight: 10 }} source={require('../assets/icons/plus.png')} />
@@ -262,7 +225,7 @@ export class Map extends Component
 			<View styleName="h-center" style={{shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
 				<TouchableOpacity onPress={() => navigateTo({
 					screen: ext('SpringDetails'),
-					props: { marker, user }
+					props: { marker, user, lastPosition }
 				})}>
 					<View styleName="horizontal" style={{backgroundColor: '#FFF'}}>
 						<Image styleName="medium-square rounded-corners" style={{margin: 10}} source={{ uri: marker.image }} />
@@ -280,9 +243,9 @@ export class Map extends Component
 	
 	renderMap()
 	{
-		const { markers, selectedMarker } = this.state;
+		const { markers, selectedMarker, lastPosition } = this.state;
 		
-		if(!markers.length)
+		if(!markers.length || !lastPosition)
 		{
 			return (
 				<View styleName="horizontal v-center h-center" style={{ flex: 1 }}>
@@ -294,10 +257,14 @@ export class Map extends Component
 		return (
 			<MapView
 				ref="map"
-				onRegionChangeComplete={() => this.animateToRegion()}
+				initialRegion={{
+					latitude: lastPosition.latitude,
+					longitude: lastPosition.longitude,
+					latitudeDelta: 0.3,
+					longitudeDelta: 0.3
+				}}
 				loadingEnabled
 				showsUserLocation
-				//followsUserLocation
 				onPress={() => {
 					if(selectedMarker) this.setState({ selectedMarker: null });
 				}}
@@ -310,7 +277,6 @@ export class Map extends Component
 							latitude: marker.latitude,
 							longitude: marker.longitude
 						}}
-						//title={marker.title.toUpperCase()}
 						image={marker.icon}
 						onPress={() => this.setState({ selectedMarker: marker })}
 					/>

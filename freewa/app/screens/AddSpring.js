@@ -15,14 +15,15 @@ import {
 	Subtitle,
 	Caption,
 	Spinner,
-	DropDownMenu,
-	Screen
+	DropDownMenu
 } from '@shoutem/ui';
 
 import {
 	ListView,
 	Modal,
-	Image
+	Image,
+	ScrollView,
+	InteractionManager
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -77,7 +78,7 @@ export class AddSpring extends Component
 			return;
 		}
 		
-		const { navigateTo, user } = this.props;
+		const { navigateTo, user, lastPosition } = this.props;
 		this.setState({ uploading: true });
 		
 		navigator.geolocation.getCurrentPosition((position) => {
@@ -121,7 +122,7 @@ export class AddSpring extends Component
 					{
 						navigateTo({
 							screen: ext('Map'),
-							props: { user: user }
+							props: { user, lastPosition }
 						});
 					}
 					else showAlert('Add spring failed.');
@@ -212,13 +213,13 @@ export class AddSpring extends Component
 	
 	renderNavHome()
 	{
-		const { navigateTo, user } = this.props;
+		const { navigateTo, user, lastPosition } = this.props;
 		
 		return (
 			<View styleName="container" virtual>
 				<TouchableOpacity onPress={() => navigateTo({
 					screen: ext('Map'),
-					props: { user }
+					props: { user, lastPosition }
 				})}>
 					<Image style={{ width: 32, height: 32, marginRight: 10 }} source={require('../assets/icons/home.png')} />
 				</TouchableOpacity>
@@ -247,7 +248,7 @@ export class AddSpring extends Component
 			);
 		}
 		
-		const { navigateTo, user } = this.props;
+		const { navigateTo, user, lastPosition } = this.props;
 		
 		var i, size = 0;
 		for(i = 0; i < images.length; i++) size += images[i].size;
@@ -255,11 +256,11 @@ export class AddSpring extends Component
 		if(size)
 		{
 			size /= 1024 * 1024;
-			size = size.toFixed(2);
+			size = parseFloat(size.toFixed(2));
 		}
 		
 		return (
-			<Screen style={{backgroundColor: '#FFF'}}>
+			<ScrollView style={{backgroundColor: '#FFF'}}>
 				<NavigationBar
 					renderLeftComponent={() => renderNavLogo()}
 					renderRightComponent={() => this.renderNavHome()}
@@ -319,20 +320,24 @@ export class AddSpring extends Component
 				</Row>
 				
 				<View styleName="horizontal" style={{marginBottom: 250}}>
-					<Button styleName="full-width" style={{marginRight: 5, marginLeft: 15}} onPress={() => navigateTo({
-						screen: ext('Map'),
-						props: { user: user }
-					})}>
+					<Button styleName="full-width" style={{marginRight: 5, marginLeft: 15}} onPress={() => {
+						InteractionManager.runAfterInteractions(() => navigateTo({
+							screen: ext('Map'),
+							props: { user, lastPosition }
+						}));
+					}}>
 						<Icon name="close" />
 						<Text>CANCEL</Text>
 					</Button>
 					
-					<Button styleName="full-width" style={{backgroundColor: '#FAA21B', marginRight: 15, marginLeft: 5}} onPress={() => this.submitForm()}>
+					<Button styleName="full-width" style={{backgroundColor: '#FAA21B', marginRight: 15, marginLeft: 5}} onPress={() => {
+						InteractionManager.runAfterInteractions(() => this.submitForm());
+					}}>
 						<Icon name="add-to-favorites-full" />
 						<Text>SAVE</Text>
 					</Button>
 				</View>
-			</Screen>
+			</ScrollView>
 		);
 	}
 }

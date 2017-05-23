@@ -6,7 +6,8 @@ import {
 	ScrollView,
 	Modal,
 	TextInput,
-	Keyboard
+	Keyboard,
+	InteractionManager
 } from 'react-native';
 
 import {
@@ -23,12 +24,6 @@ import {
 	TouchableOpacity
 } from '@shoutem/ui';
 
-/*import {
-	LoginButton,
-	ShareDialog
-} from 'react-native-fbsdk';*/
-
-import { InlineMap } from '@shoutem/ui-addons';
 import { connect } from 'react-redux';
 import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
@@ -39,7 +34,6 @@ import {
 	emptyStar,
 	CMS_REST,
 	getRatingString,
-	getDistance,
 	parseJSON,
 	showAlert,
 	renderNavLogo
@@ -54,8 +48,6 @@ export class SpringDetails extends Component
 		
 		this.state = {
 			marker: this.props.marker,
-			lastPosition: null,
-			distance: '',
 			rateModal: false,
 			rateNumber: 0,
 			rateMessage: ''
@@ -64,82 +56,10 @@ export class SpringDetails extends Component
 	
 	watchID: ?number = null;
 	
-	componentWillMount()
+	componentDidMount()
 	{
 		Keyboard.dismiss();
-		
-		navigator.geolocation.getCurrentPosition((position) => {
-				this.setState({ lastPosition: position.coords });
-			},
-			(error) => console.log(JSON.stringify(error)),
-			{enableHighAccuracy: true}
-		);
-		
-		this.watchID = navigator.geolocation.watchPosition((position) => {
-				this.setState({ lastPosition: position.coords });
-				this.calculateDistance();
-			},
-			(error) => console.log(JSON.stringify(error)),
-			{enableHighAccuracy: true}
-		);
 	}
-	
-	componentWillUnmount()
-	{
-		navigator.geolocation.clearWatch(this.watchID);
-	}
-	
-	calculateDistance()
-	{
-		const lastPosition = this.state.lastPosition;
-		if(!lastPosition) return;
-		
-		const { marker } = this.props;
-		
-		var unit = 'm';
-		var distance = getDistance(lastPosition, marker);
-		
-		if(distance >= 1000)
-		{
-			distance /= 1000;
-			distance = distance.toFixed(2);
-			unit = 'km';
-		}
-		else distance = parseInt(distance, 10);
-		
-		this.setState({ distance: distance + unit });
-	}
-	
-	renderDistance()
-	{
-		const distance = this.state.distance;
-		if(distance == '') return null;
-		
-		return (
-			<Row style={{backgroundColor: 'rgba(0,178,193,0.7)', marginTop: -47}}>
-				<Text style={{color: '#FFF', fontWeight: 'bold', textAlign: 'center'}}>{distance} FROM YOU</Text>
-			</Row>
-		);
-	}
-	
-	/*shareLinkWithShareDialog()
-	{
-		var tmp = this;
-		ShareDialog.canShow(this.state.shareLinkContent).then(
-			function(canShow) {
-				if(canShow) {
-					return ShareDialog.show(tmp.state.shareLinkContent);
-				}
-			}
-			).then(
-			function(result) {
-				if(!result.isCancelled) alert('Share success with postId: ' + result.postId);
-			},
-			function(error) {
-				alert('Share fail with error: ' + error);
-			}
-		);
-	}*/
 	
 	renderRating()
 	{
@@ -297,7 +217,7 @@ export class SpringDetails extends Component
 	
 	renderLogin()
 	{
-		const { user, marker, navigateTo } = this.props;
+		const { user, marker, navigateTo, lastPosition } = this.props;
 		
 		if(user)
 		{
@@ -310,13 +230,16 @@ export class SpringDetails extends Component
 		}
 		
 		return (
-			<Button style={{margin: 10, padding: 10, backgroundColor: '#FAA21B', borderColor: '#FFF'}} onPress={() => navigateTo({
-				screen: ext('Login'),
-				props: {
-					marker,
-					returnScreen: ext('SpringDetails')
-				}
-			})}>
+			<Button style={{margin: 10, padding: 10, backgroundColor: '#FAA21B', borderColor: '#FFF'}} onPress={() => {
+				InteractionManager.runAfterInteractions(() => navigateTo({
+					screen: ext('Login'),
+					props: {
+						marker,
+						returnScreen: ext('SpringDetails'),
+						lastPosition
+					}
+				}));
+			}}>
 				<Icon name="add-to-favorites-full" />
 				<Text>LOGIN TO RATE</Text>
 			</Button>
@@ -350,13 +273,13 @@ export class SpringDetails extends Component
 	
 	renderNavHome()
 	{
-		const { navigateTo, user } = this.props;
+		const { navigateTo, user, lastPosition } = this.props;
 		
 		return (
 			<View styleName="container" virtual>
 				<TouchableOpacity onPress={() => navigateTo({
 					screen: ext('Map'),
-					props: { user }
+					props: { user, lastPosition }
 				})}>
 					<Image style={{ width: 32, height: 32, marginRight: 10 }} source={require('../assets/icons/home.png')} />
 				</TouchableOpacity>
@@ -366,14 +289,8 @@ export class SpringDetails extends Component
 
 	render()
 	{
-		const { navigateTo, user } = this.props;
+		const { navigateTo, user, lastPosition } = this.props;
 		const { marker } = this.state;
-		
-		const position = {
-			latitude: marker.latitude,
-			longitude: marker.longitude,
-			title: marker.title.toUpperCase()
-		};
 		  
 		return (
 			<ScrollView style={{marginTop: -1}}>
@@ -387,8 +304,6 @@ export class SpringDetails extends Component
 					data={marker.images}
 					renderRow={image => this.renderRow(image)}
 				/>
-				
-				{this.renderDistance()}
 				
 				<Row>
 					<View styleName="horizontal h-center v-center">
@@ -419,32 +334,12 @@ export class SpringDetails extends Component
 				{this.renderLogin()}
 				{this.renderRateModal()}
 				{this.renderDescription()}
-
-				<View styleName="large-banner">
-					<InlineMap
-						initialRegion={{
-							latitude: position.latitude,
-							longitude: position.longitude,
-							latitudeDelta: 0.3,
-							longitudeDelta: 0.3
-						}}
-						markers={[position]}
-						selectedMarker={position}
-						style={{height: 160}}
-					>
-						<View styleName="overlay horizontal v-center h-center fill-parent">
-							<Text style={{fontWeight: 'bold'}}>N: {position.latitude.toFixed(6)}</Text>
-							<Text>    </Text>
-							<Text style={{fontWeight: 'bold'}}>E: {position.longitude.toFixed(6)}</Text>
-						</View>
-					</InlineMap>
-				</View>
 				
 				<Row>
 					<Button styleName="full-width" style={{backgroundColor: '#FAA21B'}}
 						onPress={() => navigateTo({
 							screen: ext('Map'),
-							props: { marker, user }
+							props: { marker, user, lastPosition }
 						})}
 					>
 						<Icon name="pin" />
