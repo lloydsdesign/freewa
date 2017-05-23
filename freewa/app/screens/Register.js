@@ -144,7 +144,7 @@ export class Register extends Component
 				
 				<Row style={{marginTop: 0, paddingTop: 10}}>
 					<View styleName="horizontal h-center">
-						<Title>REGISTER</Title>
+						<Title style={{color: '#00B2C1'}}>REGISTER</Title>
 					</View>
 				</Row>
 				
