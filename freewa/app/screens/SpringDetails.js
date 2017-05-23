@@ -153,8 +153,8 @@ export class SpringDetails extends Component
 		const { marker } = this.state;
 		var url;
 		
-		if(Platform.OS == 'ios') url = 'http://maps.apple.com/?dirflg=w&ll='+ marker.latitude +','+ marker.longitude;
-		else url = 'geo:'+ marker.latitude +','+ marker.longitude +'?q='+ marker.latitude +','+ marker.longitude;
+		if(Platform.OS == 'ios') url = 'http://maps.apple.com/?daddr='+ marker.latitude +','+ marker.longitude +'&dirflg=w';
+		else url = 'google.navigation:q='+ marker.latitude +','+ marker.longitude +'&mode=w';
 		
 		Linking.openURL(url);
 	}
