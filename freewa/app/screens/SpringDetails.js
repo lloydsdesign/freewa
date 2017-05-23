@@ -5,9 +5,10 @@ import React, {
 import {
 	ScrollView,
 	Modal,
-	TextInput,
 	Keyboard,
-	InteractionManager
+	InteractionManager,
+	Linking,
+	Platform
 } from 'react-native';
 
 import {
@@ -21,7 +22,8 @@ import {
 	ListView,
 	Title,
 	Subtitle,
-	TouchableOpacity
+	TouchableOpacity,
+	TextInput
 } from '@shoutem/ui';
 
 import { connect } from 'react-redux';
@@ -264,6 +266,17 @@ export class SpringDetails extends Component
 		);
 	}
 	
+	openMaps()
+	{
+		const { marker } = this.state;
+		
+		var url;
+		if(Platform.OS == 'ios') url = 'http://maps.apple.com/?dirflg=w&ll='+ marker.latitude +','+ marker.longitude;
+		else url = 'geo:'+ marker.latitude +','+ marker.longitude;
+		
+		Linking.openURL(url);
+	}
+	
 	renderRow(image)
 	{
 		return (
@@ -289,7 +302,6 @@ export class SpringDetails extends Component
 
 	render()
 	{
-		const { navigateTo, user, lastPosition } = this.props;
 		const { marker } = this.state;
 		  
 		return (
@@ -336,12 +348,7 @@ export class SpringDetails extends Component
 				{this.renderDescription()}
 				
 				<Row>
-					<Button styleName="full-width" style={{backgroundColor: '#FAA21B'}}
-						onPress={() => navigateTo({
-							screen: ext('Map'),
-							props: { marker, user, lastPosition }
-						})}
-					>
+					<Button styleName="full-width" style={{backgroundColor: '#FAA21B'}} onPress={() => this.openMaps()}>
 						<Icon name="pin" />
 						<Text>SHOW ON MAP</Text>
 					</Button>
