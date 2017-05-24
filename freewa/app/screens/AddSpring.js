@@ -23,7 +23,8 @@ import {
 	Modal,
 	Image,
 	ScrollView,
-	InteractionManager
+	InteractionManager,
+	KeyboardAvoidingView
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -266,45 +267,47 @@ export class AddSpring extends Component
 					renderRightComponent={() => this.renderNavHome()}
 				/>
 
-				<TextInput
-					autoCapitalize="words"
-					autoCorrect={false}
-					autoFocus
-					maxLength={50}
-					enablesReturnKeyAutomatically
-					returnKeyType="next"
-					onChangeText={(value) => this.setState({name: value.trim()})}
-					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, margin: 15}}
-					placeholder="Name of the New Spring"
-					keyboardAppearance="dark"
-				/>
-				
-				<Divider styleName="line" />
-				
-				<Subtitle styleName="horizontal h-center v-center" style={{padding: 10}}>SPRING TYPE</Subtitle>
-				<DropDownMenu
-					style={{backgroundColor: '#ddd'}}
-					options={types}
-					selectedOption={type}
-					onOptionSelected={(type) => this.setState({ type })}
-					titleProperty="title"
-					valueProperty="value"
-				/>
-				
-				<Divider styleName="line" />
-				
-				<TextInput
-					autoCapitalize="sentences"
-					autoCorrect={false}
-					enablesReturnKeyAutomatically
-					returnKeyType="next"
-					multiline
-					maxLength={500}
-					onChangeText={(value) => this.setState({description: value.trim()})}
-					style={{height: 240, textAlignVertical: 'top', borderColor: '#CCC', borderWidth: 1, borderRadius: 0, margin: 15}}
-					placeholder="Spring Description"
-					keyboardAppearance="dark"
-				/>
+				<KeyboardAvoidingView>
+					<TextInput
+						autoCapitalize="words"
+						autoCorrect={false}
+						autoFocus
+						maxLength={50}
+						enablesReturnKeyAutomatically
+						returnKeyType="next"
+						onChangeText={(value) => this.setState({name: value.trim()})}
+						style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, margin: 15}}
+						placeholder="Name of the New Spring"
+						keyboardAppearance="dark"
+					/>
+					
+					<Divider styleName="line" />
+					
+					<Subtitle styleName="horizontal h-center v-center" style={{padding: 10}}>SPRING TYPE</Subtitle>
+					<DropDownMenu
+						style={{backgroundColor: '#ddd'}}
+						options={types}
+						selectedOption={type}
+						onOptionSelected={(type) => this.setState({ type })}
+						titleProperty="title"
+						valueProperty="value"
+					/>
+					
+					<Divider styleName="line" />
+					
+					<TextInput
+						autoCapitalize="sentences"
+						autoCorrect={false}
+						enablesReturnKeyAutomatically
+						returnKeyType="next"
+						multiline
+						maxLength={500}
+						onChangeText={(value) => this.setState({description: value.trim()})}
+						style={{height: 240, textAlignVertical: 'top', borderColor: '#CCC', borderWidth: 1, borderRadius: 0, margin: 15}}
+						placeholder="Spring Description"
+						keyboardAppearance="dark"
+					/>
+				</KeyboardAvoidingView>
 				
 				<Divider styleName="line" />
 				

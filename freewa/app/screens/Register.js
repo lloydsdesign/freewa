@@ -14,7 +14,8 @@ import {
 
 import {
 	InteractionManager,
-	ScrollView
+	ScrollView,
+	KeyboardAvoidingView
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -122,55 +123,57 @@ export class Register extends Component
 			<ScrollView style={{backgroundColor: '#FFF'}}>		
 				<NavigationBar title="REGISTER" />
 
-				<TextInput
-					autoCapitalize="none"
-					autoCorrect={false}
-					autoFocus
-					maxLength={50}
-					enablesReturnKeyAutomatically
-					returnKeyType="next"
-					onChangeText={(value) => this.setState({username: value.trim()})}
-					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 10, marginBottom: 5}}
-					placeholder="Username"
-					keyboardAppearance="dark"
-				/>
-	
-				<TextInput
-					autoCapitalize="words"
-					autoCorrect={false}
-					maxLength={50}
-					enablesReturnKeyAutomatically
-					returnKeyType="next"
-					onChangeText={(value) => this.setState({fullName: value.trim()})}
-					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 10, marginBottom: 5}}
-					placeholder="Full Name"
-					keyboardAppearance="dark"
-				/>
-			
-				<TextInput
-					autoCapitalize="none"
-					autoCorrect={false}
-					maxLength={50}
-					enablesReturnKeyAutomatically
-					returnKeyType="next"
-					keyboardType="email-address"
-					onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
-					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 10, marginBottom: 5}}
-					placeholder="E-mail"
-					keyboardAppearance="dark"
-				/>
-			
-				<TextInput
-					autoCapitalize="none"
-					autoCorrect={false}
-					enablesReturnKeyAutomatically
-					returnKeyType="next"
-					secureTextEntry
-					onChangeText={(value) => this.setState({password: value.trim()})}
-					style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 10, marginBottom: 15}}
-					placeholder="Password"
-					keyboardAppearance="dark"
-				/>
+				<KeyboardAvoidingView>
+					<TextInput
+						autoCapitalize="none"
+						autoCorrect={false}
+						autoFocus
+						maxLength={50}
+						enablesReturnKeyAutomatically
+						returnKeyType="next"
+						onChangeText={(value) => this.setState({username: value.trim()})}
+						style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 10, marginBottom: 5}}
+						placeholder="Username"
+						keyboardAppearance="dark"
+					/>
+		
+					<TextInput
+						autoCapitalize="words"
+						autoCorrect={false}
+						maxLength={50}
+						enablesReturnKeyAutomatically
+						returnKeyType="next"
+						onChangeText={(value) => this.setState({fullName: value.trim()})}
+						style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 10, marginBottom: 5}}
+						placeholder="Full Name"
+						keyboardAppearance="dark"
+					/>
+				
+					<TextInput
+						autoCapitalize="none"
+						autoCorrect={false}
+						maxLength={50}
+						enablesReturnKeyAutomatically
+						returnKeyType="next"
+						keyboardType="email-address"
+						onChangeText={(value) => this.setState({email: value.trim().toLowerCase()})}
+						style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 10, marginBottom: 5}}
+						placeholder="E-mail"
+						keyboardAppearance="dark"
+					/>
+				
+					<TextInput
+						autoCapitalize="none"
+						autoCorrect={false}
+						enablesReturnKeyAutomatically
+						returnKeyType="next"
+						secureTextEntry
+						onChangeText={(value) => this.setState({password: value.trim()})}
+						style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 10, marginBottom: 15}}
+						placeholder="Password"
+						keyboardAppearance="dark"
+					/>
+				</KeyboardAvoidingView>
 				
 				<Row style={{marginTop: 0, paddingTop: 0}}>
 					{this.renderSubmitButton()}
