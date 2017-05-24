@@ -4,16 +4,11 @@ import React, {
 
 import {
 	Text,
-	Divider,
 	Row,
-	Title,
 	View,
 	TextInput,
 	Icon,
 	Button,
-	Subtitle,
-	Image,
-	TouchableOpacity,
 	Spinner
 } from '@shoutem/ui';
 

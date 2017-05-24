@@ -16,7 +16,6 @@ import {
 	View,
 	Image,
 	Divider,
-	ListView,
 	Title,
 	Subtitle,
 	TouchableOpacity,

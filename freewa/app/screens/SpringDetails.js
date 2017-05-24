@@ -18,10 +18,7 @@ import {
 	View,
 	Image,
 	Divider,
-	ListView,
-	Title,
-	Subtitle,
-	TouchableOpacity
+	ListView
 } from '@shoutem/ui';
 
 import { connect } from 'react-redux';
