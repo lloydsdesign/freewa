@@ -190,6 +190,7 @@ export class SpringDetails extends Component
 				
 				{this.renderRating()}
 				{this.renderLogin()}
+				{this.renderDescription()}
 				
 				<Divider styleName="line" />
 				
@@ -204,10 +205,6 @@ export class SpringDetails extends Component
 						<Text>{marker.longitude}</Text>
 					</View>
 				</Row>
-				
-				<Divider styleName="line" />
-				
-				{this.renderDescription()}
 				
 				<View>
 					<Button styleName="full-width" style={{backgroundColor: '#00B2C1'}} onPress={() => this.openMaps()}>
