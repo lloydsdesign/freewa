@@ -2,7 +2,10 @@ import React, {
 	Component
 } from 'react';
 
-import { Alert } from 'react-native';
+import {
+	Alert,
+	Platform
+} from 'react-native';
 
 import {
 	View,
@@ -19,6 +22,18 @@ const MAP_DELTA = 0.5;
 const fullStar = require('./assets/icons/full-star.png');
 const emptyStar = require('./assets/icons/empty-star.png');
 const halfStar = require('./assets/icons/half-star.png');
+var markerImage, markerImageNearest;
+
+if(Platform.OS == 'ios')
+{
+	markerImage = require('./assets/icons/flag-ios-basic.png');
+	markerImageNearest = require('./assets/icons/flag-ios-nearest.png');
+}
+else
+{
+	markerImage = require('./assets/icons/flag-android-basic.png');
+	markerImageNearest = require('./assets/icons/flag-android-nearest.png');
+}
 
 
 function renderNavLogo()
@@ -124,5 +139,7 @@ export {
 	getAzimuth,
 	getDistance,
 	fullStar,
-	emptyStar
+	emptyStar,
+	markerImage,
+	markerImageNearest
 };

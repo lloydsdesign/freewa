@@ -279,6 +279,7 @@ export class AddSpring extends Component
 						style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, margin: 15}}
 						placeholder="Name of the New Spring"
 						keyboardAppearance="dark"
+						underlineColorAndroid="#fff"
 					/>
 					
 					<Divider styleName="line" />
@@ -306,6 +307,7 @@ export class AddSpring extends Component
 						style={{height: 240, textAlignVertical: 'top', borderColor: '#CCC', borderWidth: 1, borderRadius: 0, margin: 15}}
 						placeholder="Spring Description"
 						keyboardAppearance="dark"
+						underlineColorAndroid="#fff"
 					/>
 				</KeyboardAvoidingView>
 				

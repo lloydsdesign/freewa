@@ -16,6 +16,7 @@ import {
 import {
 	InteractionManager,
 	ScrollView,
+	AsyncStorage,
 	KeyboardAvoidingView
 } from 'react-native';
 
@@ -72,13 +73,16 @@ export class Login extends Component
 			
 			if(response.status)
 			{
-				navigateTo({
-					screen: this.props.returnScreen,
-					props: {
-						user: response.data,
-						marker: this.props.marker ? this.props.marker : null,
-						lastPosition
-					}
+				AsyncStorage.removeItem('UserData').then(() => {
+					AsyncStorage.setItem('UserData', JSON.stringify(response.data))
+					.then(() => navigateTo({
+						screen: this.props.returnScreen,
+						props: {
+							user: response.data,
+							marker: this.props.marker ? this.props.marker : null,
+							lastPosition
+						}
+					}));
 				});
 			}
 			else
@@ -115,7 +119,7 @@ export class Login extends Component
 		const { navigateTo, lastPosition, returnScreen } = this.props;
 		
 		return (
-			<ScrollView style={{backgroundColor: '#FFF'}}>
+			<ScrollView style={{backgroundColor: '#FFF'}} keyboardShouldPersistTaps={true}>
 				<NavigationBar title="LOGIN" />
 
 				<KeyboardAvoidingView>
@@ -131,6 +135,7 @@ export class Login extends Component
 						style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 10, marginBottom: 10}}
 						placeholder="E-mail"
 						keyboardAppearance="dark"
+						underlineColorAndroid="#fff"
 					/>
 					
 					<TextInput
@@ -143,6 +148,7 @@ export class Login extends Component
 						style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 5, marginBottom: 15}}
 						placeholder="Password"
 						keyboardAppearance="dark"
+						underlineColorAndroid="#fff"
 					/>
 				</KeyboardAvoidingView>
 				

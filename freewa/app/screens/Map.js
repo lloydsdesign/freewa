@@ -17,15 +17,16 @@ import {
 	Button
 } from '@shoutem/ui';
 
-import { Keyboard } from 'react-native';
+import {
+	Keyboard,
+	AsyncStorage
+} from 'react-native';
+
 import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
 import { NavigationBar } from '@shoutem/ui/navigation';
 import { navigateTo } from '@shoutem/core/navigation';
 import { ext } from '../extension';
-
-const markerImage = require('../assets/icons/marker-image.png');
-const markerImageNearest = require('../assets/icons/marker-image-nearest.png');
 
 import {
 	jsonGuard,
@@ -35,7 +36,9 @@ import {
 	parseJSON,
 	getRatingStars,
 	getDistance,
-	renderNavLogo
+	renderNavLogo,
+	markerImage,
+	markerImageNearest
 } from '../const';
 
 
@@ -80,6 +83,8 @@ export class Map extends Component
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
 		);
+		
+		this.getUser();
 	}
 	
 	componentWillUnmount()
@@ -120,6 +125,16 @@ export class Map extends Component
 		.then((response) => {
 			response = parseJSON(response);
 			return adjustMarkerValues(response.springs);
+		});
+	}
+	
+	getUser()
+	{
+		const { user } = this.state;
+		if(user) return;
+		
+		AsyncStorage.getItem('UserData').then((user) => {
+			if(user) this.setState({ user: JSON.parse(user) });
 		});
 	}
 	

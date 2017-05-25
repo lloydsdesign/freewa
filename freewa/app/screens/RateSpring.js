@@ -5,8 +5,7 @@ import React, {
 import {
 	ScrollView,
 	Keyboard,
-	InteractionManager,
-	KeyboardAvoidingView
+	InteractionManager
 } from 'react-native';
 
 import {
@@ -199,21 +198,26 @@ export class RateSpring extends Component
 					</Row>
 					
 					<Divider styleName="line" />
+					
+					<View styleName="vertical v-center h-center">
+						<Text>YOUR PREVIOUS RATE WILL BE OVERWRITTEN</Text>
+					</View>
+					
+					<Divider styleName="line" />
 				
 					<Row>
-						<KeyboardAvoidingView>
-							<TextInput
-								autoCapitalize="sentences"
-								autoCorrect={false}
-								enablesReturnKeyAutomatically
-								returnKeyType="next"
-								multiline
-								maxLength={500}
-								onChangeText={(value) => this.setState({rateMessage: value.trim()})}
-								style={{flex: 1, height: 240, textAlignVertical: 'top', borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
-								placeholder="Message"
-							/>
-						</KeyboardAvoidingView>
+						<TextInput
+							autoCapitalize="sentences"
+							autoCorrect={false}
+							enablesReturnKeyAutomatically
+							returnKeyType="next"
+							multiline
+							maxLength={500}
+							onChangeText={(value) => this.setState({rateMessage: value.trim()})}
+							style={{flex: 1, height: 240, textAlignVertical: 'top', borderColor: '#CCC', borderWidth: 1, borderRadius: 4}}
+							placeholder="Message"
+							underlineColorAndroid="#fff"
+						/>
 					</Row>
 				</View>
 				

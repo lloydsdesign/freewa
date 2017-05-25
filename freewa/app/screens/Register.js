@@ -15,6 +15,7 @@ import {
 import {
 	InteractionManager,
 	ScrollView,
+	AsyncStorage,
 	KeyboardAvoidingView
 } from 'react-native';
 
@@ -77,13 +78,16 @@ export class Register extends Component
 			{
 				showAlert('Successfully registered as '+ email);
 				
-				navigateTo({
-					screen: this.props.returnScreen,
-					props: {
-						user: response.data,
-						marker: this.props.marker ? this.props.marker : null,
-						lastPosition
-					}
+				AsyncStorage.removeItem('UserData').then(() => {
+					AsyncStorage.setItem('UserData', JSON.stringify(response.data))
+					.then(() => navigateTo({
+						screen: this.props.returnScreen,
+						props: {
+							user: response.data,
+							marker: this.props.marker ? this.props.marker : null,
+							lastPosition
+						}
+					}));
 				});
 			}
 			else
@@ -120,7 +124,7 @@ export class Register extends Component
 		const { navigateTo, lastPosition } = this.props;
 		
 		return (
-			<ScrollView style={{backgroundColor: '#FFF'}}>		
+			<ScrollView style={{backgroundColor: '#FFF'}} keyboardShouldPersistTaps={true}>		
 				<NavigationBar title="REGISTER" />
 
 				<KeyboardAvoidingView>
@@ -135,6 +139,7 @@ export class Register extends Component
 						style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 10, marginBottom: 5}}
 						placeholder="Username"
 						keyboardAppearance="dark"
+						underlineColorAndroid="#fff"
 					/>
 		
 					<TextInput
@@ -147,6 +152,7 @@ export class Register extends Component
 						style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 10, marginBottom: 5}}
 						placeholder="Full Name"
 						keyboardAppearance="dark"
+						underlineColorAndroid="#fff"
 					/>
 				
 					<TextInput
@@ -160,6 +166,7 @@ export class Register extends Component
 						style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 10, marginBottom: 5}}
 						placeholder="E-mail"
 						keyboardAppearance="dark"
+						underlineColorAndroid="#fff"
 					/>
 				
 					<TextInput
@@ -172,6 +179,7 @@ export class Register extends Component
 						style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 10, marginBottom: 15}}
 						placeholder="Password"
 						keyboardAppearance="dark"
+						underlineColorAndroid="#fff"
 					/>
 				</KeyboardAvoidingView>
 				
