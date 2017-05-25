@@ -176,8 +176,6 @@ export class SpringDetails extends Component
 					renderRow={image => this.renderRow(image)}
 				/>
 				
-				
-				
 				<Row style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
 					<View style={{flex: 0.4}} styleName="vertical h-center v-center">
 						<Text style={{color: '#00B2C1'}}>TYPE</Text>
@@ -190,13 +188,25 @@ export class SpringDetails extends Component
 					</View>
 				</Row>
 				
-				<Divider styleName="line" />
-				
 				{this.renderRating()}
+				{this.renderLogin()}
 				
 				<Divider styleName="line" />
 				
-				{this.renderLogin()}
+				<Row style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
+					<View style={{flex: 0.5}} styleName="vertical h-center v-center">
+						<Text style={{color: '#00B2C1'}}>LATITUDE</Text>
+						<Text>{marker.latitude}</Text>
+					</View>
+					
+					<View style={{flex: 0.5}} styleName="vertical h-center v-center">
+						<Text style={{color: '#00B2C1'}}>LONGITUDE</Text>
+						<Text>{marker.longitude}</Text>
+					</View>
+				</Row>
+				
+				<Divider styleName="line" />
+				
 				{this.renderDescription()}
 				
 				<View>
