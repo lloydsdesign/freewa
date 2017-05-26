@@ -17,7 +17,6 @@ import {
 	Image,
 	Divider,
 	Title,
-	Subtitle,
 	TouchableOpacity,
 	TextInput,
 	Spinner
@@ -99,7 +98,7 @@ export class RateSpring extends Component
 				showAlert('Spring successfully rated.');
 				
 				navigateTo({
-					screen: ext('SpringDetails'),
+					screen: ext('Map'),
 					props: { user, lastPosition, marker }
 				});
 			}
@@ -163,14 +162,15 @@ export class RateSpring extends Component
 	renderNavHome()
 	{
 		const { navigateTo, user, lastPosition } = this.props;
+		const { marker } = this.state;
 		
 		return (
 			<View styleName="container" virtual>
 				<TouchableOpacity onPress={() => navigateTo({
 					screen: ext('Map'),
-					props: { user, lastPosition }
+					props: { user, lastPosition, marker }
 				})}>
-					<Image style={{ width: 32, height: 32, marginRight: 10 }} source={require('../assets/icons/home.png')} />
+					<Icon name="back" style={{color: '#00B2C1'}} />
 				</TouchableOpacity>
 			</View>
 		);
@@ -184,13 +184,12 @@ export class RateSpring extends Component
 		return (
 			<ScrollView>
 				<NavigationBar
-					renderLeftComponent={() => renderNavLogo()}
-					renderRightComponent={() => this.renderNavHome()}
+					title="RATE SPRING"
+					renderLeftComponent={() => this.renderNavHome()}
 				/>
 				
 				<View style={{ flex: 1, marginTop: 20 }} styleName="vertical h-center">
-					<Title>RATE SPRING</Title>
-					<Subtitle style={{marginBottom: 10}}>{marker.title.toUpperCase()}</Subtitle>
+					<Title style={{marginBottom: 10}}>{marker.title.toUpperCase()}</Title>
 					
 					<Divider styleName="line" />
 					
@@ -224,19 +223,7 @@ export class RateSpring extends Component
 					</Row>
 				</View>
 				
-				<View styleName="horizontal" style={{backgroundColor: '#FFF'}}>
-					<Button styleName="full-width" style={{margin: 10}} onPress={() => {
-						InteractionManager.runAfterInteractions(() => navigateTo({
-							screen: ext('SpringDetails'),
-							props: { user, lastPosition, marker }
-						}));
-					}}>
-						<Icon name="close" />
-						<Text>CANCEL</Text>
-					</Button>
-					
-					{this.renderRateButton()}
-				</View>
+				{this.renderRateButton()}
 			</ScrollView>
 		);
 	}

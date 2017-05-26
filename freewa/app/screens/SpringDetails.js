@@ -155,7 +155,7 @@ export class SpringDetails extends Component
 	renderRow(image)
 	{
 		return (
-			<Image styleName="large-banner" source={{ uri: image }} />
+			<Image styleName="featured" source={{ uri: image }} />
 		);
 	}
 

@@ -258,7 +258,7 @@ export class Map extends Component
 	{
 		const { markers, selectedMarker, lastPosition } = this.state;
 		
-		if(!markers.length || !lastPosition)
+		if(!markers.length || (!lastPosition && !selectedMarker))
 		{
 			return (
 				<View styleName="horizontal v-center h-center" style={{ flex: 1 }}>
@@ -267,21 +267,26 @@ export class Map extends Component
 			);
 		}
 		
+		var position;
+		
+		if(selectedMarker) position = selectedMarker;
+		else position = lastPosition;
+		
 		return (
 			<MapView
 				ref="map"
 				initialRegion={{
-					latitude: lastPosition.latitude,
-					longitude: lastPosition.longitude,
-					latitudeDelta: 0.3,
-					longitudeDelta: 0.3
+					latitude: position.latitude,
+					longitude: position.longitude,
+					latitudeDelta: 0.1,
+					longitudeDelta: 0.1
 				}}
 				loadingEnabled
 				showsUserLocation
 				onPress={() => {
 					if(selectedMarker) this.setState({ selectedMarker: null });
 				}}
-				style={{flex: 1}}
+				style={{ flex: 1 }}
 			>
 				{markers.map((marker, i) => (
 					<MapView.Marker
@@ -300,9 +305,6 @@ export class Map extends Component
 
 	render()
 	{
-		const { navigateTo } = this.props;
-		const { lastPosition } = this.state;
-		
 		return (
 		  <Screen styleName="full-screen">
 			<NavigationBar
