@@ -206,7 +206,7 @@ export class SpringDetails extends Component
 				<View>
 					<Button styleName="full-width" style={{backgroundColor: '#00B2C1'}} onPress={() => this.openMaps()}>
 						<Image style={{width: 16, height:16, marginRight: 10}} source={require('../assets/icons/compass.png')} />
-						<Text>SHOW ON MAP</Text>
+						<Text>SHOW DIRECTIONS</Text>
 					</Button>
 				</View>
 			</ScrollView>
