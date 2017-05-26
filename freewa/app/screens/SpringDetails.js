@@ -18,7 +18,8 @@ import {
 	View,
 	Image,
 	Divider,
-	ListView
+	ListView,
+	TouchableOpacity
 } from '@shoutem/ui';
 
 import { connect } from 'react-redux';
@@ -30,6 +31,7 @@ import {
 	fullStar,
 	emptyStar,
 	CMS_REST,
+	DISCLAIMER_URL,
 	getRatingString,
 	parseJSON,
 	showAlert
@@ -188,6 +190,16 @@ export class SpringDetails extends Component
 				{this.renderRating()}
 				{this.renderLogin()}
 				{this.renderDescription()}
+				
+				<Divider styleName="line" />
+				
+				<Row>
+					<TouchableOpacity onPress={() => Linking.openURL(DISCLAIMER_URL)}>
+						<View styleName="vertical h-center v-center">
+							<Text>READ DISCLAIMER</Text>
+						</View>
+					</TouchableOpacity>
+				</Row>
 				
 				<Divider styleName="line" />
 				
