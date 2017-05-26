@@ -278,8 +278,8 @@ export class Map extends Component
 				initialRegion={{
 					latitude: position.latitude,
 					longitude: position.longitude,
-					latitudeDelta: 0.1,
-					longitudeDelta: 0.1
+					latitudeDelta: 0.03,
+					longitudeDelta: 0.03
 				}}
 				loadingEnabled
 				showsUserLocation
