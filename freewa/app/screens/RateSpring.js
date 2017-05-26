@@ -52,9 +52,12 @@ export class RateSpring extends Component
 		};
 	}
 	
-	watchID: ?number = null;
+	componentWillMount()
+	{
+		Keyboard.dismiss();
+	}
 	
-	componentDidMount()
+	componentWillUnmount()
 	{
 		Keyboard.dismiss();
 	}

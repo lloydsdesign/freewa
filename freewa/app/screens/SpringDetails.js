@@ -49,9 +49,7 @@ export class SpringDetails extends Component
 		};
 	}
 	
-	watchID: ?number = null;
-	
-	componentDidMount()
+	componentWillMount()
 	{
 		Keyboard.dismiss();
 	}

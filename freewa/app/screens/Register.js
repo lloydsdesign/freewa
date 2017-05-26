@@ -16,6 +16,7 @@ import {
 	InteractionManager,
 	ScrollView,
 	AsyncStorage,
+	Keyboard,
 	KeyboardAvoidingView
 } from 'react-native';
 
@@ -45,6 +46,11 @@ export class Register extends Component
 			fullName: '',
 			email: ''
 		};
+	}
+	
+	componentWillUnmount()
+	{
+		Keyboard.dismiss();
 	}
 	
 	submitForm()

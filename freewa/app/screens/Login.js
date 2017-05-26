@@ -17,6 +17,7 @@ import {
 	InteractionManager,
 	ScrollView,
 	AsyncStorage,
+	Keyboard,
 	KeyboardAvoidingView
 } from 'react-native';
 
@@ -44,6 +45,11 @@ export class Login extends Component
 			email: '',
 			password: ''
 		};
+	}
+	
+	componentWillUnmount()
+	{
+		Keyboard.dismiss();
 	}
 	
 	submitForm()

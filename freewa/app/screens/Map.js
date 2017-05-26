@@ -61,6 +61,7 @@ export class Map extends Component
 	
 	componentWillMount()
 	{
+		Keyboard.dismiss();
 		const { lastPosition } = this.state;
 		
 		if(lastPosition)
@@ -77,8 +78,6 @@ export class Map extends Component
 	
 	componentDidMount()
 	{
-		Keyboard.dismiss();
-		
 		this.watchID = navigator.geolocation.watchPosition((position) => this.doFetchJob(position.coords),
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}

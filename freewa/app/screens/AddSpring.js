@@ -24,6 +24,7 @@ import {
 	Image,
 	ScrollView,
 	InteractionManager,
+	Keyboard,
 	KeyboardAvoidingView
 } from 'react-native';
 
@@ -68,6 +69,11 @@ export class AddSpring extends Component
 			images: [],
 			uploading: false
 		};
+	}
+	
+	componentWillUnmount()
+	{
+		Keyboard.dismiss();
 	}
 	
 	submitForm()
