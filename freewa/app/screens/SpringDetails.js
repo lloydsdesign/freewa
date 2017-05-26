@@ -191,17 +191,15 @@ export class SpringDetails extends Component
 				{this.renderLogin()}
 				{this.renderDescription()}
 				
-				<Divider styleName="line" />
 				
 				<Row>
 					<TouchableOpacity onPress={() => Linking.openURL(DISCLAIMER_URL)}>
-						<View styleName="vertical h-center v-center">
-							<Text>READ DISCLAIMER</Text>
+						<View>
+							<Text style={{textDecorationLine: 'underline', textAlign: 'center', color: '#00B2C1', fontSize: 12}}>READ DISCLAIMER BEFORE USING SPRING</Text>
 						</View>
 					</TouchableOpacity>
 				</Row>
 				
-				<Divider styleName="line" />
 				
 				<Row style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
 					<View style={{flex: 0.5}} styleName="vertical h-center v-center">
