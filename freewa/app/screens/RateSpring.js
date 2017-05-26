@@ -152,10 +152,12 @@ export class RateSpring extends Component
 		}
 		
 		return (
-			<Button styleName="full-width" style={{margin: 10, backgroundColor: '#FAA21B'}} onPress={() => this.rateSpring()}>
-				<Icon name="like" />
-				<Text>RATE</Text>
-			</Button>
+			<Row>
+				<Button styleName="full-width" style={{margin: 10, backgroundColor: '#FAA21B'}} onPress={() => this.rateSpring()}>
+					<Icon name="like" />
+					<Text>RATE</Text>
+				</Button>
+			</Row>
 		);
 	}
 	

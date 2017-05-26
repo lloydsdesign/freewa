@@ -194,12 +194,12 @@ export class SpringDetails extends Component
 				<Row style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
 					<View style={{flex: 0.5}} styleName="vertical h-center v-center">
 						<Text style={{color: '#00B2C1'}}>LATITUDE</Text>
-						<Text>{marker.latitude}</Text>
+						<Text>{marker.latitude.toFixed(6)}</Text>
 					</View>
 					
 					<View style={{flex: 0.5}} styleName="vertical h-center v-center">
 						<Text style={{color: '#00B2C1'}}>LONGITUDE</Text>
-						<Text>{marker.longitude}</Text>
+						<Text>{marker.longitude.toFixed(6)}</Text>
 					</View>
 				</Row>
 				
