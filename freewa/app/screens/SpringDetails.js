@@ -17,7 +17,6 @@ import {
 	Button,
 	View,
 	Image,
-	Divider,
 	ListView,
 	TouchableOpacity
 } from '@shoutem/ui';
@@ -131,8 +130,6 @@ export class SpringDetails extends Component
 		if(marker.description == "") return null;
 		
 		return (
-			<Divider styleName="line" />
-			&&
 			<Row>
 				<View style={{flex: 1}}>
 					<Text style={{color: '#00B2C1'}}>SPRING DESCRIPTION</Text>
@@ -191,12 +188,9 @@ export class SpringDetails extends Component
 				{this.renderLogin()}
 				{this.renderDescription()}
 				
-				
 				<Row>
 					<TouchableOpacity onPress={() => Linking.openURL(DISCLAIMER_URL)}>
-						<View>
-							<Text style={{textDecorationLine: 'underline', textAlign: 'center', color: '#00B2C1', fontSize: 12}}>READ DISCLAIMER BEFORE USING SPRING</Text>
-						</View>
+						<Text style={{textDecorationLine: 'underline', textAlign: 'center', color: '#00B2C1', fontSize: 12}}>READ DISCLAIMER BEFORE USING SPRING</Text>
 					</TouchableOpacity>
 				</Row>
 				
