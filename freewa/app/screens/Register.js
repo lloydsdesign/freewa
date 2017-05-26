@@ -41,7 +41,6 @@ export class Register extends Component
 		
 		this.state = {
 			loading: false,
-			username: '',
 			password: '',
 			fullName: '',
 			email: ''
@@ -55,8 +54,8 @@ export class Register extends Component
 	
 	submitForm()
 	{
-		const {username, password, fullName, email} = this.state;
-		if(username == '' || password == '' || fullName == '' || email == '')
+		const {password, fullName, email} = this.state;
+		if(password == '' || fullName == '' || email == '')
 		{
 			showAlert('Registration failed. Please fill all input fields.');
 			return;
@@ -67,7 +66,6 @@ export class Register extends Component
 		
 		var data = new FormData();
 		data.append('mobile_add_admin', '');
-		data.append('username', username);
 		data.append('password', password);
 		data.append('full_name', fullName);
 		data.append('email', email);
@@ -135,22 +133,9 @@ export class Register extends Component
 
 				<KeyboardAvoidingView>
 					<TextInput
-						autoCapitalize="none"
-						autoCorrect={false}
-						autoFocus
-						maxLength={50}
-						enablesReturnKeyAutomatically
-						returnKeyType="next"
-						onChangeText={(value) => this.setState({username: value.trim()})}
-						style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 10, marginBottom: 5}}
-						placeholder="Username"
-						keyboardAppearance="dark"
-						underlineColorAndroid="#fff"
-					/>
-		
-					<TextInput
 						autoCapitalize="words"
 						autoCorrect={false}
+						autoFocus
 						maxLength={50}
 						enablesReturnKeyAutomatically
 						returnKeyType="next"
