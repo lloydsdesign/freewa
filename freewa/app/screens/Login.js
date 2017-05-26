@@ -3,6 +3,14 @@ import React, {
 } from 'react';
 
 import {
+	InteractionManager,
+	ScrollView,
+	AsyncStorage,
+	Keyboard,
+	KeyboardAvoidingView
+} from 'react-native';
+
+import {
 	Text,
 	Row,
 	TextInput,
@@ -12,14 +20,6 @@ import {
 	Image,
 	Spinner
 } from '@shoutem/ui';
-
-import {
-	InteractionManager,
-	ScrollView,
-	AsyncStorage,
-	Keyboard,
-	KeyboardAvoidingView
-} from 'react-native';
 
 import { connect } from 'react-redux';
 import { ext } from '../extension';

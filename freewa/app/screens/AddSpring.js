@@ -3,6 +3,16 @@ import React, {
 } from 'react';
 
 import {
+	ListView,
+	Modal,
+	Image,
+	ScrollView,
+	InteractionManager,
+	Keyboard,
+	KeyboardAvoidingView
+} from 'react-native';
+
+import {
 	Text,
 	Divider,
 	Row,
@@ -17,16 +27,6 @@ import {
 	Spinner,
 	DropDownMenu
 } from '@shoutem/ui';
-
-import {
-	ListView,
-	Modal,
-	Image,
-	ScrollView,
-	InteractionManager,
-	Keyboard,
-	KeyboardAvoidingView
-} from 'react-native';
 
 import { connect } from 'react-redux';
 import { ext } from '../extension';

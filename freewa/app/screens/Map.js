@@ -3,6 +3,11 @@ import React, {
 } from 'react';
 
 import {
+	Keyboard,
+	AsyncStorage
+} from 'react-native';
+
+import {
 	Screen,
 	View,
 	TouchableOpacity,
@@ -16,11 +21,6 @@ import {
 	Spinner,
 	Button
 } from '@shoutem/ui';
-
-import {
-	Keyboard,
-	AsyncStorage
-} from 'react-native';
 
 import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
