@@ -50,6 +50,7 @@ export class Map extends Component
 		
 		this.state = {
 			markers: [],
+			hasLoaded: false,
 			distance: null,
 			lastPosition: this.props.lastPosition ? this.props.lastPosition : null,
 			selectedMarker: this.props.marker ? this.props.marker : null,
@@ -96,6 +97,7 @@ export class Map extends Component
 		this.fetchMarkers(position).then((markers) => {
 			this.setState({
 				markers: this.pickNearestMarker(markers, position),
+				hasLoaded: true,
 				lastPosition: position,
 				distance: this.calculateDistance(position)
 			});
@@ -256,9 +258,9 @@ export class Map extends Component
 	
 	renderMap()
 	{
-		const { markers, selectedMarker, lastPosition } = this.state;
+		const { markers, hasLoaded, selectedMarker, lastPosition } = this.state;
 		
-		if(!markers.length || (!lastPosition && !selectedMarker))
+		if(!hasLoaded || (!lastPosition && !selectedMarker))
 		{
 			return (
 				<View styleName="horizontal v-center h-center" style={{ flex: 1 }}>
