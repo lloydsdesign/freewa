@@ -113,10 +113,10 @@ export class Map extends Component
 		
 		var data = new FormData();
 		data.append('get_springs', '');
-		/*data.append('min_lat', min_lat);
+		data.append('min_lat', min_lat);
 		data.append('max_lat', max_lat);
 		data.append('min_lng', min_lng);
-		data.append('max_lng', max_lng);*/
+		data.append('max_lng', max_lng);
 		
 		return fetch(CMS_REST, {
 			method: 'POST',
