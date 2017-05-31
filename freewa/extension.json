@@ -1,7 +1,7 @@
 {
   "name": "freewa",
   "title": "Freewa",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "description": "Free water project",
   "platform": "1.0.*",
   "screens": [

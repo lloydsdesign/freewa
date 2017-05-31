@@ -9,7 +9,8 @@ import {
 	ScrollView,
 	InteractionManager,
 	Keyboard,
-	KeyboardAvoidingView
+	KeyboardAvoidingView,
+	Platform
 } from 'react-native';
 
 import {
@@ -154,20 +155,27 @@ export class AddSpring extends Component
 			cameraType: 'back',
 			mediaType: 'photo',
 			quality: 1,
-			allowsEditing: true
+			allowsEditing: true,
+			storageOptions: {
+				skipBackup: true,
+				cameraRoll: true
+			}
 		},
 		(response) => {
 			if(response.didCancel || response.error || response.fileSize > MAX_UPLOAD_SIZE) return;
 			var { images } = this.state;
 			
-			var i;
+			var i, file_name;
 			for(i = 0; i < images.length; i++)
 			{
 				if(images[i].uri == response.uri) return;
 			}
 			
+			if(Platform.OS == 'ios') file_name = 'image'+ images.length +'.jpg';
+			else file_name = response.fileName;
+			
 			images[images.length] = {
-				name: response.fileName,
+				name: file_name,
 				size: response.fileSize,
 				uri: response.uri,
 				data: response.data,
