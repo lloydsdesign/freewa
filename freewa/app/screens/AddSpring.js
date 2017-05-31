@@ -79,6 +79,8 @@ export class AddSpring extends Component
 	
 	submitForm()
 	{
+		Keyboard.dismiss();
+		
 		const { name, description, type, images } = this.state;
 		if(name == '' || !images.length)
 		{
