@@ -274,11 +274,6 @@ export class Map extends Component
 		if(selectedMarker) position = selectedMarker;
 		else position = lastPosition;
 		
-		const pinPos = {
-			x: 0,
-			y: 1
-		};
-		
 		return (
 			<MapView
 				ref="map"
@@ -302,8 +297,6 @@ export class Map extends Component
 							latitude: marker.latitude,
 							longitude: marker.longitude
 						}}
-						anchor={pinPos}
-						centerOffset={pinPos}
 						image={marker.icon}
 						onPress={() => this.setState({ selectedMarker: marker })}
 					/>
@@ -315,16 +308,16 @@ export class Map extends Component
 	render()
 	{
 		return (
-		  <Screen styleName="full-screen">
-			<NavigationBar
-				styleName="no-border"
-				renderLeftComponent={() => renderNavLogo()}
-			/>
-			
-			{this.renderMap()}
-			{this.renderSelectedMarker()}
-			{this.renderAddButton()}
-		  </Screen>
+			<Screen styleName="full-screen">
+				<NavigationBar
+					styleName="no-border"
+					renderLeftComponent={() => renderNavLogo()}
+				/>
+
+				{this.renderMap()}
+				{this.renderSelectedMarker()}
+				{this.renderAddButton()}
+			</Screen>
 		);
 	}
 }
