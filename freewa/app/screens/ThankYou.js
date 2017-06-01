@@ -10,8 +10,7 @@ import {
 	Icon,
 	Button,
 	View,
-	Screen,
-	Subtitle
+	Screen
 } from '@shoutem/ui';
 
 import { connect } from 'react-redux';
@@ -39,9 +38,9 @@ export class ThankYou extends Component
 				/>
 				
 				<View styleName="vertical h-center">
-					<Row>
-						<Subtitle>Thank you {user.fullName} for contributing to our community.</Subtitle>
-					</Row>
+					<Text>Thank you</Text>
+					<Text style={{fontWeight: 'bold'}}>{user.fullName}</Text>
+					<Text>for contributing to our community.</Text>
 				</View>
 				
 				<Row>
