@@ -131,7 +131,7 @@ export class AddSpring extends Component
 					if(response.status)
 					{
 						navigateTo({
-							screen: ext('Map'),
+							screen: ext('ThankYou'),
 							props: { user, lastPosition }
 						});
 					}

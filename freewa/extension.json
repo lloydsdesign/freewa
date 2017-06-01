@@ -1,7 +1,7 @@
 {
   "name": "freewa",
   "title": "Freewa",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "Free water project",
   "platform": "1.0.*",
   "screens": [
@@ -22,6 +22,9 @@
     },
     {
       "name": "RateSpring"
+    },
+    {
+      "name": "ThankYou"
     }
   ],
   "shortcuts": [
