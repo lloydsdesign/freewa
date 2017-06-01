@@ -62,7 +62,6 @@ export class Map extends Component
 	
 	componentWillMount()
 	{
-		Keyboard.dismiss();
 		const { lastPosition } = this.state;
 		
 		if(lastPosition)
@@ -79,6 +78,8 @@ export class Map extends Component
 	
 	componentDidMount()
 	{
+		Keyboard.dismiss();
+		
 		this.watchID = navigator.geolocation.watchPosition((position) => this.doFetchJob(position.coords),
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
@@ -203,14 +204,14 @@ export class Map extends Component
 	renderLogoutButton()
 	{
 		const { navigateTo } = this.props;
-		const { lastPosition } = this.state;
+		const { lastPosition, user } = this.state;
 		
 		return (
 			<Button style={{padding: 10}} onPress={() => navigateTo({
-				screen: ext('AddSpring'),
+				screen: ext('ThankYou'),
 				props: {
 					returnScreen: ext('Map'),
-					user: this.state.user,
+					user,
 					lastPosition
 				}
 			})}>

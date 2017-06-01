@@ -49,7 +49,7 @@ export class SpringDetails extends Component
 		};
 	}
 	
-	componentWillMount()
+	componentDidMount()
 	{
 		Keyboard.dismiss();
 	}

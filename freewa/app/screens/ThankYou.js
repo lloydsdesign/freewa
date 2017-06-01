@@ -22,7 +22,7 @@ import { navigateTo } from '@shoutem/core/navigation';
 
 export class ThankYou extends Component
 {
-	componentWillMount()
+	componentDidMount()
 	{
 		Keyboard.dismiss();
 	}
@@ -38,11 +38,11 @@ export class ThankYou extends Component
 					renderLeftComponent={() => { return null; }}
 				/>
 				
-				<Row>
-					<View styleName="vertical h-center v-center">
+				<View styleName="vertical h-center">
+					<Row>
 						<Subtitle>Thank you {user.fullName} for contributing to our community.</Subtitle>
-					</View>
-				</Row>
+					</Row>
+				</View>
 				
 				<Row>
 					<Button styleName="full-width" onPress={() => navigateTo({

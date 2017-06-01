@@ -51,7 +51,7 @@ export class RateSpring extends Component
 		};
 	}
 	
-	componentWillMount()
+	componentDidMount()
 	{
 		Keyboard.dismiss();
 	}
