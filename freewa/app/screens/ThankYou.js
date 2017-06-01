@@ -39,7 +39,7 @@ export class ThankYou extends Component
 				
 				<View styleName="vertical h-center">
 					<Text>Thank you</Text>
-					<Text style={{fontWeight: 'bold'}}>{user.fullName}</Text>
+					<Text style={{ fontWeight: 'bold' }}>{user.fullName}</Text>
 					<Text>for contributing to our community.</Text>
 				</View>
 				

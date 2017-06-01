@@ -208,7 +208,7 @@ export class Map extends Component
 		
 		return (
 			<Button style={{padding: 10}} onPress={() => navigateTo({
-				screen: ext('ThankYou'),
+				screen: ext('AddSpring'),
 				props: {
 					returnScreen: ext('Map'),
 					user,
