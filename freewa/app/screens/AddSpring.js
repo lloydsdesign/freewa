@@ -316,7 +316,7 @@ export class AddSpring extends Component
 						autoCapitalize="sentences"
 						autoCorrect={false}
 						enablesReturnKeyAutomatically
-						returnKeyType="next"
+						returnKeyType="done"
 						multiline
 						maxLength={500}
 						onChangeText={(value) => this.setState({description: value.trim()})}

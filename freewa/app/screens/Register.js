@@ -164,7 +164,7 @@ export class Register extends Component
 						autoCapitalize="none"
 						autoCorrect={false}
 						enablesReturnKeyAutomatically
-						returnKeyType="next"
+						returnKeyType="done"
 						secureTextEntry
 						onChangeText={(value) => this.setState({password: value.trim()})}
 						style={{borderColor: '#CCC', borderWidth: 1, borderRadius: 0, marginLeft: 15, marginRight: 15, marginTop: 10, marginBottom: 15}}

@@ -35,7 +35,7 @@ export class ThankYou extends Component
 			<Screen>
 				<NavigationBar
 					title="THANK YOU"
-					renderLeftComponent={null}
+					renderLeftComponent={() => { return null; }}
 				/>
 				
 				<Row>

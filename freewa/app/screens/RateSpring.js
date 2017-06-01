@@ -214,7 +214,7 @@ export class RateSpring extends Component
 							autoCapitalize="sentences"
 							autoCorrect={false}
 							enablesReturnKeyAutomatically
-							returnKeyType="next"
+							returnKeyType="done"
 							multiline
 							maxLength={500}
 							onChangeText={(value) => this.setState({rateMessage: value.trim()})}
