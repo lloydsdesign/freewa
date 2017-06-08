@@ -110,10 +110,19 @@ export class Map extends Component
 	
 	fetchMarkers(position)
 	{
-		const min_lat = position.latitude - MAP_DELTA;
-		const max_lat = position.latitude + MAP_DELTA;
-		const min_lng = position.longitude - MAP_DELTA;
-		const max_lng = position.longitude + MAP_DELTA;
+		var latDelta, lngDelta;
+		
+		if('latitudeDelta' in position && 'longitudeDelta' in position)
+		{
+			latDelta = position.latitudeDelta;
+			lngDelta = position.longitudeDelta;
+		}
+		else latDelta = lngDelta = MAP_DELTA;
+		
+		const min_lat = position.latitude - latDelta;
+		const max_lat = position.latitude + latDelta;
+		const min_lng = position.longitude - lngDelta;
+		const max_lng = position.longitude + lngDelta;
 		
 		var data = new FormData();
 		data.append('get_springs', '');
@@ -285,8 +294,8 @@ export class Map extends Component
 				initialRegion={{
 					latitude: position.latitude,
 					longitude: position.longitude,
-					latitudeDelta: 0.03,
-					longitudeDelta: 0.03
+					latitudeDelta: MAP_DELTA,
+					longitudeDelta: MAP_DELTA
 				}}
 				loadingEnabled
 				showsUserLocation
