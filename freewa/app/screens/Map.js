@@ -69,7 +69,10 @@ export class Map extends Component
 			return;
 		}
 		
-		navigator.geolocation.getCurrentPosition((position) => this.doFetchJob(position.coords),
+		navigator.geolocation.getCurrentPosition((position) => {
+				this.doFetchJob(position.coords);
+				this.setState({ lastPosition: position.coords });
+			},
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
 		);
@@ -79,7 +82,10 @@ export class Map extends Component
 	{
 		Keyboard.dismiss();
 		
-		this.watchID = navigator.geolocation.watchPosition((position) => this.doFetchJob(position.coords),
+		this.watchID = navigator.geolocation.watchPosition((position) => {
+				this.doFetchJob(position.coords);
+				this.setState({ lastPosition: position.coords });
+			},
 			(error) => console.log(JSON.stringify(error)),
 			{enableHighAccuracy: true}
 		);
@@ -96,9 +102,8 @@ export class Map extends Component
 	{
 		this.fetchMarkers(position).then((markers) => {
 			this.setState({
-				markers: this.pickNearestMarker(markers, position),
-				hasLoaded: true,
-				lastPosition: position
+				markers: this.pickNearestMarker(markers),
+				hasLoaded: true
 			});
 		});
 	}
@@ -138,9 +143,10 @@ export class Map extends Component
 		});
 	}
 	
-	pickNearestMarker(markers, lastPosition)
+	pickNearestMarker(markers)
 	{
-		if(!markers.length || !lastPosition) return [];
+		const { lastPosition } = this.state;
+		if(!markers.length || !lastPosition) return markers;
 		
 		markers.sort((a, b) =>
 		{
@@ -275,6 +281,7 @@ export class Map extends Component
 		return (
 			<MapView
 				ref="map"
+				onRegionChangeComplete={(region) => this.doFetchJob(region)}
 				initialRegion={{
 					latitude: position.latitude,
 					longitude: position.longitude,
