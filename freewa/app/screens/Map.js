@@ -51,7 +51,6 @@ export class Map extends Component
 		this.state = {
 			markers: [],
 			hasLoaded: false,
-			distance: null,
 			lastPosition: this.props.lastPosition ? this.props.lastPosition : null,
 			selectedMarker: this.props.marker ? this.props.marker : null,
 			user: this.props.user ? this.props.user : null
@@ -99,8 +98,7 @@ export class Map extends Component
 			this.setState({
 				markers: this.pickNearestMarker(markers, position),
 				hasLoaded: true,
-				lastPosition: position,
-				distance: this.calculateDistance(position)
+				lastPosition: position
 			});
 		});
 	}
@@ -226,12 +224,11 @@ export class Map extends Component
 		const marker = this.state.selectedMarker;
 		if(!marker) return null;
 		
-		var { distance } = this.state;
 		const { user, lastPosition } = this.state;
 		const { navigateTo } = this.props;
 		var rating;
 		
-		if(!distance) distance = this.calculateDistance(lastPosition);
+		var distance = this.calculateDistance(lastPosition);
 		if(distance) distance = <Text>{distance} FROM YOU</Text>
 		
 		if(marker.ratingCount) rating = <View styleName="horizontal">{getRatingStars(marker.rating)}</View>;
