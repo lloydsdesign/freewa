@@ -18,7 +18,9 @@ import {
 	View,
 	Image,
 	ListView,
-	TouchableOpacity
+	TouchableOpacity,
+	Spinner,
+	Divider
 } from '@shoutem/ui';
 
 import { connect } from 'react-redux';
@@ -44,8 +46,8 @@ export class SpringDetails extends Component
 		super(props);
 		
 		this.state = {
-			rateNumber: 0,
-			rateMessage: ''
+			comments: [],
+			loading: false
 		};
 	}
 	
@@ -124,6 +126,75 @@ export class SpringDetails extends Component
 		);
 	}
 	
+	renderComments()
+	{
+		const { comments, loading } = this.state;
+		
+		if(loading)
+		{
+			return (
+				<Row>
+					<View styleName="horizontal v-center h-center" style={{ flex: 1 }}>
+						<Spinner style={{ size: 'large', color: '#00B2C1' }} />
+					</View>
+				</Row>
+			);
+		}
+		
+		if(!comments.length)
+		{
+			return (
+				<Row>
+					<Button styleName="full-width" onPress={() => this.fetchComments()}>
+						<Icon name="comment" />
+						<Text>LATEST COMMENTS</Text>
+					</Button>
+				</Row>
+			);
+		}
+		
+		return (
+			<View>
+				<Row>
+					<Button styleName="full-width" onPress={() => this.setState({ comments: [] })}>
+						<Icon name="up-arrow" />
+						<Text>CLOSE</Text>
+					</Button>
+				</Row>
+				
+				<Row>
+					<ListView
+						data={comments}
+						renderRow={comment => this.renderRowComment(comment)}
+					/>
+				</Row>
+			</View>
+		);
+	}
+	
+	fetchComments()
+	{
+		this.setState({ loading: true });
+		const { marker } = this.props;
+		
+		var data = new FormData();
+		data.append('get_comments', '');
+		data.append('spring_id', marker.id);
+		data.append('limit', '10');
+		
+		fetch(CMS_REST, {
+			method: 'POST',
+			body: data
+		})
+		.then((response) => response.text())
+		.then((response) => {
+			response = parseJSON(response);
+			if(!response.comments.length) showAlert('This spring has no comments yet.');
+			
+			this.setState({ comments: response.comments, loading: false })
+		});
+	}
+	
 	renderDescription()
 	{
 		const { marker } = this.props;
@@ -157,6 +228,20 @@ export class SpringDetails extends Component
 			<Image styleName="featured" source={{ uri: image }} />
 		);
 	}
+	
+	renderRowComment(comment)
+	{
+		return (
+			<Row>
+				<View styleName="vertical">
+					<Text>Rated {comment.rate}/5 by {comment.user} on {comment.timestamp}</Text>
+					<Text>{comment.message}</Text>
+				</View>
+				
+				<Divider styleName="line" />
+			</Row>
+		);
+	}
 
 	render()
 	{
@@ -186,6 +271,7 @@ export class SpringDetails extends Component
 				
 				{this.renderRating()}
 				{this.renderLogin()}
+				{this.renderComments()}
 				{this.renderDescription()}
 				
 				<Row>
@@ -194,6 +280,7 @@ export class SpringDetails extends Component
 					</TouchableOpacity>
 				</Row>
 				
+				<Divider styleName="line" />
 				
 				<Row style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
 					<View style={{flex: 0.5}} styleName="vertical h-center v-center">
@@ -207,12 +294,12 @@ export class SpringDetails extends Component
 					</View>
 				</Row>
 				
-				<View>
+				<Row>
 					<Button styleName="full-width" style={{backgroundColor: '#00B2C1'}} onPress={() => this.openMaps()}>
 						<Image style={{width: 16, height:16, marginRight: 10}} source={require('../assets/icons/compass.png')} />
 						<Text>SHOW DIRECTIONS</Text>
 					</Button>
-				</View>
+				</Row>
 			</ScrollView>
 		);
 	}
