@@ -147,27 +147,23 @@ export class SpringDetails extends Component
 				<Row>
 					<Button styleName="full-width" onPress={() => this.fetchComments()}>
 						<Icon name="comment" />
-						<Text>LATEST COMMENTS</Text>
+						<Text>VIEW LATEST COMMENTS</Text>
 					</Button>
 				</Row>
 			);
 		}
 		
 		return (
-			<View>
-				<Row>
-					<Button styleName="full-width" onPress={() => this.setState({ comments: [] })}>
-						<Icon name="up-arrow" />
-						<Text>CLOSE</Text>
-					</Button>
-				</Row>
-				
-				<Row>
-					<ListView
-						data={comments}
-						renderRow={comment => this.renderRowComment(comment)}
-					/>
-				</Row>
+			<View style={{margin: 15}}>
+				<ListView
+					data={comments}
+					renderRow={comment => this.renderRowComment(comment)}
+				/>
+
+				<Button styleName="full-width" onPress={() => this.setState({ comments: [] })}>	
+					<Icon name="up-arrow" />
+					<Text>CLOSE</Text>
+				</Button>
 			</View>
 		);
 	}
@@ -232,14 +228,14 @@ export class SpringDetails extends Component
 	renderRowComment(comment)
 	{
 		return (
-			<Row>
-				<View styleName="vertical">
-					<Text>Rated {comment.rate}/5 by {comment.user} on {comment.timestamp}</Text>
+			<View style={{backgroundColor: '#f7f7f7'}}>
+				<View styleName="vertical" style={{padding: 15}}>
+					<Text style={{color: '#00B2C1', fontWeight: 'bold', fontSize: 12}}>Rated {comment.rate}/5 by {comment.user} on {comment.timestamp}</Text>
 					<Text>{comment.message}</Text>
-				</View>
-				
+				</View>	
+			
 				<Divider styleName="line" />
-			</Row>
+			</View>
 		);
 	}
 
