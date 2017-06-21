@@ -100,9 +100,12 @@ export class Map extends Component
 	
 	doFetchJob(position)
 	{
-		this.fetchMarkers(position).then((markers) => {
+		this.fetchMarkers(position).then((newMarkers) => {
+			const { markers } = this.state;
+			if(markers == newMarkers) return;
+			
 			this.setState({
-				markers: this.pickNearestMarker(markers),
+				markers: newMarkers,
 				hasLoaded: true
 			});
 		});
@@ -138,7 +141,7 @@ export class Map extends Component
 		.then((response) => response.text())
 		.then((response) => {
 			response = parseJSON(response);
-			return adjustMarkerValues(response.springs);
+			return this.pickNearestMarker(adjustMarkerValues(response.springs));
 		});
 	}
 	

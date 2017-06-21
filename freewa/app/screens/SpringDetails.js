@@ -146,7 +146,7 @@ export class SpringDetails extends Component
 			return (
 				<Row>
 					<Button styleName="full-width" onPress={() => this.fetchComments()}>
-						<Icon name="comment" />
+						<Icon name="comment-full" />
 						<Text>VIEW LATEST COMMENTS</Text>
 					</Button>
 				</Row>
