@@ -33,12 +33,14 @@ import {
 	CMS_BASE,
 	CMS_REST,
 	MAP_DELTA,
+	MAP_DELTA_BREAKPOINT,
 	parseJSON,
 	getRatingStars,
 	getDistance,
 	renderNavLogo,
 	markerImage,
-	markerImageNearest
+	markerImageNearest,
+	markerImageDot
 } from '../const';
 
 
@@ -141,7 +143,7 @@ export class Map extends Component
 		.then((response) => response.text())
 		.then((response) => {
 			response = parseJSON(response);
-			return this.pickNearestMarker(adjustMarkerValues(response.springs));
+			return this.pickNearestMarker(adjustMarkerValues(response.springs), position);
 		});
 	}
 	
@@ -155,10 +157,19 @@ export class Map extends Component
 		});
 	}
 	
-	pickNearestMarker(markers)
+	pickNearestMarker(markers, position)
 	{
 		const { lastPosition } = this.state;
 		if(!markers.length || !lastPosition) return markers;
+		
+		var latDelta, lngDelta, image = markerImage;
+		
+		if('latitudeDelta' in position && 'longitudeDelta' in position)
+		{
+			latDelta = position.latitudeDelta;
+			lngDelta = position.longitudeDelta;
+		}
+		else latDelta = lngDelta = MAP_DELTA;
 		
 		markers.sort((a, b) =>
 		{
@@ -166,9 +177,10 @@ export class Map extends Component
 		});
 		
 		markers[0].icon = markerImageNearest;
+		if(latDelta > MAP_DELTA_BREAKPOINT || lngDelta > MAP_DELTA_BREAKPOINT) image = markerImageDot;
 		
 		var i;
-		for(i = 1; i < markers.length; i++) markers[i].icon = markerImage;
+		for(i = 1; i < markers.length; i++) markers[i].icon = image;
 		
 		return markers;
 	}
@@ -272,6 +284,12 @@ export class Map extends Component
 		);
 	}
 	
+	markerClicked(marker)
+	{
+		if(marker.icon == markerImageDot) return;
+		this.setState({ selectedMarker: marker });
+	}
+	
 	renderMap()
 	{
 		const { markers, hasLoaded, selectedMarker, lastPosition } = this.state;
@@ -315,7 +333,7 @@ export class Map extends Component
 							longitude: marker.longitude
 						}}
 						image={marker.icon}
-						onPress={() => this.setState({ selectedMarker: marker })}
+						onPress={() => this.markerClicked(marker)}
 					/>
 				))}
 			</MapView>

@@ -16,12 +16,14 @@ const CMS_BASE = 'https://admin.freewa.org/';
 const CMS_REST = CMS_BASE +'manage.php';
 const MAX_UPLOAD_SIZE = 1024 * 1024 * 15;
 const MAP_DELTA = 0.03;
+const MAP_DELTA_BREAKPOINT = MAP_DELTA;
 const DISCLAIMER_URL = 'https://freewa.org/privacy/';
 const fullStar = require('./assets/icons/full-star.png');
 const emptyStar = require('./assets/icons/empty-star.png');
 const halfStar = require('./assets/icons/half-star.png');
 const markerImage = require('./assets/icons/flag-basic.png');
 const markerImageNearest = require('./assets/icons/flag-nearest.png');
+const markerImageDot = require('./assets/icons/dot-marker.png');
 
 
 function renderNavLogo()
@@ -120,6 +122,7 @@ export {
 	CMS_BASE,
 	CMS_REST,
 	MAP_DELTA,
+	MAP_DELTA_BREAKPOINT,
 	MAX_UPLOAD_SIZE,
 	DISCLAIMER_URL,
 	parseJSON,
@@ -130,5 +133,6 @@ export {
 	fullStar,
 	emptyStar,
 	markerImage,
-	markerImageNearest
+	markerImageNearest,
+	markerImageDot
 };
