@@ -184,7 +184,7 @@ export class RateSpring extends Component
 		const { marker } = this.state;
 		  
 		return (
-			<ScrollView>
+			<ScrollView keyboardShouldPersistTaps="handled">
 				<NavigationBar
 					title="RATE SPRING"
 					renderLeftComponent={() => this.renderNavHome()}

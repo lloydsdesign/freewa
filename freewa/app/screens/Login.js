@@ -125,7 +125,7 @@ export class Login extends Component
 		const { navigateTo, lastPosition, returnScreen } = this.props;
 		
 		return (
-			<ScrollView style={{backgroundColor: '#FFF'}} keyboardShouldPersistTaps={true}>
+			<ScrollView style={{backgroundColor: '#FFF'}} keyboardShouldPersistTaps="handled">
 				<NavigationBar title="LOGIN" />
 
 				<KeyboardAvoidingView>

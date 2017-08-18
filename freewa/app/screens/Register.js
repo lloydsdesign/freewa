@@ -128,7 +128,7 @@ export class Register extends Component
 		const { navigateTo, lastPosition } = this.props;
 		
 		return (
-			<ScrollView style={{backgroundColor: '#FFF'}} keyboardShouldPersistTaps={true}>		
+			<ScrollView style={{backgroundColor: '#FFF'}} keyboardShouldPersistTaps="handled">		
 				<NavigationBar title="REGISTER" />
 
 				<KeyboardAvoidingView>

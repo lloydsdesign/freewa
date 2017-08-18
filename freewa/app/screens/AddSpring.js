@@ -277,7 +277,7 @@ export class AddSpring extends Component
 		}
 		
 		return (
-			<ScrollView style={{backgroundColor: '#FFF'}}>
+			<ScrollView style={{backgroundColor: '#FFF'}} keyboardShouldPersistTaps="handled">
 				<NavigationBar
 					renderLeftComponent={() => renderNavLogo()}
 					renderRightComponent={() => this.renderNavHome()}
@@ -354,7 +354,7 @@ export class AddSpring extends Component
 					<Button styleName="full-width" style={{backgroundColor: '#FAA21B', marginRight: 15, marginLeft: 5}} onPress={() => {
 						InteractionManager.runAfterInteractions(() => this.submitForm());
 					}}>
-						<Icon name="add-to-favorites-full" />
+						<Icon name="add-to-favorites-on" />
 						<Text>SAVE</Text>
 					</Button>
 				</View>

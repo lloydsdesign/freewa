@@ -103,7 +103,7 @@ export class SpringDetails extends Component
 						}
 					}));
 				}}>
-					<Icon name="add-to-favorites-full" />
+					<Icon name="add-to-favorites-on" />
 					<Text>RATE</Text>
 				</Button>
 			);
@@ -120,7 +120,7 @@ export class SpringDetails extends Component
 					}
 				}));
 			}}>
-				<Icon name="add-to-favorites-full" />
+				<Icon name="add-to-favorites-on" />
 				<Text>LOGIN TO RATE</Text>
 			</Button>
 		);
@@ -146,7 +146,7 @@ export class SpringDetails extends Component
 			return (
 				<Row>
 					<Button styleName="full-width" onPress={() => this.fetchComments()}>
-						<Icon name="comment-full" />
+						<Icon name="comment" />
 						<Text>VIEW LATEST COMMENTS</Text>
 					</Button>
 				</Row>
