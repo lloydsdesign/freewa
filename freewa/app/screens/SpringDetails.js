@@ -4,6 +4,7 @@ import React, {
 
 import {
 	ScrollView,
+	FlatList,
 	Keyboard,
 	InteractionManager,
 	Linking,
@@ -17,7 +18,6 @@ import {
 	Button,
 	View,
 	Image,
-	ListView,
 	TouchableOpacity,
 	Spinner,
 	Divider
@@ -128,6 +128,9 @@ export class SpringDetails extends Component
 	
 	renderComments()
 	{
+		const { marker } = this.props;
+		if(!marker.ratingCount) return null;
+		
 		const { comments, loading } = this.state;
 		
 		if(loading)
@@ -155,9 +158,10 @@ export class SpringDetails extends Component
 		
 		return (
 			<View style={{margin: 15}}>
-				<ListView
+				<FlatList
 					data={comments}
-					renderRow={comment => this.renderRowComment(comment)}
+					keyExtractor={(item, index) => index}
+					renderItem={comment => this.renderRowComment(comment)}
 				/>
 
 				<Button styleName="full-width" onPress={() => this.setState({ comments: [] })}>	
@@ -221,12 +225,14 @@ export class SpringDetails extends Component
 	renderRow(image)
 	{
 		return (
-			<Image styleName="featured" source={{ uri: image }} />
+			<Image styleName="featured" source={{ uri: image.item }} />
 		);
 	}
 	
 	renderRowComment(comment)
 	{
+		comment = comment.item;
+		
 		return (
 			<View style={{backgroundColor: '#f7f7f7'}}>
 				<View styleName="vertical" style={{padding: 15}}>
@@ -247,10 +253,11 @@ export class SpringDetails extends Component
 			<ScrollView>
 				<NavigationBar title={marker.title.toUpperCase()} />
 				
-				<ListView
+				<FlatList
 					horizontal
 					data={marker.images}
-					renderRow={image => this.renderRow(image)}
+					keyExtractor={(item, index) => index}
+					renderItem={image => this.renderRow(image)}
 				/>
 				
 				<Row style={{backgroundColor: '#FFF', shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>

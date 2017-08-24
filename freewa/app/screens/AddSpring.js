@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 
 import {
-	ListView,
+	FlatList,
 	Modal,
 	Image,
 	ScrollView,
@@ -44,7 +44,7 @@ import {
 	renderNavLogo
 } from '../const';
 
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
 const types = [
 	{
 		title: 'NATURAL',
@@ -199,6 +199,8 @@ export class AddSpring extends Component
 	
 	renderRow(image)
 	{
+		image = image.item;
+		
 		var size = image.size / (1024 * 1024);
 		size = parseFloat(size.toFixed(2));
 		
@@ -220,10 +222,11 @@ export class AddSpring extends Component
 		if(!images.length) return null;
 		
 		return (
-			<ListView
+			<FlatList
 				horizontal
-				dataSource={ds.cloneWithRows(images)}
-				renderRow={image => this.renderRow(image)}
+				data={images}
+				keyExtractor={(item, index) => index}
+				renderItem={image => this.renderRow(image)}
 			/>
 		);
 	}
@@ -252,8 +255,8 @@ export class AddSpring extends Component
 		{
 			return (
 				<Modal
-					animationType={"fade"}
 					visible
+					animationType={"fade"}
 					onRequestClose={() => this.setState({ uploading: false })}
 				>
 					<View style={{ flex: 1 }} styleName="vertical h-center v-center">
