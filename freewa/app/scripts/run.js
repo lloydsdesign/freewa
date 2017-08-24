@@ -25,8 +25,8 @@ fs.writeFileSync(androidManifestPath, androidManifest, 'ascii');
 
 const buildGradlePath = 'android/app/build.gradle';
 var buildGradle = fs.readFileSync(buildGradlePath, 'utf8');
-const buildGradleChange = 'javaMaxHeapSize "4g"';
 
+var buildGradleChange = 'javaMaxHeapSize "4g"';
 replacementTag = 'jumboMode = true';
 replacement = `
 	${replacementTag}
@@ -34,6 +34,11 @@ replacement = `
 `;
 
 buildGradle = buildGradle.replace(replacementTag, replacement);
+
+buildGradleChange = 'com.shoutemapp';
+replacement = 'hr.apps.n7301';
+
+buildGradle = buildGradle.replace(buildGradleChange, replacement);
 
 console.log('[freewa] - Adding required changes to build.gradle');
 fs.writeFileSync(buildGradlePath, buildGradle, 'ascii');
