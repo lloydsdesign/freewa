@@ -139,7 +139,7 @@ export class AddSpring extends Component
 				});
 			},
 			(error) => {
-				showAlert('Add spring failed. Are your geolocation services turned on?');
+				showAlert('Add spring failed. Please turn on your geolocation services and restart the app.');
 				this.setState({ uploading: false });
 			},
 			{enableHighAccuracy: true}

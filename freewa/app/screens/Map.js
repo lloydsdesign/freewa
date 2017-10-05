@@ -34,6 +34,7 @@ import {
 	CMS_REST,
 	MAP_DELTA,
 	MAP_DELTA_BREAKPOINT,
+	showAlert,
 	parseJSON,
 	getRatingStars,
 	getDistance,
@@ -88,7 +89,7 @@ export class Map extends Component
 				this.doFetchJob(position.coords);
 				this.setState({ lastPosition: position.coords });
 			},
-			(error) => console.log(JSON.stringify(error)),
+			(error) => showAlert('Unable to get current location. Please turn on your geolocation services and restart the app.'),
 			{enableHighAccuracy: true}
 		);
 		
