@@ -1,6 +1,6 @@
 {
   "name": "ricardo.freewa",
-  "version": "0.0.52",
+  "version": "0.0.52-build1507183138814-build1521617885180-build1523256703818-build1523262921030",
   "description": "Free water project",
   "dependencies": {
     "@turf/bearing": "^4.2.0",

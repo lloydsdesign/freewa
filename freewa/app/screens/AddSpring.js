@@ -197,6 +197,11 @@ export class AddSpring extends Component
 		this.setState({ images });
 	}
 	
+	addSpinner()
+	{
+		return (<Spinner style={{ size: 'large' }} />);
+	}
+	
 	renderRow(image)
 	{
 		image = image.item;
@@ -206,12 +211,11 @@ export class AddSpring extends Component
 		
 		return (
 			<TouchableOpacity onPress={() => this.removeImage(image)}>
-				<Image style={{ width: 150, height: 150 }} source={{ uri: image.uri }}>
-					<View styleName="overlay vertical v-center h-center fill-parent">
-						<Image source={require('../assets/icons/remove.png')} />
-						<Caption style={{ color: '#fff' }}>{size} MB</Caption>
-					</View>
-				</Image>
+				<Image style={{ width: 150, height: 150 }} source={{ uri: image.uri }} loadingIndicatorSource={this.addSpinner()} />
+				<View styleName="overlay vertical v-center h-center fill-parent" style={{ position: 'absolute' }}>
+					<Image style={{ width: 64, height: 64 }} source={require('../assets/icons/remove.png')} />
+					<Caption style={{ color: '#fff' }}>{size} MB</Caption>
+				</View>
 			</TouchableOpacity>
 		);
 	}
@@ -262,7 +266,7 @@ export class AddSpring extends Component
 					<View style={{ flex: 1 }} styleName="vertical h-center v-center">
 						<Title>Uploading</Title>
 						<Subtitle>This could take a while...</Subtitle>
-						<Spinner style={{ size: 'large' }} />
+						{this.addSpinner()}
 					</View>
 				</Modal>
 			);

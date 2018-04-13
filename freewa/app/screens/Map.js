@@ -4,7 +4,8 @@ import React, {
 
 import {
 	Keyboard,
-	AsyncStorage
+	AsyncStorage,
+	Linking
 } from 'react-native';
 
 import {
@@ -250,32 +251,49 @@ export class Map extends Component
 		);
 	}
 	
+	selectedMarkerPressAction(marker)
+	{
+		if(marker.url && marker.url != '')
+		{
+			Linking.openURL(marker.url);
+			return;
+		}
+		
+		const { navigateTo } = this.props;
+		const { user, lastPosition } = this.state;
+		
+		navigateTo({
+			screen: ext('SpringDetails'),
+			props: { marker, user, lastPosition }
+		});
+	}
+	
 	renderSelectedMarker()
 	{
 		const marker = this.state.selectedMarker;
 		if(!marker) return null;
 		
-		const { user, lastPosition } = this.state;
-		const { navigateTo } = this.props;
-		var rating;
+		var type = rating = distance = null;
 		
-		var distance = this.calculateDistance(lastPosition);
-		if(distance) distance = <Text>{distance} FROM YOU</Text>
-		
-		if(marker.ratingCount) rating = <View styleName="horizontal">{getRatingStars(marker.rating)}</View>;
-		else rating = <Text style={{color: '#FAA21B'}}>UNRATED</Text>;
+		if(!marker.url || marker.url == '')
+		{
+			type = <Subtitle styleName="h-center">{marker.type.toUpperCase()}</Subtitle>;
+			
+			distance = this.calculateDistance(this.state.lastPosition);
+			if(distance) distance = <Text>{distance} FROM YOU</Text>
+			
+			if(marker.ratingCount) rating = <View styleName="horizontal">{getRatingStars(marker.rating)}</View>;
+			else rating = <Text style={{color: '#FAA21B'}}>UNRATED</Text>;
+		}
 		
 		return (
 			<View styleName="h-center" style={{shadowColor: '#000', shadowOpacity: 0.2, shadowOffset: {width: 0, height: -3}}}>
-				<TouchableOpacity onPress={() => navigateTo({
-					screen: ext('SpringDetails'),
-					props: { marker, user, lastPosition }
-				})}>
+				<TouchableOpacity onPress={() => this.selectedMarkerPressAction(marker)}>
 					<View styleName="horizontal" style={{backgroundColor: '#FFF'}}>
 						<Image styleName="medium-square rounded-corners" style={{margin: 10}} source={{ uri: marker.image }} />
 						<Tile styleName="text-centric" style={{padding: 20}}>
 							<Title styleName="h-center">{marker.title.toUpperCase()}</Title>
-							<Subtitle styleName="h-center">{marker.type.toUpperCase()}</Subtitle>
+							{type}
 							{rating}
 							{distance}
 						</Tile>
